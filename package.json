@@ -1,0 +1,23 @@
+{
+  "name": "test",
+  "version": "1.0.0",
+  "description": "test shopify",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ghani",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ghaninf/test-shopify.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ghaninf/test-shopify/issues"
+  },
+  "homepage": "https://github.com/ghaninf/test-shopify#readme",
+  "dependencies": {
+    "@shopify/cli": "^3.47.5",
+    "@shopify/theme": "^3.47.5"
+  }
+}

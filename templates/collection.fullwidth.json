@@ -1,0 +1,173 @@
+{
+  "sections": {
+    "16488248807b8f94da": {
+      "type": "home-sub-banner",
+      "blocks": {
+        "1648824880847c0959-0": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/WEB_BANNER_VOUCHER_compress.jpg",
+            "title": "",
+            "color_title": "#ffffff",
+            "link": "shopify:\/\/pages\/voucher"
+          }
+        }
+      },
+      "block_order": [
+        "1648824880847c0959-0"
+      ],
+      "settings": {
+        "display_sub_banner": true,
+        "layout": "default",
+        "margin_bottom_mb": 0,
+        "margin_bottom_tab": 0,
+        "margin_bottom": 0,
+        "font_size_title": "16px",
+        "display_padding": true
+      }
+    },
+    "main": {
+      "type": "main-collection",
+      "blocks": {
+        "43ee36c1-a6cb-4c50-ab30-e9683cd30d4a": {
+          "type": "sidebar",
+          "settings": {
+            "display_sidebar": true,
+            "sidebar_style": "style_1",
+            "show_sidebar": "left",
+            "style_option_color": "Color",
+            "style_option_size": "Size",
+            "number_collapse": 5,
+            "enable_categories": false,
+            "title_categories": "",
+            "style_categories": "style_main_menu",
+            "link_list": "main-menu",
+            "filter_option": "dynamic",
+            "enable_1": false,
+            "title_1": "",
+            "list_tags_1": "",
+            "enable_2": false,
+            "title_2": "",
+            "list_tags_2": "",
+            "enable_3": false,
+            "title_3": "",
+            "list_tags_3": "",
+            "enable_4": false,
+            "title_4": "",
+            "list_tags_4": "",
+            "enable_5": false,
+            "title_5": "",
+            "list_tags_5": "",
+            "enable_6": false,
+            "title_6": "",
+            "list_tags_6": "",
+            "enable_7": false,
+            "title_7": "",
+            "list_tags_7": "",
+            "enable_8": false,
+            "title_8": "",
+            "list_tags_8": "",
+            "enable_9": false,
+            "title_9": "",
+            "list_tags_9": "",
+            "enable_10": false,
+            "title_10": "",
+            "list_tags_10": "",
+            "enable_product": true,
+            "title_product": "FEATURED PRODUCT",
+            "collection": "fashion-sale",
+            "limit": "8",
+            "enable_img_1": false,
+            "link_img_1": "",
+            "enable_img_2": false,
+            "link_img_2": "",
+            "enable_custom_block": false,
+            "title_custom_block": "Custom Block",
+            "quote_custom_block": "<p>Add customer reviews and testimonials to showcase your store’s happy customers.<\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "43ee36c1-a6cb-4c50-ab30-e9683cd30d4a"
+      ],
+      "settings": {
+        "limited_view": true,
+        "view_as_enable": true,
+        "sort_enable": true,
+        "collection_results_per_row": "4",
+        "collection_results_per_page": "30",
+        "color_button_more": "#ffffff",
+        "bg_color_button_more": "#ba7a2d",
+        "border_color_button_more": "#ba7a2d",
+        "show_countdown": false,
+        "text_countdown": "End ins:",
+        "show_pro_des": false,
+        "show_banner": false,
+        "show_banner_1": true,
+        "link_banner_1": "",
+        "show_banner_2": true,
+        "link_banner_2": "",
+        "show_banner_3": true,
+        "link_banner_3": "",
+        "show_banner_4": true,
+        "link_banner_4": "",
+        "pro_image": " ",
+        "pro_name": "Product",
+        "pro_price": "Price",
+        "pro_quantity": "Qty",
+        "pro_variant_options": "Options",
+        "btn_1_bg_color": "#232323",
+        "btn_1_border_color": "#232323",
+        "btn_1_text_color": "#ffffff",
+        "btn_2_bg_color": "#ffffff",
+        "btn_2_border_color": "#323232",
+        "btn_2_text_color": "#232323",
+        "btn_3_bg_color": "#ffffff",
+        "btn_3_border_color": "#e6e6e6",
+        "btn_3_text_color": "#232323",
+        "btn_4_bg_color": "#69c69c",
+        "btn_4_border_color": "#69c69c",
+        "btn_4_text_color": "#ffffff"
+      }
+    },
+    "brand": {
+      "type": "brand-supermarket",
+      "disabled": true,
+      "settings": {
+        "background_color": "#f5f5f5",
+        "heading": "Top Brands",
+        "item_per_row": "3",
+        "enable_all": true,
+        "title_all": "View all",
+        "link": "",
+        "content": "",
+        "margin_bottom_mb": 0,
+        "margin_bottom_tab": 0,
+        "margin_bottom": 0
+      }
+    },
+    "testimonials": {
+      "type": "collection-testimonials",
+      "disabled": true,
+      "settings": {
+        "display_customer": false
+      }
+    },
+    "recently-view": {
+      "type": "recently-viewed-products",
+      "settings": {
+        "display_recently_viewed_products": true,
+        "recently_viewed_products_title": "Recently Viewed Products",
+        "number_of_recently_viewed_products": "8",
+        "recently_viewed_products_per_row": "6"
+      }
+    }
+  },
+  "order": [
+    "16488248807b8f94da",
+    "main",
+    "brand",
+    "testimonials",
+    "recently-view"
+  ]
+}

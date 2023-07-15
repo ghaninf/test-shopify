@@ -1,0 +1,108 @@
+.tuecus-app-pills-custom .nav-link {
+	color: #6b6a6a;
+	background: #fff;
+	position: relative;
+	border-radius: 6px 0px 0px 6px;
+}
+.tuecus-app-pills-custom .nav-link.active {
+	color: #45b649;
+	background: #fff;
+}
+@media (min-width: 992px) {
+	.tuecus-app-pills-custom .nav-link::before {
+		content: "";
+		display: block;
+		border-top: 8px solid transparent;
+		border-left: 10px solid #cacaca;
+		border-bottom: 8px solid transparent;
+		position: absolute;
+		top: 50%;
+		right: -10px;
+		transform: translateY(-50%);
+		opacity: 0;
+	}
+	
+	#app-pills-product-reviews .tuecus-customer-review .tuecus-review-img{
+			width:180px;
+			height:180px;
+	}
+				
+}
+.tuecus-app-pills-custom .nav-link.active::before {
+	opacity: 1;
+}
+
+.tuecus-app-pills-custom .nav-link span{
+	font-size: 12px;
+}
+
+#app-pills-profile small{
+	font-size: 15px;
+	line-height: 30px;
+}
+
+.tuecus-font-weight-600{
+	font-weight: 600 !important;
+}
+	
+.tuecus-option-selection, .tuecus-qty-changer{
+	height: 28px !important;
+    font-size: 13px !important;
+	border-radius: 0 !important;
+    padding-top: 3px !important;
+}	
+	
+#tuecus-account-block .tuecus-tab-pane .tuecus-wishlist-grid .tuecus-img-thumbnail{
+	width: 250px;
+    height: 200px;
+    margin-bottom: 5px;
+}
+	
+
+#tuecus-loader{
+	position: absolute;
+    width: 100%;
+    justify-content: center;
+    display: grid;
+    height: 100vh;
+    vertical-align: middle;
+    top: 0;
+    background: #000;
+    opacity: 0.6; 
+    padding: 130px;
+	z-index:2;
+}
+
+#tuecus-loader h4{
+	margin: 0;
+    position: relative;
+    top: 100px;
+    color: #fff;
+}
+
+#tuecus-loader .loader {
+    border: 16px solid #f3f3f3; /* Light grey */
+  	border-top: 16px solid #3498db; /* Blue */
+ 	border-radius: 50%;
+ 	width: 120px;
+	height: 120px;
+	animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}	
+
+.tuecus-mbl-nav{
+    position: absolute;
+    top: 110px;
+    z-index: 5;
+    left: 0;
+}
+
+.tuecus-mbl-nav .navbar-collapse{
+	background: #fff;
+}
+
+

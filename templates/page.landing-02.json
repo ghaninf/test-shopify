@@ -1,0 +1,130 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {
+      }
+    },
+    "165614517554a00bd3": {
+      "type": "home-slideshow",
+      "blocks": {
+        "16561451759df8a115-0": {
+          "type": "image",
+          "settings": {
+            "dpl_slide_img": true,
+            "image_slide": "shopify:\/\/shop_images\/Banner_1200x456_-_Atome_Agustus.jpg",
+            "image_slide_mb": "shopify:\/\/shop_images\/Banner_450x300_-_Atome_Agustus.jpg",
+            "style_content": "style_1",
+            "alignment": "left",
+            "alignment_custom": "35%",
+            "text_alignment": "center",
+            "bg_color_box": "#ffffff",
+            "color_border_box": "#bcbcbc",
+            "heading": "",
+            "font_size_heading": "40px",
+            "font_size_heading_mb": "24px",
+            "color_heading": "#232323",
+            "color_heading_style_4": "#10ffda",
+            "color_heading_mb": "#ffffff",
+            "sub_heading": "",
+            "font_size_sub_heading": "30px",
+            "font_size_sub_heading_mb": "18px",
+            "color_sub_heading": "#ffffff",
+            "color_sub_heading_mb": "#ffffff",
+            "slide-des": "",
+            "font_size_des": "12px",
+            "font_size_des_mb": "12px",
+            "color_des": "#232323",
+            "color_des_mb": "#ffffff",
+            "button_slide": "",
+            "link": "",
+            "button_slide_2": "",
+            "link_2": "",
+            "bg_button": "#232323",
+            "border_button": "#232323",
+            "color_button": "#ffffff",
+            "bg_button_mb": "#232323",
+            "border_button_mb": "#232323",
+            "color_button_mb": "#ffffff",
+            "lb_product_1": "",
+            "top_position_1": "10",
+            "left_position_1": "10",
+            "dots_color_1": "#ffffff",
+            "dots_bg_color_1": "#323232",
+            "dots_shadow_color_1": "#ffffff",
+            "lb_product_2": "",
+            "top_position_2": "10",
+            "left_position_2": "10",
+            "dots_color_2": "#ffffff",
+            "dots_bg_color_2": "#323232",
+            "dots_shadow_color_2": "#ffffff",
+            "lb_product_3": "",
+            "top_position_3": "10",
+            "left_position_3": "10",
+            "dots_color_3": "#ffffff",
+            "dots_bg_color_3": "#323232",
+            "dots_shadow_color_3": "#ffffff"
+          }
+        }
+      },
+      "block_order": [
+        "16561451759df8a115-0"
+      ],
+      "settings": {
+        "layout": "default",
+        "bg_color": "",
+        "widget_title": "",
+        "title_style": "style_1",
+        "margin_bottom_mb": 20,
+        "margin_bottom_tab": 20,
+        "margin_bottom": 30,
+        "style_slideshow": "style_1",
+        "autoplay": true,
+        "slideshow_speed": "5000",
+        "slideshow_transition": "true",
+        "dots": "true",
+        "dots_color": "#707979",
+        "dots_active_color": "#505656",
+        "dots_opacity": false,
+        "bg_dots_color": "#bababa",
+        "arrow_active": true,
+        "arrow_color": "#666d6d",
+        "arrow_border_color": "#666d6d",
+        "arrow_bg_color": "#ffffff",
+        "position_slick_arrow": "10%",
+        "min_width_banner_button": "270px",
+        "bg_video": "#866965",
+        "bg_overlay_opacity": 40,
+        "video_height": "41.7%",
+        "auto_playvideo": true,
+        "enable_categories": false,
+        "text_categories": "Shop by categories",
+        "label_color": "",
+        "bg_label": "",
+        "text_icon_color": "",
+        "menu": "",
+        "enable_banner": false
+      }
+    },
+    "16561452175db9a376": {
+      "type": "home-rich-text",
+      "settings": {
+        "content_top": "<p><b>SYARAT & KETENTUAN PROMO<\/b>\n<\/p>\n\n<p>\n1. Promo ini berlaku untuk seluruh pengguna Atome.<\/p>\n\n<p>\n2. <b>Khusus pengguna baru Atome:<\/b> <b>Potongan 25%<\/b> dengan maksimal Rp 75.000, dapat dinikmati oleh pengguna dengan minimum transaksi Rp100.000.<\/p>\n\n<p>\n3. Periode promo pengguna baru: 1 - 31 Agustus 2022.<\/p>\n\n<p>\n4. <b>Untuk pengguna setia Atome:<\/b><\/p>\n\n<p>\n- <b>Diskon 20%<\/b> dengan minimum transaksi Rp249.900 berlaku untuk hari <b>Minggu dan Senin<\/b>.<\/p>\n\n<p>\n- <b>Diskon 10%<\/b> dengan minimum transaksi Rp249.900 berlaku untuk hari <b>Selasa sampai Sabtu<\/b>.<\/p>\n\n<p>\n- <b>EKSTRA Voucher URBAN&CO<\/b> hingga Rp50.000\n<a href=\"https:\/\/urbanco.co.id\/pages\/voucher\" style=\"color:blue\"><u>disini<\/u><\/a>\ndengan menggunakan Atome selama periode berlangsung.<\/p>\n\n<p>\n5. Masing-masing voucher potongan hanya dapat digunakan untuk 1 (satu) kali transaksi dan tidak berlaku kelipatan.<\/p>\n\n<p>\n6. Syarat dan ketentuan dapat berubah sewaktu-waktu tanpa pemberitahuan sebelumnya.<\/p>\n\n<br>\n\n<p>\n<b>TENTANG ATOME\n<\/b><\/p>\n\n<p>\nAtome merupakan metode pembayaran baru yang memudahkan kamu untuk belanja dengan pilihan 3 dan 6 bulan cicilan <b>bunga 0%, tanpa DP dan tanpa perlu menggunakan kartu kredit<\/b>. Atome menawarkan cicilan ringan, dengan rincian sebagai berikut:\n<\/p>\n\n<p>\n1. Pilihan 3x dan 6x cicilan Atome.<\/p>\n\n<p>\n2. Bunga 0% untuk setiap cicilan.<\/p>\n\n<p>\n3. Tanpa DP.<\/p>\n\n<p>\n4. Bayar tanpa perlu menggunakan kartu kredit.<\/p>",
+        "content_bottom": "",
+        "font_size": "14px",
+        "text_alignment": "left",
+        "button_text_more": "Read More",
+        "button_text_less": "Read Less",
+        "color_text": "",
+        "margin_bottom_mb": 0,
+        "margin_bottom_tab": 0,
+        "margin_bottom": 0
+      }
+    }
+  },
+  "order": [
+    "main",
+    "165614517554a00bd3",
+    "16561452175db9a376"
+  ]
+}

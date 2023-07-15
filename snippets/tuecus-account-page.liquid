@@ -1,0 +1,2639 @@
+{{ 'tuecus.css' | asset_url | stylesheet_tag }}
+{{ 'datepicker.css' | asset_url | stylesheet_tag }}
+{{ 'custom-bootstrap.css' | asset_url | stylesheet_tag }}
+{{ 'datepicker.js' | asset_url | script_tag }}	
+{{ 'tuecus.js' | asset_url | script_tag }}
+{{ 'tuecus-cart.js' | asset_url | script_tag }}
+{{ 'libphonenumber.js' | asset_url | script_tag }}
+{{ 'tuecus-jquery.products.min.js' | asset_url | script_tag }}
+{{ "shopify_common.js" | shopify_asset_url | script_tag }}
+{{ "customer_area.js"  | shopify_asset_url | script_tag }}
+
+{{ 'tuecus-styles.css' | asset_url | stylesheet_tag }}	
+			
+<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+<input type="hidden" name="tuecus-store-token" value="{{ shop.metafields.tuecus.store_token }}" id="tuecus-store-token">
+<input type="hidden" name="tuecus-shop-money-format" value="{{ shop.money_format }}" id="tuecus-store-money-format">
+<input type="hidden" name="tuecus-shop-currency-symbol" value="{{ shop.currency.symbol }}" id="tuecus-store-currency-symbol">
+
+
+<input type="hidden" name="tuecus-store-id" value="{{ shop.metafields.tuecus.store_id }}" id="tuecus-store-id">
+<input type="hidden" name="tuecus-app-id" value="{{ shop.metafields.tuecus.app_id }}" id="tuecus-app-id">
+<input type="hidden" name="tuecus-customer-id" value="{{ customer.id }}" id="tuecus-customer-id">
+<input type="hidden" name="tuecus-app-proxy" value="{{ shop.metafields.tuecus.app_proxy }}" id="tuecus-app-proxy">
+<input type="hidden" name="tuecus-shop-domain" value="{{shop.domain}}" id="tuecus-shop-domain">
+<!-- <input type="hidden" name="tuecus-customer-proxy" value="/apps/{{ shop.metafields.tuecus.app_proxy }}/api/profile/{{ shop.metafields.tuecus.app_id }}/{{ shop.metafields.tuecus.store_id }}/{{ customer.id }}" id="tuecus-customer-proxy">-->
+
+<script>
+	if (!window.tuecusObj || typeof window.tuecusObj == "undefined") {
+		window.tuecusObj = {};
+	}	
+	window.tuecusObj.refer_friend = {};
+	window.tuecusObj.refer_friend.registration_url = "https://{{ shop.domain }}/account/register";
+	window.tuecusObj.refer_friend.refer_message = "Hi Earn credits by registering with {{ shop.name }}. Use this link and get your rewards:";
+	
+	var earned_rewards_str = 'Earned Rewards';
+	{% assign earned_rewards = 'tuecus.general.earned_rewards' | t %}
+	{% if  earned_rewards != 'translation missing' %} 
+	  earned_rewards_str = '{{ earned_rewards }}';
+	{% endif %}
+	
+	var spent_rewards_str = 'Spent Rewards';
+	{% assign spent_rewards = 'tuecus.general.spent_rewards' | t %}
+	{% if  spent_rewards != 'translation missing' %} 
+	  spent_rewards_str = '{{ spent_rewards }}';
+	{% endif %}
+	
+	var current_rewards_str = 'Current Rewards';
+	{% assign current_rewards = 'tuecus.general.current_rewards' | t %}
+	{% if  current_rewards != 'translation missing' %} 
+	  current_rewards_str = '{{ current_rewards }}';
+	{% endif %}
+	
+	var total_rewards_str = 'Total Rewards';
+	{% assign total_rewards = 'tuecus.general.total_rewards' | t %}
+	{% if  total_rewards != 'translation missing' %} 
+	  total_rewards_str = '{{ total_rewards }}';
+	{% endif %}
+	
+	var no_reviews_str = 'No Reviews';
+	{% assign no_reviews = 'tuecus.general.no_reviews' | t %}
+	{% if  no_reviews != 'translation missing' %} 
+	  no_reviews_str = '{{ no_reviews }}';
+	{% endif %}
+      
+    var do_not_have_reviews_str = 'Looks like you don\'t have any reviews.';
+	{% assign do_not_have_reviews = 'tuecus.general.do_not_have_reviews' | t %}
+	{% if  do_not_have_reviews != 'translation missing' %} 
+	  do_not_have_reviews_str = '{{ do_not_have_reviews }}';
+	{% endif %}
+	
+	var add_to_cart_str = 'ADD TO CART';
+	{% assign add_to_cart = 'tuecus.general.add_to_cart' | t %}
+	{% if  add_to_cart != 'translation missing' %} 
+	  add_to_cart_str = '{{ add_to_cart }}';
+	{% endif %}
+	
+</script>
+
+
+	<div class="tuecus-main-block">	
+		
+<!-- tuecus-error-modal -->
+<div id="tuecus-error-modal" class="tuecus-m-auto tuecus-col-md-12" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="display:none;position:absolute;z-index:9999;margin:auto 0;">
+	<input type="hidden" name="order_contact_order_id" id="order_contact_order_id" value="" />
+	<div class="modal-dialog modal-sm tuecus-border-danger tuecus-rounded tuecus-shadow-lg" role="document">
+		<div class="modal-content tuecus-bg-danger tuecus-text-white tuecus-text-center">
+			<div class="modal-header">
+				<h5 class="modal-title tuecus-text-white tuecus-text-center tuecus-w-100"><i class="fa fa-exclamation-circle fa-4x tuecus-pl-4" aria-hidden="true"></i></h5>
+				<button type="button" class="tuecus_close" data-dismiss="modal" aria-label="Close" data-target="#tuecus-error-modal">
+					<span aria-hidden="true" class="tuecus-text-white">&times;</span>
+				</button>
+			</div>
+			<h4 class="tuecus-text-white tuecus-pt-4">ERROR FOUND</h4>
+			<div class="modal-body" id="tuecus-error-modal-body">
+				
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- tuecus-error-modal -->
+
+
+<!-- tuecus-refund-return-modal -->
+<div id="tuecus-refund-return-modal" class="tuecus-m-auto tuecus-col-md-12" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="display:none;position:absolute;z-index:9999;margin:auto 0;">
+	<input type="hidden" name="order_refund_return_order_id" id="order_refund_return_order_id" value="" />
+	<input type="hidden" name="order_refund_return_product_id" id="order_refund_return_product_id" value="" />
+	<input type="hidden" name="order_refund_return_product_handle" id="order_refund_return_product_handle" value="" />
+	
+    <input type="hidden" name="order_refund_return__first_name" id="order_refund_return__first_name" value="" />
+	<input type="hidden" name="order_refund_return__last_name" id="order_refund_return__last_name" value="" />
+	 <input type="hidden" name="order_refund_return__phone" id="order_refund_return__phone" value="" />
+	<input type="hidden" name="order_refund_return__email" id="order_refund_return__email" value="" />
+	
+  	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title tuecus-text-success"><i class="fa fa-archive" aria-hidden="true"></i> Return Request</h5>
+				<button type="button" class="tuecus_close" data-dismiss="modal" aria-label="Close" data-target="#tuecus-refund-return-modal">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="tuecus-container tuecus-contact-form tuecus-p-3">
+					  
+                  		<div class="tuecus-col-md-12 tuecus-text-center tuecus-mb-3">
+                          <input type="radio" class="return_type" name="return_type" id="return_type_return" value="0"  onclick="onreturntypeclick(this.value)" checked> 
+                          <h6 class="tuecus-d-inline tuecus-pl-1 tuecus-pr-3" id="return_type_exchange" >RETURN</h6> 
+                            <input type="radio" class="return_type" name="return_type" value="1" onclick="onreturntypeclick(this.value)"> 
+                          <h6 class="tuecus-d-inline tuecus-pl-1 tuecus-pr-3">EXCHANGE</h6>
+                            
+						</div>
+                  		
+                  
+                           <div class="tuecus-col-md-12" id="order_return_message_container">
+								<div class="tuecus-form-group tuecus-mb-0">
+									<textarea name="order_return_message" id="order_return_message" class="tuecus-form-control" placeholder="Your Message *" style="width: 100%; height: 180px;"></textarea>
+								</div>
+								
+								<small id="order_return_message_error" class="tuecus-text-danger tuecus-mb-2 tuecus-valid-error">
+										
+									</small>
+                            
+							</div>
+                  			
+                  			<div class="tuecus-col-md-12" id="order_exchange_container">
+								
+                               
+                             <div class="tuecus-col-md-12 tuecus-col-12 tuecus-row tuecus-ml-0 tuecus-mb-4 tuecus-pb-2">
+                            	<div class="tuecus-form-check tuecus-col-md-3 tuecus-col-3 tuecus-mt-2 tuecus-text-center">
+                                  <input class="tuecus-form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                             	</div>
+                              	<div class="tuecus-col-md-4 tuecus-col-4 tuecus-text-center">
+                                  <h6 class="tuecus-m-0">Product Name</h6>
+                                  <h6 class="tuecus-m-0 tuecus-font-weight-normal">Price :{{ 499.00 | money }}</h6>
+                                </div>
+                               <div class="tuecus-col-md-2 tuecus-col-2 tuecus-p-0 tuecus-text-center">
+                                 <h6 class="tuecus-mt-2 tuecus-pt-2 tuecus-small tuecus-font-weight-bold tuecus-text-uppercase">In Stock</h6>
+                               </div>
+                               <div class="tuecus-col-md-3 tuecus-col-3 tuecus-text-right tuecus-mt-2">
+                                 <button class="tuecus-btn tuecus-btn-sm tuecus-btn-success">SELECT <i class="fa fa-check tuecus-ml-2" aria-hidden="true"></i></button>
+                               </div>  
+                             </div>
+                             
+                             <div class="tuecus-col-md-12 tuecus-col-12 tuecus-row tuecus-ml-0 tuecus-mb-4 tuecus-pb-2">
+                            	<div class="tuecus-form-check tuecus-col-md-3 tuecus-col-3 tuecus-mt-2 tuecus-text-center">
+                                  <input class="tuecus-form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                             	</div>
+                              	<div class="tuecus-col-md-4 tuecus-col-4 tuecus-text-center">
+                                  <h6 class="tuecus-m-0">Product Name</h6>
+                                  <h6 class="tuecus-m-0 tuecus-font-weight-normal">Price :{{ 499.00 | money }}</h6>
+                                </div>
+                               <div class="tuecus-col-md-2 tuecus-col-2 tuecus-p-0 tuecus-text-center">
+                                 <h6 class="tuecus-mt-2 tuecus-pt-2 tuecus-small tuecus-font-weight-bold tuecus-text-uppercase">In Stock</h6>
+                               </div>
+                               <div class="tuecus-col-md-3 tuecus-col-3 tuecus-text-right tuecus-mt-2">
+                                 <button class="tuecus-btn tuecus-btn-sm tuecus-btn-success">SELECT <i class="fa fa-check tuecus-ml-2" aria-hidden="true"></i></button>
+                               </div>  
+                             </div>
+                             
+                             <div class="tuecus-col-md-12 tuecus-col-12 tuecus-row tuecus-ml-0 tuecus-mb-4 tuecus-pb-2">
+                            	<div class="tuecus-form-check tuecus-col-md-3 tuecus-col-3 tuecus-mt-2 tuecus-text-center">
+                                  <input class="tuecus-form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                             	</div>
+                              	<div class="tuecus-col-md-4 tuecus-col-4 tuecus-text-center">
+                                  <h6 class="tuecus-m-0">Product Name</h6>
+                                  <h6 class="tuecus-m-0 tuecus-font-weight-normal">Price :{{ 499.00 | money }}</h6>
+                                </div>
+                               <div class="tuecus-col-md-2 tuecus-col-2 tuecus-p-0 tuecus-text-center">
+                                 <h6 class="tuecus-mt-2 tuecus-pt-2 tuecus-small tuecus-font-weight-bold tuecus-text-uppercase">Out of Stock</h6>
+                               </div>
+                               <div class="tuecus-col-md-3 tuecus-col-3 tuecus-text-right tuecus-mt-2">
+                                 <button class="tuecus-btn tuecus-btn-sm tuecus-btn-success">SELECT <i class="fa fa-check tuecus-ml-2" aria-hidden="true"></i></button>
+                               </div>  
+                             </div>
+                             
+                              
+							</div>
+                  
+                  
+					   <div class="tuecus-row">
+							<div class="tuecus-form-group tuecus-row tuecus-col-md-12 tuecus-justify-content-end tuecus-p-0">
+								<button type="submit" name="btnOrderReturnSubmit" id="btnOrderReturnSubmit" class="tuecus-btn tuecus-btn-success tuecus-rounded-btn tuecus-pl-3 tuecus-pr-3" onclick="onOrderReturnSubmit();"> Send &nbsp;<i class="fa fa-paper-plane"></i></button>
+							</div>
+						</div>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+      
+<!-- tuecus-profile-image-modal -->
+<div id="tuecus-profile-image-modal" class="tuecus-m-auto tuecus-col-md-12" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="display:none;position:absolute;z-index:9999;margin:auto 0;">
+	<input type="hidden" name="order_contact_order_id" id="order_contact_order_id" value="" />
+	<div class="modal-dialog modal-md tuecus-border-danger tuecus-rounded tuecus-shadow-lg" role="document">
+		<div class="modal-content tuecus-bg-white tuecus-text-white tuecus-text-center">
+			<div class="modal-header">
+				<button type="button" class="tuecus_close" data-dismiss="modal" aria-label="Close" data-target="#tuecus-profile-image-modal">
+					<span aria-hidden="true" class="tuecus-text-dark">&times;</span>
+				</button>
+			</div>
+			<h4 class="tuecus-text-dark tuecus-pt-4">Upload Profile pic</h4>
+			<div class="modal-body" id="tuecus-profile-image-modal-body">
+				 <div class="tuecus-custom-file" id="customFile">
+                    <input type="file" class="tuecus-custom-file-input" id="profile_pic_file" aria-describedby="fileHelp">
+                    <label class="tuecus-custom-file-label tuecus-profile-upload" for="profile_pic_file">
+                        Click here to Upload
+                    </label>
+                </div>
+			</div>
+          	<div class="modal-footer">
+              <button type="button" class="tuecus-btn tuecus-btn-sm tuecus-btn-success" onclick="uploadFile();">Upload <i class="fa fa-cloud-upload" aria-hidden="true" ></i></button>
+          	</div>  
+		</div>
+	</div>
+</div>
+
+
+
+<style>
+	.tuecus-profile-upload::after{
+  		height:auto;
+	}  
+	
+	.tuecus-pagination a{
+		padding: 6px;
+		background: #eee;
+	}
+	  
+	.tuecus-pagination .active{
+		background: #9de8af;
+	}
+	
+	.code-discout{
+    display: inline-block;
+    margin: 10px 0 0 0;
+    padding: 0px 10px;
+    border: 2px dashed currentColor;
+    background: #f5f5f5;
+    font-weight: bold;
+    font-style: normal;
+    font-size: 1.4em;
+	box-shadow: 0 3px 2px #b7b7b7;
+	}
+  
+</style>  
+      
+<script>
+    
+  function uploadlogo() {
+    
+     document.getElementById('tuecus-profile-image-modal').style.display='block';
+  }
+
+ async function uploadFile() {
+     //  alert('uploadFile');
+      var formData = new FormData();   
+      var profile_pic_file = document.getElementById('profile_pic_file');
+    
+      var app_id =  document.getElementById('tuecus-app-id').value; 
+      var store_token = document.getElementById('tuecus-store-token').value;
+	  var customer_id = document.getElementById('tuecus-customer-id').value;
+	
+      var url="/apps/"+document.getElementById('tuecus-app-proxy').value+"/api/profile/uploadpic/"+document.getElementById('tuecus-store-token').value;;
+		
+    
+      formData.append("app_id",app_id);
+      formData.append("store_token", store_token);
+      formData.append("customer_id",customer_id);
+      formData.append("file", profile_pic_file.files[0]);
+
+	  var ajax = new XMLHttpRequest();
+      ajax.onreadystatechange =
+	  function(){
+			if(ajax.readyState==4 && ajax.status==200){
+				var resdata = ajax.responseText;
+				var response = JSON.parse(resdata);
+				console.log(response);
+				document.getElementById('tuecus_avatar').src=response.base64;
+				document.getElementById('tuecus-profile-image-modal').style.display='none';
+				alert('The file has been uploaded successfully.');
+
+			}  else{
+			}
+	   }               
+       ajax.open("POST",url);
+       //ajax.setRequestHeader("Content-Type", "multipart/form-data");
+       ajax.send(formData);
+
+      /*await fetch(url, {
+        method: "POST", 
+        body: formData
+      });  
+	  document.getElementById('tuecus-profile-image-modal').style.display='none';
+      alert('The file has been uploaded successfully.');*/
+  }
+
+      
+</script>      
+<!-- tuecus-profile-image-modal -->
+
+
+<!-- tuecus-profile-modal --> 
+<div id="tuecus-profile-modal" class="tuecus-m-auto tuecus-col-md-12" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"  style="display:none;position:absolute;z-index:1;margin:auto;"> 
+<div class="modal-dialog modal-lg" role="document"> 
+	<div class="modal-content tuecus-shadow-lg">
+		<div class="modal-header">
+			<h5 class="modal-title tuecus-text-success" id="exampleModalLabel">{{ 'tuecus.general.profile' | t }}</h5>
+			<button type="button" class="tuecus_close tuecus-p-2 tuecus-bg-dark" style="opacity:1; border-radius: 0 6px 0 0px;" data-dismiss="modal" aria-label="Close" data-target="#tuecus-profile-modal">
+				<span aria-hidden="true" class="tuecus-bg-white tuecus-rounded-circle tuecus-text-dark tuecus-font-weight-normal" style="width: 20px;height: 20px;display: block;line-height: 19px;padding-left: 1px;font-size: 17px;">&times;</span>
+			</button>
+		</div>
+		<div class="modal-body">
+			<div class="tuecus-container tuecus-contact-form tuecus-p-3">
+				
+				   <div class="tuecus-row">
+						<div class="tuecus-col-md-6">
+							<div class="tuecus-form-group tuecus-input-group tuecus-mb-0">
+								<span class="tuecus-input-group-addon tuecus-pl-2 tuecus-border tuecus-pt-1 tuecus-pr-2"><i class="fa fa-user tuecus-text-secondary"></i></span>
+								<input type="text" id="profile_first_name" name="first_name" class="tuecus-form-control" placeholder="{{ 'tuecus.general.first_name' | t }} *" value="" />
+								
+								
+							</div>
+							<small id="profile_first_name_error" class="tuecus-text-danger tuecus-valid-error tuecus-mb-2"></small>
+							
+							<div class="tuecus-form-group tuecus-input-group tuecus-mb-0">
+								<span class="tuecus-input-group-addon tuecus-pl-2 tuecus-border tuecus-pt-1 tuecus-pr-2"><i class="fa fa-user tuecus-text-secondary"></i></span>
+								<input type="text" id="profile_last_name" name="last_name" class="tuecus-form-control" placeholder="{{ 'tuecus.general.last_name' | t }} *" value="" />
+								
+								
+								
+							</div>
+						
+							<small id="profile_last_name_error" class="tuecus-text-danger tuecus-mb-2 tuecus-valid-error"></small>
+							
+						</div>
+						<div class="tuecus-col-md-6">
+							<div class="tuecus-form-group tuecus-input-group tuecus-mb-0">
+								<span class="tuecus-input-group-addon tuecus-pl-2 tuecus-border tuecus-pt-1 tuecus-pr-2"><i class="fa fa-envelope tuecus-text-secondary"></i></span>
+								<input type="text" id="profile_email"  name="email" class="tuecus-form-control" placeholder="{{ 'tuecus.general.email' | t }} *" value="" />
+								
+								
+							</div>
+							<small id="profile_email_error" class="tuecus-text-danger tuecus-mb-2 tuecus-valid-error">
+								
+							</small>
+								
+								
+							<div class="tuecus-form-group tuecus-input-group tuecus-mb-0">
+								<span class="tuecus-input-group-addon tuecus-pl-2 tuecus-border tuecus-pt-2 tuecus-pr-2"><i class="fa fa-phone tuecus-text-secondary"></i></span>
+								
+									<select name="countryCode" id="tuecus-country-code" class="tuecus-form-control">
+											<option data-countryCode="US" value="1" Selected>US (+1)</option>
+											<option data-countryCode="GB" value="44">UK (+44)</option>
+											<optgroup label="Other countries">
+											<option data-countryCode="DZ" value="213">Algeria (+213)</option>
+											<option data-countryCode="AD" value="376">Andorra (+376)</option>
+											<option data-countryCode="AO" value="244">Angola (+244)</option>
+											<option data-countryCode="AI" value="1264">Anguilla (+1264)</option>
+											<option data-countryCode="AG" value="1268">Antigua &amp; Barbuda (+1268)</option>
+											<option data-countryCode="AR" value="54">Argentina (+54)</option>
+											<option data-countryCode="AM" value="374">Armenia (+374)</option>
+											<option data-countryCode="AW" value="297">Aruba (+297)</option>
+											<option data-countryCode="AU" value="61">Australia (+61)</option>
+											<option data-countryCode="AT" value="43">Austria (+43)</option>
+											<option data-countryCode="AZ" value="994">Azerbaijan (+994)</option>
+											<option data-countryCode="BS" value="1242">Bahamas (+1242)</option>
+											<option data-countryCode="BH" value="973">Bahrain (+973)</option>
+											<option data-countryCode="BD" value="880">Bangladesh (+880)</option>
+											<option data-countryCode="BB" value="1246">Barbados (+1246)</option>
+											<option data-countryCode="BY" value="375">Belarus (+375)</option>
+											<option data-countryCode="BE" value="32">Belgium (+32)</option>
+											<option data-countryCode="BZ" value="501">Belize (+501)</option>
+											<option data-countryCode="BJ" value="229">Benin (+229)</option>
+											<option data-countryCode="BM" value="1441">Bermuda (+1441)</option>
+											<option data-countryCode="BT" value="975">Bhutan (+975)</option>
+											<option data-countryCode="BO" value="591">Bolivia (+591)</option>
+											<option data-countryCode="BA" value="387">Bosnia Herzegovina (+387)</option>
+											<option data-countryCode="BW" value="267">Botswana (+267)</option>
+											<option data-countryCode="BR" value="55">Brazil (+55)</option>
+											<option data-countryCode="BN" value="673">Brunei (+673)</option>
+											<option data-countryCode="BG" value="359">Bulgaria (+359)</option>
+											<option data-countryCode="BF" value="226">Burkina Faso (+226)</option>
+											<option data-countryCode="BI" value="257">Burundi (+257)</option>
+											<option data-countryCode="KH" value="855">Cambodia (+855)</option>
+											<option data-countryCode="CM" value="237">Cameroon (+237)</option>
+											<option data-countryCode="CA" value="1">Canada (+1)</option>
+											<option data-countryCode="CV" value="238">Cape Verde Islands (+238)</option>
+											<option data-countryCode="KY" value="1345">Cayman Islands (+1345)</option>
+											<option data-countryCode="CF" value="236">Central African Republic (+236)</option>
+											<option data-countryCode="CL" value="56">Chile (+56)</option>
+											<option data-countryCode="CN" value="86">China (+86)</option>
+											<option data-countryCode="CO" value="57">Colombia (+57)</option>
+											<option data-countryCode="KM" value="269">Comoros (+269)</option>
+											<option data-countryCode="CG" value="242">Congo (+242)</option>
+											<option data-countryCode="CK" value="682">Cook Islands (+682)</option>
+											<option data-countryCode="CR" value="506">Costa Rica (+506)</option>
+											<option data-countryCode="HR" value="385">Croatia (+385)</option>
+											<option data-countryCode="CU" value="53">Cuba (+53)</option>
+											<option data-countryCode="CY" value="90392">Cyprus North (+90392)</option>
+											<option data-countryCode="CY" value="357">Cyprus South (+357)</option>
+											<option data-countryCode="CZ" value="42">Czech Republic (+42)</option>
+											<option data-countryCode="DK" value="45">Denmark (+45)</option>
+											<option data-countryCode="DJ" value="253">Djibouti (+253)</option>
+											<option data-countryCode="DM" value="1809">Dominica (+1809)</option>
+											<option data-countryCode="DO" value="1809">Dominican Republic (+1809)</option>
+											<option data-countryCode="EC" value="593">Ecuador (+593)</option>
+											<option data-countryCode="EG" value="20">Egypt (+20)</option>
+											<option data-countryCode="SV" value="503">El Salvador (+503)</option>
+											<option data-countryCode="GQ" value="240">Equatorial Guinea (+240)</option>
+											<option data-countryCode="ER" value="291">Eritrea (+291)</option>
+											<option data-countryCode="EE" value="372">Estonia (+372)</option>
+											<option data-countryCode="ET" value="251">Ethiopia (+251)</option>
+											<option data-countryCode="FK" value="500">Falkland Islands (+500)</option>
+											<option data-countryCode="FO" value="298">Faroe Islands (+298)</option>
+											<option data-countryCode="FJ" value="679">Fiji (+679)</option>
+											<option data-countryCode="FI" value="358">Finland (+358)</option>
+											<option data-countryCode="FR" value="33">France (+33)</option>
+											<option data-countryCode="GF" value="594">French Guiana (+594)</option>
+											<option data-countryCode="PF" value="689">French Polynesia (+689)</option>
+											<option data-countryCode="GA" value="241">Gabon (+241)</option>
+											<option data-countryCode="GM" value="220">Gambia (+220)</option>
+											<option data-countryCode="GE" value="7880">Georgia (+7880)</option>
+											<option data-countryCode="DE" value="49">Germany (+49)</option>
+											<option data-countryCode="GH" value="233">Ghana (+233)</option>
+											<option data-countryCode="GI" value="350">Gibraltar (+350)</option>
+											<option data-countryCode="GR" value="30">Greece (+30)</option>
+											<option data-countryCode="GL" value="299">Greenland (+299)</option>
+											<option data-countryCode="GD" value="1473">Grenada (+1473)</option>
+											<option data-countryCode="GP" value="590">Guadeloupe (+590)</option>
+											<option data-countryCode="GU" value="671">Guam (+671)</option>
+											<option data-countryCode="GT" value="502">Guatemala (+502)</option>
+											<option data-countryCode="GN" value="224">Guinea (+224)</option>
+											<option data-countryCode="GW" value="245">Guinea - Bissau (+245)</option>
+											<option data-countryCode="GY" value="592">Guyana (+592)</option>
+											<option data-countryCode="HT" value="509">Haiti (+509)</option>
+											<option data-countryCode="HN" value="504">Honduras (+504)</option>
+											<option data-countryCode="HK" value="852">Hong Kong (+852)</option>
+											<option data-countryCode="HU" value="36">Hungary (+36)</option>
+											<option data-countryCode="IS" value="354">Iceland (+354)</option>
+											<option data-countryCode="IN" value="91">India (+91)</option>
+											<option data-countryCode="ID" value="62">Indonesia (+62)</option>
+											<option data-countryCode="IR" value="98">Iran (+98)</option>
+											<option data-countryCode="IQ" value="964">Iraq (+964)</option>
+											<option data-countryCode="IE" value="353">Ireland (+353)</option>
+											<option data-countryCode="IL" value="972">Israel (+972)</option>
+											<option data-countryCode="IT" value="39">Italy (+39)</option>
+											<option data-countryCode="JM" value="1876">Jamaica (+1876)</option>
+											<option data-countryCode="JP" value="81">Japan (+81)</option>
+											<option data-countryCode="JO" value="962">Jordan (+962)</option>
+											<option data-countryCode="KZ" value="7">Kazakhstan (+7)</option>
+											<option data-countryCode="KE" value="254">Kenya (+254)</option>
+											<option data-countryCode="KI" value="686">Kiribati (+686)</option>
+											<option data-countryCode="KP" value="850">Korea North (+850)</option>
+											<option data-countryCode="KR" value="82">Korea South (+82)</option>
+											<option data-countryCode="KW" value="965">Kuwait (+965)</option>
+											<option data-countryCode="KG" value="996">Kyrgyzstan (+996)</option>
+											<option data-countryCode="LA" value="856">Laos (+856)</option>
+											<option data-countryCode="LV" value="371">Latvia (+371)</option>
+											<option data-countryCode="LB" value="961">Lebanon (+961)</option>
+											<option data-countryCode="LS" value="266">Lesotho (+266)</option>
+											<option data-countryCode="LR" value="231">Liberia (+231)</option>
+											<option data-countryCode="LY" value="218">Libya (+218)</option>
+											<option data-countryCode="LI" value="417">Liechtenstein (+417)</option>
+											<option data-countryCode="LT" value="370">Lithuania (+370)</option>
+											<option data-countryCode="LU" value="352">Luxembourg (+352)</option>
+											<option data-countryCode="MO" value="853">Macao (+853)</option>
+											<option data-countryCode="MK" value="389">Macedonia (+389)</option>
+											<option data-countryCode="MG" value="261">Madagascar (+261)</option>
+											<option data-countryCode="MW" value="265">Malawi (+265)</option>
+											<option data-countryCode="MY" value="60">Malaysia (+60)</option>
+											<option data-countryCode="MV" value="960">Maldives (+960)</option>
+											<option data-countryCode="ML" value="223">Mali (+223)</option>
+											<option data-countryCode="MT" value="356">Malta (+356)</option>
+											<option data-countryCode="MH" value="692">Marshall Islands (+692)</option>
+											<option data-countryCode="MQ" value="596">Martinique (+596)</option>
+											<option data-countryCode="MR" value="222">Mauritania (+222)</option>
+											<option data-countryCode="YT" value="269">Mayotte (+269)</option>
+											<option data-countryCode="MX" value="52">Mexico (+52)</option>
+											<option data-countryCode="FM" value="691">Micronesia (+691)</option>
+											<option data-countryCode="MD" value="373">Moldova (+373)</option>
+											<option data-countryCode="MC" value="377">Monaco (+377)</option>
+											<option data-countryCode="MN" value="976">Mongolia (+976)</option>
+											<option data-countryCode="MS" value="1664">Montserrat (+1664)</option>
+											<option data-countryCode="MA" value="212">Morocco (+212)</option>
+											<option data-countryCode="MZ" value="258">Mozambique (+258)</option>
+											<option data-countryCode="MN" value="95">Myanmar (+95)</option>
+											<option data-countryCode="NA" value="264">Namibia (+264)</option>
+											<option data-countryCode="NR" value="674">Nauru (+674)</option>
+											<option data-countryCode="NP" value="977">Nepal (+977)</option>
+											<option data-countryCode="NL" value="31">Netherlands (+31)</option>
+											<option data-countryCode="NC" value="687">New Caledonia (+687)</option>
+											<option data-countryCode="NZ" value="64">New Zealand (+64)</option>
+											<option data-countryCode="NI" value="505">Nicaragua (+505)</option>
+											<option data-countryCode="NE" value="227">Niger (+227)</option>
+											<option data-countryCode="NG" value="234">Nigeria (+234)</option>
+											<option data-countryCode="NU" value="683">Niue (+683)</option>
+											<option data-countryCode="NF" value="672">Norfolk Islands (+672)</option>
+											<option data-countryCode="NP" value="670">Northern Marianas (+670)</option>
+											<option data-countryCode="NO" value="47">Norway (+47)</option>
+											<option data-countryCode="OM" value="968">Oman (+968)</option>
+											<option data-countryCode="PW" value="680">Palau (+680)</option>
+											<option data-countryCode="PA" value="507">Panama (+507)</option>
+											<option data-countryCode="PG" value="675">Papua New Guinea (+675)</option>
+											<option data-countryCode="PY" value="595">Paraguay (+595)</option>
+											<option data-countryCode="PE" value="51">Peru (+51)</option>
+											<option data-countryCode="PH" value="63">Philippines (+63)</option>
+											<option data-countryCode="PL" value="48">Poland (+48)</option>
+											<option data-countryCode="PT" value="351">Portugal (+351)</option>
+											<option data-countryCode="PR" value="1787">Puerto Rico (+1787)</option>
+											<option data-countryCode="QA" value="974">Qatar (+974)</option>
+											<option data-countryCode="RE" value="262">Reunion (+262)</option>
+											<option data-countryCode="RO" value="40">Romania (+40)</option>
+											<option data-countryCode="RU" value="7">Russia (+7)</option>
+											<option data-countryCode="RW" value="250">Rwanda (+250)</option>
+											<option data-countryCode="SM" value="378">San Marino (+378)</option>
+											<option data-countryCode="ST" value="239">Sao Tome &amp; Principe (+239)</option>
+											<option data-countryCode="SA" value="966">Saudi Arabia (+966)</option>
+											<option data-countryCode="SN" value="221">Senegal (+221)</option>
+											<option data-countryCode="CS" value="381">Serbia (+381)</option>
+											<option data-countryCode="SC" value="248">Seychelles (+248)</option>
+											<option data-countryCode="SL" value="232">Sierra Leone (+232)</option>
+											<option data-countryCode="SG" value="65">Singapore (+65)</option>
+											<option data-countryCode="SK" value="421">Slovak Republic (+421)</option>
+											<option data-countryCode="SI" value="386">Slovenia (+386)</option>
+											<option data-countryCode="SB" value="677">Solomon Islands (+677)</option>
+											<option data-countryCode="SO" value="252">Somalia (+252)</option>
+											<option data-countryCode="ZA" value="27">South Africa (+27)</option>
+											<option data-countryCode="ES" value="34">Spain (+34)</option>
+											<option data-countryCode="LK" value="94">Sri Lanka (+94)</option>
+											<option data-countryCode="SH" value="290">St. Helena (+290)</option>
+											<option data-countryCode="KN" value="1869">St. Kitts (+1869)</option>
+											<option data-countryCode="SC" value="1758">St. Lucia (+1758)</option>
+											<option data-countryCode="SD" value="249">Sudan (+249)</option>
+											<option data-countryCode="SR" value="597">Suriname (+597)</option>
+											<option data-countryCode="SZ" value="268">Swaziland (+268)</option>
+											<option data-countryCode="SE" value="46">Sweden (+46)</option>
+											<option data-countryCode="CH" value="41">Switzerland (+41)</option>
+											<option data-countryCode="SI" value="963">Syria (+963)</option>
+											<option data-countryCode="TW" value="886">Taiwan (+886)</option>
+											<option data-countryCode="TJ" value="7">Tajikstan (+7)</option>
+											<option data-countryCode="TH" value="66">Thailand (+66)</option>
+											<option data-countryCode="TG" value="228">Togo (+228)</option>
+											<option data-countryCode="TO" value="676">Tonga (+676)</option>
+											<option data-countryCode="TT" value="1868">Trinidad &amp; Tobago (+1868)</option>
+											<option data-countryCode="TN" value="216">Tunisia (+216)</option>
+											<option data-countryCode="TR" value="90">Turkey (+90)</option>
+											<option data-countryCode="TM" value="7">Turkmenistan (+7)</option>
+											<option data-countryCode="TM" value="993">Turkmenistan (+993)</option>
+											<option data-countryCode="TC" value="1649">Turks &amp; Caicos Islands (+1649)</option>
+											<option data-countryCode="TV" value="688">Tuvalu (+688)</option>
+											<option data-countryCode="UG" value="256">Uganda (+256)</option>
+										
+											<option data-countryCode="UA" value="380">Ukraine (+380)</option>
+											<option data-countryCode="AE" value="971">United Arab Emirates (+971)</option>
+											<option data-countryCode="UY" value="598">Uruguay (+598)</option>
+											
+											<option data-countryCode="UZ" value="7">Uzbekistan (+7)</option>
+											<option data-countryCode="VU" value="678">Vanuatu (+678)</option>
+											<option data-countryCode="VA" value="379">Vatican City (+379)</option>
+											<option data-countryCode="VE" value="58">Venezuela (+58)</option>
+											<option data-countryCode="VN" value="84">Vietnam (+84)</option>
+											<option data-countryCode="VG" value="84">Virgin Islands - British (+1284)</option>
+											<option data-countryCode="VI" value="84">Virgin Islands - US (+1340)</option>
+											<option data-countryCode="WF" value="681">Wallis &amp; Futuna (+681)</option>
+											<option data-countryCode="YE" value="969">Yemen (North)(+969)</option>
+											<option data-countryCode="YE" value="967">Yemen (South)(+967)</option>
+											<option data-countryCode="ZM" value="260">Zambia (+260)</option>
+											<option data-countryCode="ZW" value="263">Zimbabwe (+263)</option>
+										</optgroup>
+									</select>
+
+								<input type="text" id="profile_phone" name="profile_phone_number" class="tuecus-form-control" placeholder="{{ 'tuecus.general.phone_no' | t }}" value="" />
+							</div>
+						</div>
+						
+						
+						<div class="tuecus-col-md-6">
+							<div class="tuecus-form-group tuecus-input-group tuecus-mb-4">
+								<span class="tuecus-input-group-addon tuecus-pl-2 tuecus-border tuecus-pt-1 tuecus-pr-2"><i class="fa fa-calendar tuecus-text-secondary"></i></span>
+								
+								<input type="input" id="profile_birthdate" name="profile_birthdate" class="tuecus-form-control" placeholder="{{ 'tuecus.general.birthday' | t }} {{ 'tuecus.general.date' | t }}" value="" data-provide="datepicker" data-date-startDate="-3d"/>
+							
+							</div>
+							<div class="tuecus-form-group tuecus-input-group tuecus-mb-0">
+								<span class="tuecus-input-group-addon tuecus-pl-2 tuecus-border tuecus-pt-2 tuecus-pr-2"><i class="fa fa-venus-mars tuecus-text-secondary"></i></span>
+	
+									<select class="tuecus-custom-select" name="profile_gender" id="profile_gender">
+										<!--<option value="0">{{ 'tuecus.general.select_gender' | t }} :</option>-->
+										<option value="1" {% if customer.metafields.tuecus.customer_gender == "1" %}selected {% endif %} >{{ 'tuecus.general.male' | t }}</option>
+										<option value="2" {% if customer.metafields.tuecus.customer_gender == "2" %}selected {% endif %} >{{ 'tuecus.general.female' | t }}</option>
+										<option value="3" {% if customer.metafields.tuecus.customer_gender == "3" %}selected {% endif %} >{{ 'tuecus.general.other' | t }}</option>
+									</select>
+								
+							</div>
+						</div>
+						<div class="tuecus-col-md-6">
+						
+							 {% if customer.metafields.tuecus.customer_subscribe == "1" %}
+                                <input type="hidden" id="profile_subscribe_hidden" name="profile_subscribe" value="1"/>
+								<input type="checkbox" id="profile_subscribe" name="profile_subscribe" value="1" onchange="onProfileSubscriptionChange(this);" checked/>
+								<small>{{ 'tuecus.general.subscribeto_email_notifications' | t }}</small>
+						 
+							 {% else %}
+								<input type="hidden" id="profile_subscribe_hidden" name="profile_subscribe" value="0"/>
+								<input type="checkbox" id="profile_subscribe" name="profile_subscribe" value="0" onchange="onProfileSubscriptionChange(this);" />
+								<small>{{ 'tuecus.general.subscribeto_email_notifications' | t }}</small>
+							 {% endif %}
+										  
+							
+						</div>
+						
+						
+						<div class="tuecus-form-group tuecus-row tuecus-col-md-12 tuecus-justify-content-end tuecus-p-0">
+							<button href="void(0)" id="btnProfileSubmit" class="tuecus-btn tuecus-btn-success tuecus-rounded-btn tuecus-pl-3 tuecus-pr-3"> {{ 'tuecus.general.update' | t }} &nbsp;<i class="fa fa-paper-plane"></i></button>
+						</div>
+					</div>
+				
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+<!-- tuecus-profile-modal -->
+
+<div class="tuecus-container tuecus-d-sm-block tuecus-d-md-none tuecus-mbl-nav">	
+			<nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+						
+				<div class="navbar-header">
+				  <button type="button" class="navbar-toggle collapsed tuecus-btn tuecus-btn-light tuecus-border" data-toggle="collapse" data-target="#tuecus-navbar-mobile-collapse" onclick="event.stopPropagation(); toggletuecusmenu();">
+					<span class="tuecus-sr-only">Toggle navigation</span>
+					<span class="fa fa-bars"></span>
+				  </button>
+				</div>
+	
+				<div class="collapse navbar-collapse" id="tuecus-navbar-mobile-collapse">
+				
+					
+					<ul class="nav navbar-nav">
+						<li>
+							<a class="nav-link tuecus-mb-1 tuecus-p-md-2 tuecus-p-lg-2 tuecus-p-1 tuecus-border tuecus-nav-link active" id="app-pills-profile-tab" data-toggle="pill" href="javascript://ajax" role="tab" aria-controls="app-pills-profile" aria-selected="true" onclick="openTab(event,'app-pills-profile', true)">
+								<i class="fa fa-user-circle-o tuecus-col-2"></i>
+								<span class="tuecus-font-weight-600 tuecus-small tuecus-text-uppercase">{{ 'tuecus.general.profile' | t }} </span>
+							</a>
+						</li>
+						
+						<!-- membership start mobile-->
+                      	{% if shop.metafields.tuecus.is_membership_enabled == 1 %}
+						<li>	
+							<a class="nav-link tuecus-mb-1 tuecus-p-md-2 tuecus-p-lg-2 tuecus-p-1 tuecus-border tuecus-nav-link" id="app-pills-product-membership-tab" data-toggle="pill" href="javascript://ajax"  role="tab" aria-controls="app-pills-product-membership" aria-selected="false" onclick="openTab(event,'app-pills-product-membership',true)"> 
+								<i class="fa fa-user-o  tuecus-col-2"></i>
+								<span class="tuecus-font-weight-600 tuecus-small tuecus-text-uppercase">{{ 'tuecus.general.membership' | t }}</span>
+                          	</a>
+						</li>
+						{% endif %}
+						<!-- membership end mobile-->
+						
+						<li>
+							<a class="nav-link tuecus-mb-1 tuecus-p-md-2 tuecus-p-lg-2 tuecus-p-1 tuecus-border tuecus-nav-link" id="app-pills-orders-tab" data-toggle="pill" href="javascript://ajax" role="tab" aria-controls="app-pills-orders" aria-selected="false" onclick="openTab(event,'app-pills-orders', true)">
+								<i class="fa fa-file-text tuecus-col-2"></i>
+								<span class="tuecus-font-weight-600 tuecus-small tuecus-text-uppercase">{{ 'tuecus.general.my_orders' | t }}</span>
+							</a>
+						</li>
+							{% if shop.metafields.tuecus.is_top_ordered_enabled == 1 %}
+								<li>
+									<a class="nav-link tuecus-mb-1 tuecus-p-md-2 tuecus-p-lg-2 tuecus-p-1 tuecus-border tuecus-nav-link" id="app-pills-topproducts-tab" data-toggle="pill" href="javascript://ajax" role="tab" aria-controls="app-pills-topproducts" aria-selected="false" onclick="openTab(event,'app-pills-topproducts', true)">
+									<i class="fa fa-rocket tuecus-col-2"></i>
+									<span class="tuecus-font-weight-600 tuecus-small tuecus-text-uppercase">{{ 'tuecus.general.top_ordered_products' | t }}</span></a>
+								</li>
+							{% endif %}
+							
+						
+						<li>
+							<a class="nav-link tuecus-mb-1 tuecus-p-md-2 tuecus-p-lg-2 tuecus-p-1 tuecus-border tuecus-nav-link" id="app-pills-address-tab" data-toggle="pill" href="javascript://ajax" role="tab" aria-controls="app-pills-address" aria-selected="false" onclick="openTab(event,'app-pills-address', true)">
+								<i class="fa fa-truck tuecus-col-2"></i>
+								<span class="tuecus-font-weight-600 tuecus-small tuecus-text-uppercase">{{ 'tuecus.general.delivery_address' | t }} </span>
+							</a>
+						</li>
+						{% if shop.metafields.tuecus.is_refer_friend_enable == 1 %}
+
+						<li>
+							<a class="nav-link tuecus-mb-1 tuecus-p-md-2 tuecus-p-lg-2 tuecus-p-1 tuecus-border tuecus-nav-link" id="app-pills-refer-tab" data-toggle="pill" href="javascript://ajax" role="tab" aria-controls="app-pills-refer" aria-selected="false" onclick="openTab(event,'app-pills-refer', true)">
+								<i class="fa fa-users tuecus-col-2"></i>
+								<span class="tuecus-font-weight-600 tuecus-small tuecus-text-uppercase">{{ 'tuecus.general.refer_friend' | t }}</span>
+							</a>
+						</li>
+						{% endif %}
+						
+						{% if shop.metafields.tuecus.wishlist_enable == 1 %}
+						<li>
+							<a class="nav-link tuecus-mb-1 tuecus-p-md-2 tuecus-p-lg-2 tuecus-p-1 tuecus-border tuecus-nav-link" id="app-pills-wishlist-tab" data-toggle="pill" href="javascript://ajax" role="tab" aria-controls="app-pills-wishlist" aria-selected="false" onclick="openTab(event,'app-pills-wishlist', true)">
+								<i class="fa fa-heart-o tuecus-col-2"></i>
+								<span class="tuecus-font-weight-600 tuecus-small tuecus-text-uppercase">{{ 'tuecus.general.wishlist' | t }}</span>
+							</a>
+						</li>
+						{% endif %}
+						
+						{% if shop.metafields.tuecus.is_store_credit_enabled == 1 %}
+							<li>
+								<a class="nav-link tuecus-mb-1 tuecus-p-md-2 tuecus-p-lg-2 tuecus-p-1 tuecus-border tuecus-nav-link" id="app-pills-managecredits-tab" data-toggle="pill" href="javascript://ajax" role="tab" aria-controls="app-pills-managecredits" aria-selected="false" onclick="openTab(event,'app-pills-managecredits', true)">
+									<i class="fa fa-cubes tuecus-col-2"></i>
+									<span class="tuecus-font-weight-600 tuecus-small tuecus-text-uppercase">{{ 'tuecus.general.manage_rewards' | t }}</span>
+								</a>
+							</li>
+							<li>
+								<a class="nav-link tuecus-mb-1 tuecus-p-md-2 tuecus-p-lg-2 tuecus-p-1 tuecus-border tuecus-nav-link" id="app-pills-storecredits-tab" data-toggle="pill" href="javascript://ajax" role="tab" aria-controls="app-pills-storecredits" aria-selected="false" onclick="openTab(event,'app-pills-storecredits', true)">
+									<i class="fa fa-money tuecus-col-2"></i>
+									<span class="tuecus-font-weight-600 tuecus-small tuecus-text-uppercase">{{ 'tuecus.general.store_rewards' | t }}</span>
+								</a>
+							</li>						
+						{% endif %}
+						
+						{% if shop.metafields.tuecus.is_store_pages_enabled == 1 %}
+						
+							{% assign spages = shop.metafields.tuecus.storepages %} 
+					
+							{% if spages.size != 0 %}
+							  {% for spage in spages %}
+								
+								<li>
+									<a class="nav-link tuecus-mb-1 tuecus-p-md-2 tuecus-p-lg-2 tuecus-p-1 tuecus-border tuecus-nav-link" id="app-pills-store-page-{{ spage.id }}-tab"  data-toggle="pill" href="javascript://ajax" role="tab" aria-controls="app-pills-store-page-{{ spage.id }}" aria-selected="false" onclick="openTab(event,'app-pills-store-page-{{ spage.id }}', true)">
+										<i class="fa fa-check tuecus-mr-2"></i>
+										<span class="tuecus-font-weight-600 tuecus-small tuecus-text-uppercase">{{ spage.title }}</span>
+									</a>
+								</li>
+								
+						
+								   
+							  {% endfor %}
+							{% endif %}
+						{% endif %}
+						
+						{% if shop.metafields.tuecus.is_recently_viewed_enable == 1 %}
+						<li>
+							<a class="nav-link tuecus-mb-1 tuecus-p-md-2 tuecus-p-lg-2 tuecus-p-1 tuecus-border tuecus-nav-link" id="app-pills-viewedproducts-tab" data-toggle="pill" href="javascript://ajax" role="tab" aria-controls="app-pills-viewedproducts" aria-selected="false" onclick="openTab(event,'app-pills-viewedproducts', true)">
+								<i class="fa fa-eye tuecus-col-2"></i>
+								<span class="tuecus-font-weight-600 tuecus-small tuecus-text-uppercase">
+								{{ 'tuecus.general.recently_viewed_products' | t }}</span>
+							</a>
+						</li>
+						{% endif %}
+						{% if shop.metafields.tuecus.is_reviews_enabled == 1 %}
+							{% if shop.metafields.tuecus.is_loox_reviews_enabled == '1' or shop.metafields.tuecus.is_judgeme_reviews_enabled == '1' %}
+							<li>
+									<a class="nav-link tuecus-mb-1 tuecus-p-md-2 tuecus-p-lg-2 tuecus-p-1 tuecus-border tuecus-nav-link" id="app-pills-product-reviews-tab" data-toggle="pill" href="javascript://ajax" role="tab" aria-controls="app-pills-product-reviews" aria-selected="false" onclick="openTab(event,'app-pills-product-reviews', true)">
+									<i class="fa fa-star tuecus-col-2"></i>
+									<span class="tuecus-font-weight-600 tuecus-small tuecus-text-uppercase">{{ 'tuecus.general.product_reviews' | t }}</span></a>
+								</li>
+							{% endif %}
+						{% endif %}
+						
+						<li>
+							<a class="nav-link tuecus-mb-1 tuecus-p-md-2 tuecus-p-lg-2 tuecus-p-1 tuecus-border tuecus-nav-link" id="app-pills-passwordchange-tab" data-toggle="pill" href="javascript://ajax" role="tab" aria-controls="app-pills-passwordchange" aria-selected="false" onclick="openTab(event,'app-pills-passwordchange', true)">
+								<i class="fa fa-unlock tuecus-col-2"></i>
+								<span class="tuecus-font-weight-600 tuecus-small tuecus-text-uppercase">{{ 'tuecus.general.change_password' | t }}</span>
+							</a>
+						</li> 
+						<li>
+							<a class="nav-link tuecus-mb-1 tuecus-p-md-2 tuecus-p-lg-2 tuecus-p-1 tuecus-border tuecus-nav-link" id="app-pills-logout-tab" data-toggle="pill" href="account/logout" role="tab" aria-controls="app-pills-logout" aria-selected="false">
+								<i class="fa fa-sign-out tuecus-col-2"></i>
+								<span class="tuecus-font-weight-600 tuecus-small tuecus-text-uppercase">{{ 'tuecus.general.logout' | t }}</span>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</nav>
+		</div>
+	<!-- tuecus-contact-modal -->
+<div id="tuecus-contact-modal" class="tuecus-m-auto tuecus-col-md-12" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="display:none;position:absolute;z-index:9999;margin:auto 0;">
+	<input type="hidden" name="order_contact_order_id" id="order_contact_order_id" value="" />
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content tuecus-shadow-lg">
+			<div class="modal-header">
+				<h5 class="modal-title tuecus-text-success" id="exampleModalLabel">{{ 'tuecus.general.contact_us' | t }}</h5>
+				<button type="button" class="tuecus_close tuecus-p-2 tuecus-bg-dark" style="opacity:1; border-radius: 0 6px 0 0px;" data-dismiss="modal" aria-label="Close" data-target="#tuecus-contact-modal">
+					<span aria-hidden="true" class="tuecus-bg-white tuecus-rounded-circle tuecus-text-dark tuecus-font-weight-normal" style="width: 20px;height: 20px;display: block;line-height: 19px;padding-left: 1px;font-size: 17px;">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="tuecus-container tuecus-contact-form tuecus-p-3">
+					
+					   <div class="tuecus-row">
+							<div class="tuecus-col-md-6">
+								<div class="tuecus-form-group tuecus-input-group tuecus-mb-0">
+									<span class="tuecus-input-group-addon tuecus-pl-2 tuecus-border tuecus-pt-1 tuecus-pr-2"><i class="fa fa-user tuecus-text-secondary"></i></span>
+									<input type="text" name="order_contact_first_name" id="order_contact_first_name" class="tuecus-form-control" placeholder="Your First Name *" value="" />
+								</div>
+								
+									<small id="order_contact_first_name_error" class="tuecus-text-danger tuecus-mb-2 tuecus-valid-error">
+										
+									</small>
+									
+								
+								
+								<div class="tuecus-form-group tuecus-input-group tuecus-mb-0">
+									<span class="tuecus-input-group-addon tuecus-pl-2 tuecus-border tuecus-pt-1 tuecus-pr-2"><i class="fa fa-envelope tuecus-text-secondary"></i></span>
+									<input type="text" name="order_contact_email" id="order_contact_email"  class="tuecus-form-control" placeholder="Your Email *" value="" />
+								</div>
+								
+							
+									<small id="order_contact_email_error" class="tuecus-text-danger tuecus-mb-2 tuecus-valid-error">
+										
+									</small>
+									
+							
+								
+							</div>
+							<div class="tuecus-col-md-6">
+								<div class="tuecus-form-group tuecus-input-group tuecus-mb-0">
+									<span class="tuecus-input-group-addon tuecus-pl-2 tuecus-border tuecus-pt-1 tuecus-pr-2"><i class="fa fa-user tuecus-text-secondary"></i></span>
+									<input type="text" name="order_contact_last_name" id="order_contact_last_name" class="tuecus-form-control" placeholder="Your Last Name *" value="" />
+								</div>
+								
+							
+									<small id="order_contact_last_name_error" class="tuecus-text-danger tuecus-mb-2 tuecus-valid-error">
+										
+									</small>
+									
+								
+								
+								<div class="tuecus-form-group tuecus-input-group tuecus-mb-0">
+									<span class="tuecus-input-group-addon tuecus-pl-2 tuecus-border tuecus-pt-2 tuecus-pr-2"><i class="fa fa-phone tuecus-text-secondary"></i></span>
+									
+	
+
+									<input type="text" name="order_contact_phone" id="order_contact_phone" class="tuecus-form-control" placeholder="Your Phone Number" value="" />
+								</div>
+								
+									<small id="order_contact_phone_error" class="tuecus-text-danger tuecus-mb-2 tuecus-valid-error">
+										
+									</small>
+							</div>
+							
+							<div class="tuecus-col-md-12">
+								<select class="tuecus-custom-select tuecus-mb-4" id="order_contact_reason">
+									<option value="0" selected>{{ 'tuecus.general.reason_for_contactus' | t }} :</option>
+									<option value="1">{{ 'tuecus.general.shipping_tracking_enquiry' | t }}</option>
+									<option value="2">{{ 'tuecus.general.billing_payment_details' | t }}</option>
+									<option value="3">{{ 'tuecus.general.refund_return' | t }}</option>
+									<option value="4">{{ 'tuecus.general.other' | t }}</option>
+								</select>
+								
+								<small id="order_contact_reason_error" class="tuecus-text-danger tuecus-mb-2 tuecus-valid-error">
+										
+									</small>
+							</div>
+							
+							<div class="tuecus-col-md-12">
+								<div class="tuecus-form-group tuecus-mb-0">
+									<textarea name="order_contact_message" id="order_contact_message" class="tuecus-form-control" placeholder="Your Message *" style="width: 100%; height: 180px;"></textarea>
+								</div>
+								
+								
+									<small id="order_contact_message_error" class="tuecus-text-danger tuecus-mb-2 tuecus-valid-error">
+										
+									</small>
+									
+							
+								
+								
+							</div>
+							<div class="tuecus-form-group tuecus-row tuecus-col-md-12 tuecus-justify-content-end tuecus-p-0">
+								<button type="submit" name="btnOrderContactSubmit" id="btnOrderContactSubmit" class="tuecus-btn tuecus-btn-success tuecus-rounded-btn tuecus-pl-3 tuecus-pr-3"> {{ 'tuecus.general.send_message' | t }} &nbsp;<i class="fa fa-paper-plane"></i></button>
+							</div>
+						</div>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- tuecus-contact-modal -->
+
+
+
+							  <div id="tuecus-add-address-modal" class="tuecus-m-auto tuecus-col-md-12" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="display:none;position:absolute;z-index:9999;margin:auto 0;">
+									<div class="modal-dialog modal-lg" role="document">
+										<div class="modal-content tuecus-shadow-lg">
+                                          
+											<div class="modal-header">
+												<h5 class="modal-title tuecus-text-success" id="exampleModalLabel">{{ 'tuecus.general.add_new_address' | t }}</h5>
+												<button type="button" class="tuecus_close tuecus-p-2 tuecus-bg-dark" style="opacity:1; border-radius: 0 6px 0 0px;" data-target="#tuecus-add-address-modal" aria-label="Close">
+													<span aria-hidden="true" class="tuecus-bg-white tuecus-rounded-circle tuecus-text-dark tuecus-font-weight-normal" style="width: 20px;height: 20px;display: block;line-height: 19px;padding-left: 1px;font-size: 17px;">&times;</span>
+												</button>
+											</div>
+											<div class="modal-body">
+												<div class="tuecus-container tuecus-contact-form tuecus-p-3 tuecus-add-address">
+													<form method="post">
+													   <div class="tuecus-row">
+															<div class="tuecus-col-md-6">
+																<div class="tuecus-form-group tuecus-mb-0">
+																	<small class="tuecus-d-block tuecus-mb-1 tuecus-pl-2" for="firstname">{{ 'tuecus.general.first_name' | t }} :</small>
+																	<input type="text" class="tuecus-form-control" id="tuecus-address-first-name" aria-describedby="firstname" placeholder="Your first name" />
+																	<small class="tuecus-text-danger tuecus-pl-2" id="customer-address-first-name" style="display:none;" >Enter first name here</small>
+																</div>
+																
+															
+																	<small id="tuecus-address-first-name_error" class="tuecus-text-danger tuecus-mb-2 tuecus-valid-error">
+																		
+																	</small>
+														
+								
+															</div>
+															<div class="tuecus-col-md-6">
+																<div class="tuecus-form-group tuecus-mb-0">
+																	<small class="tuecus-d-block tuecus-mb-1 tuecus-pl-2" for="lastname">{{ 'tuecus.general.last_name' | t }} :</small>
+																	<input type="text" class="tuecus-form-control" id="tuecus-address-last-name" aria-describedby="lastname" placeholder="Your last name" />
+																	<small class="tuecus-text-danger tuecus-pl-2" id="customer-address-last-name" style="display:none;" >Enter last name here</small>
+																</div>
+															
+																	<small id="tuecus-address-last-name_error" class="tuecus-text-danger tuecus-mb-2 tuecus-valid-error">
+																		
+																	</small>
+																	
+															
+															</div>
+															
+															<div class="tuecus-col-md-12">
+																<div class="tuecus-form-group tuecus-mb-0">
+																	<small class="tuecus-d-block tuecus-mb-1 tuecus-pl-2" for="address">{{ 'tuecus.general.address' | t }} :</small>
+																	<input type="text" class="tuecus-form-control" id="tuecus-address-address" aria-describedby="address" placeholder="Your address here" />
+																	<small class="tuecus-text-danger tuecus-pl-2" id="customer-address-address" style="display:none;" >Enter address here</small>
+																</div>
+																
+															
+																	<small id="tuecus-address-address_error" class="tuecus-text-danger tuecus-mb-2 tuecus-valid-error">
+																		
+																	</small>
+																	
+															
+															</div>
+															
+															<div class="tuecus-col-md-6">
+																<div class="tuecus-form-group tuecus-mb-4">
+																	<small class="tuecus-d-block tuecus-mb-1 tuecus-pl-2" for="number">{{ 'tuecus.general.contact_number' | t }} :</small>
+																	<input type="text" class="tuecus-form-control" id="tuecus-address-phone" aria-describedby="number" placeholder="Your contact number here" />
+																</div>
+															</div>
+															
+															<div class="tuecus-col-md-6">
+																<div class="tuecus-form-group tuecus-mb-4">
+																	<small class="tuecus-d-block tuecus-mb-1 tuecus-pl-2" for="company-name">{{ 'tuecus.general.company_name' | t }} :</small>
+																	<input type="text" class="tuecus-form-control" id="tuecus-address-company-name" aria-describedby="company" placeholder="Your company name here" />
+																</div>
+															</div>
+															
+															<div class="tuecus-row tuecus-col-12 tuecus-m-auto">
+																<div class="tuecus-col-md-4">
+																	<div class="tuecus-form-group tuecus-mb-0">
+																		<small class="tuecus-d-block tuecus-mb-1 tuecus-pl-2" for="postal_code">{{ 'tuecus.general.postal_code' | t }} :</small>
+																		<input type="text" class="tuecus-form-control" id="tuecus-address-zip" aria-describedby="postal" placeholder="Postal code" />
+																		<small class="tuecus-text-danger tuecus-pl-2" id="customer-address-zip" style="display:none;" >Enter zip code here</small>
+																	</div>
+																
+																	<small id="tuecus-address-zip_error" class="tuecus-text-danger tuecus-mb-2 tuecus-valid-error">
+																		
+																	</small>
+																	
+																
+																</div>
+																<div class="tuecus-col-md-4">
+																	<div class="tuecus-form-group tuecus-mb-0">
+																		<small class="tuecus-d-block tuecus-mb-1 tuecus-pl-2" for="firstname">{{ 'tuecus.general.city' | t }} :</small>
+																		<input type="text" class="tuecus-form-control" id="tuecus-address-city" aria-describedby="city" placeholder="Your city" />
+																		<small class="tuecus-text-danger tuecus-pl-2" id="customer-address-city" style="display:none;" >Enter city here</small>
+																	</div>
+																	
+																	<small id="tuecus-address-city_error" class="tuecus-text-danger tuecus-mb-2 tuecus-valid-error">
+																		
+																	</small>
+																	
+																
+																</div>
+																<div class="tuecus-col-md-4">
+																	<div class="tuecus-form-group tuecus-mb-0">
+																		  <small class="tuecus-d-block tuecus-mb-1 tuecus-pl-2" for="select-country">{{ 'tuecus.general.confirm_country' | t }}</small>
+
+																		  <select id="tuecus-address-select-country" name="select-country" class="tuecus-form-control" required placeholder="Confirm your country" style="border-radius:20px;">
+																			<option value="" selected>Confirm your country</option>
+																			<option value="AF">Afghanistan</option>
+																			<option value="AX">&Aring;land Islands</option>
+																			<option value="AL">Albania</option>
+																			<option value="DZ">Algeria</option>
+																			<option value="AS">American Samoa</option>
+																			<option value="AD">Andorra</option>
+																			<option value="AO">Angola</option>
+																			<option value="AI">Anguilla</option>
+																			<option value="AQ">Antarctica</option>
+																			<option value="AG">Antigua and Barbuda</option>
+																			<option value="AR">Argentina</option>
+																			<option value="AM">Armenia</option>
+																			<option value="AW">Aruba</option>
+																			<option value="AU">Australia</option>
+																			<option value="AT">Austria</option>
+																			<option value="AZ">Azerbaijan</option>
+																			<option value="BS">Bahamas</option>
+																			<option value="BH">Bahrain</option>
+																			<option value="BD">Bangladesh</option>
+																			<option value="BB">Barbados</option>
+																			<option value="BY">Belarus</option>
+																			<option value="BE">Belgium</option>
+																			<option value="BZ">Belize</option>
+																			<option value="BJ">Benin</option>
+																			<option value="BM">Bermuda</option>
+																			<option value="BT">Bhutan</option>
+																			<option value="BO">Bolivia, Plurinational State of</option>
+																			<option value="BA">Bosnia and Herzegovina</option>
+																			<option value="BW">Botswana</option>
+																			<option value="BV">Bouvet Island</option>
+																			<option value="BR">Brazil</option>
+																			<option value="IO">British Indian Ocean Territory</option>
+																			<option value="BN">Brunei Darussalam</option>
+																			<option value="BG">Bulgaria</option>
+																			<option value="BF">Burkina Faso</option>
+																			<option value="BI">Burundi</option>
+																			<option value="KH">Cambodia</option>
+																			<option value="CM">Cameroon</option>
+																			<option value="CA">Canada</option>
+																			<option value="CV">Cape Verde</option>
+																			<option value="KY">Cayman Islands</option>
+																			<option value="CF">Central African Republic</option>
+																			<option value="TD">Chad</option>
+																			<option value="CL">Chile</option>
+																			<option value="CN">China</option>
+																			<option value="CX">Christmas Island</option>
+																			<option value="CC">Cocos (Keeling) Islands</option>
+																			<option value="CO">Colombia</option>
+																			<option value="KM">Comoros</option>
+																			<option value="CG">Congo</option>
+																			<option value="CD">Congo, the Democratic Republic of the</option>
+																			<option value="CK">Cook Islands</option>
+																			<option value="CR">Costa Rica</option>
+																			<option value="CI">C&ocirc;te d'Ivoire</option>
+																			<option value="HR">Croatia</option>
+																			<option value="CU">Cuba</option>
+																			<option value="CY">Cyprus</option>
+																			<option value="CZ">Czech Republic</option>
+																			<option value="DK">Denmark</option>
+																			<option value="DJ">Djibouti</option>
+																			<option value="DM">Dominica</option>
+																			<option value="DO">Dominican Republic</option>
+																			<option value="EC">Ecuador</option>
+																			<option value="EG">Egypt</option>
+																			<option value="SV">El Salvador</option>
+																			<option value="GQ">Equatorial Guinea</option>
+																			<option value="ER">Eritrea</option>
+																			<option value="EE">Estonia</option>
+																			<option value="ET">Ethiopia</option>
+																			<option value="FK">Falkland Islands (Malvinas)</option>
+																			<option value="FO">Faroe Islands</option>
+																			<option value="FJ">Fiji</option>
+																			<option value="FI">Finland</option>
+																			<option value="FR">France</option>
+																			<option value="GF">French Guiana</option>
+																			<option value="PF">French Polynesia</option>
+																			<option value="TF">French Southern Territories</option>
+																			<option value="GA">Gabon</option>
+																			<option value="GM">Gambia</option>
+																			<option value="GE">Georgia</option>
+																			<option value="DE">Germany</option>
+																			<option value="GH">Ghana</option>
+																			<option value="GI">Gibraltar</option>
+																			<option value="GR">Greece</option>
+																			<option value="GL">Greenland</option>
+																			<option value="GD">Grenada</option>
+																			<option value="GP">Guadeloupe</option>
+																			<option value="GU">Guam</option>
+																			<option value="GT">Guatemala</option>
+																			<option value="GG">Guernsey</option>
+																			<option value="GN">Guinea</option>
+																			<option value="GW">Guinea-Bissau</option>
+																			<option value="GY">Guyana</option>
+																			<option value="HT">Haiti</option>
+																			<option value="HM">Heard Island and McDonald Islands</option>
+																			<option value="VA">Holy See (Vatican City State)</option>
+																			<option value="HN">Honduras</option>
+																			<option value="HK">Hong Kong</option>
+																			<option value="HU">Hungary</option>
+																			<option value="IS">Iceland</option>
+																			<option value="IN">India</option>
+																			<option value="ID">Indonesia</option>
+																			<option value="IR">Iran, Islamic Republic of</option>
+																			<option value="IQ">Iraq</option>
+																			<option value="IE">Ireland</option>
+																			<option value="IM">Isle of Man</option>
+																			<option value="IL">Israel</option>
+																			<option value="IT">Italy</option>
+																			<option value="JM">Jamaica</option>
+																			<option value="JP">Japan</option>
+																			<option value="JE">Jersey</option>
+																			<option value="JO">Jordan</option>
+																			<option value="KZ">Kazakhstan</option>
+																			<option value="KE">Kenya</option>
+																			<option value="KI">Kiribati</option>
+																			<option value="KP">Korea, Democratic People's Republic of</option>
+																			<option value="KR">Korea, Republic of</option>
+																			<option value="KW">Kuwait</option>
+																			<option value="KG">Kyrgyzstan</option>
+																			<option value="LA">Lao People's Democratic Republic</option>
+																			<option value="LV">Latvia</option>
+																			<option value="LB">Lebanon</option>
+																			<option value="LS">Lesotho</option>
+																			<option value="LR">Liberia</option>
+																			<option value="LY">Libyan Arab Jamahiriya</option>
+																			<option value="LI">Liechtenstein</option>
+																			<option value="LT">Lithuania</option>
+																			<option value="LU">Luxembourg</option>
+																			<option value="MO">Macao</option>
+																			<option value="MK">Macedonia, the former Yugoslav Republic of</option>
+																			<option value="MG">Madagascar</option>
+																			<option value="MW">Malawi</option>
+																			<option value="MY">Malaysia</option>
+																			<option value="MV">Maldives</option>
+																			<option value="ML">Mali</option>
+																			<option value="MT">Malta</option>
+																			<option value="MH">Marshall Islands</option>
+																			<option value="MQ">Martinique</option>
+																			<option value="MR">Mauritania</option>
+																			<option value="MU">Mauritius</option>
+																			<option value="YT">Mayotte</option>
+																			<option value="MX">Mexico</option>
+																			<option value="FM">Micronesia, Federated States of</option>
+																			<option value="MD">Moldova, Republic of</option>
+																			<option value="MC">Monaco</option>
+																			<option value="MN">Mongolia</option>
+																			<option value="ME">Montenegro</option>
+																			<option value="MS">Montserrat</option>
+																			<option value="MA">Morocco</option>
+																			<option value="MZ">Mozambique</option>
+																			<option value="MM">Myanmar</option>
+																			<option value="NA">Namibia</option>
+																			<option value="NR">Nauru</option>
+																			<option value="NP">Nepal</option>
+																			<option value="NL">Netherlands</option>
+																			<option value="AN">Netherlands Antilles</option>
+																			<option value="NC">New Caledonia</option>
+																			<option value="NZ">New Zealand</option>
+																			<option value="NI">Nicaragua</option>
+																			<option value="NE">Niger</option>
+																			<option value="NG">Nigeria</option>
+																			<option value="NU">Niue</option>
+																			<option value="NF">Norfolk Island</option>
+																			<option value="MP">Northern Mariana Islands</option>
+																			<option value="NO">Norway</option>
+																			<option value="OM">Oman</option>
+																			<option value="PK">Pakistan</option>
+																			<option value="PW">Palau</option>
+																			<option value="PS">Palestinian Territory, Occupied</option>
+																			<option value="PA">Panama</option>
+																			<option value="PG">Papua New Guinea</option>
+																			<option value="PY">Paraguay</option>
+																			<option value="PE">Peru</option>
+																			<option value="PH">Philippines</option>
+																			<option value="PN">Pitcairn</option>
+																			<option value="PL">Poland</option>
+																			<option value="PT">Portugal</option>
+																			<option value="PR">Puerto Rico</option>
+																			<option value="QA">Qatar</option>
+																			<option value="RE">R&eacute;union</option>
+																			<option value="RO">Romania</option>
+																			<option value="RU">Russian Federation</option>
+																			<option value="RW">Rwanda</option>
+																			<option value="BL">Saint Barth&eacute;lemy</option>
+																			<option value="SH">Saint Helena, Ascension and Tristan da Cunha</option>
+																			<option value="KN">Saint Kitts and Nevis</option>
+																			<option value="LC">Saint Lucia</option>
+																			<option value="MF">Saint Martin (French part)</option>
+																			<option value="PM">Saint Pierre and Miquelon</option>
+																			<option value="VC">Saint Vincent and the Grenadines</option>
+																			<option value="WS">Samoa</option>
+																			<option value="SM">San Marino</option>
+																			<option value="ST">Sao Tome and Principe</option>
+																			<option value="SA">Saudi Arabia</option>
+																			<option value="SN">Senegal</option>
+																			<option value="RS">Serbia</option>
+																			<option value="SC">Seychelles</option>
+																			<option value="SL">Sierra Leone</option>
+																			<option value="SG">Singapore</option>
+																			<option value="SK">Slovakia</option>
+																			<option value="SI">Slovenia</option>
+																			<option value="SB">Solomon Islands</option>
+																			<option value="SO">Somalia</option>
+																			<option value="ZA">South Africa</option>
+																			<option value="GS">South Georgia and the South Sandwich Islands</option>
+																			<option value="ES">Spain</option>
+																			<option value="LK">Sri Lanka</option>
+																			<option value="SD">Sudan</option>
+																			<option value="SR">Suriname</option>
+																			<option value="SJ">Svalbard and Jan Mayen</option>
+																			<option value="SZ">Swaziland</option>
+																			<option value="SE">Sweden</option>
+																			<option value="CH">Switzerland</option>
+																			<option value="SY">Syrian Arab Republic</option>
+																			<option value="TW">Taiwan, Province of China</option>
+																			<option value="TJ">Tajikistan</option>
+																			<option value="TZ">Tanzania, United Republic of</option>
+																			<option value="TH">Thailand</option>
+																			<option value="TL">Timor-Leste</option>
+																			<option value="TG">Togo</option>
+																			<option value="TK">Tokelau</option>
+																			<option value="TO">Tonga</option>
+																			<option value="TT">Trinidad and Tobago</option>
+																			<option value="TN">Tunisia</option>
+																			<option value="TR">Turkey</option>
+																			<option value="TM">Turkmenistan</option>
+																			<option value="TC">Turks and Caicos Islands</option>
+																			<option value="TV">Tuvalu</option>
+																			<option value="UG">Uganda</option>
+																			<option value="UA">Ukraine</option>
+																			<option value="AE">United Arab Emirates</option>
+																			<option value="GB">United Kingdom</option>
+																			<option value="US">United States</option>
+																			<option value="UM">United States Minor Outlying Islands</option>
+																			<option value="UY">Uruguay</option>
+																			<option value="UZ">Uzbekistan</option>
+																			<option value="VU">Vanuatu</option>
+																			<option value="VE">Venezuela, Bolivarian Republic of</option>
+																			<option value="VN">Viet Nam</option>
+																			<option value="VG">Virgin Islands, British</option>
+																			<option value="VI">Virgin Islands, U.S.</option>
+																			<option value="WF">Wallis and Futuna</option>
+																			<option value="EH">Western Sahara</option>
+																			<option value="YE">Yemen</option>
+																			<option value="ZM">Zambia</option>
+																			<option value="ZW">Zimbabwe</option>
+																		</select>
+																		<small class="tuecus-text-danger tuecus-pl-2" id="customer-address-country" style="display:none;" >Enter country here</small>
+																	</div>
+																	
+																	
+																	<small id="tuecus-address-select-country_error" class="tuecus-text-danger tuecus-mb-2 tuecus-valid-error">
+																		
+																	</small>
+																	
+																
+																
+																</div>
+																
+															</div>
+														</div>
+														<div class="form-check">
+															<input class="form-check-input" type="hidden" value="" id="isDefaultAddress">
+															<input class="form-check-input" type="checkbox" value="" id="setdefaultaddress">
+															<label class="form-check-label" for="flexCheckDefault">{{ 'tuecus.general.set_default_address' | t }}</label>
+														</div>
+														<div class="tuecus-row tuecus-justify-content-end">
+															<button id="tuecus-add-address-submit" class="tuecus-d-block tuecus-font-weight-600 tuecus-text-uppercase tuecus-btn tuecus-btn-success tuecus-btn-sm tuecus-mb-1" type="button">{{ 'tuecus.general.add_address' | t }} &nbsp; <i class="fa fa-check-circle"></i></button>
+														</div>
+													</form>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							
+							
+	
+		<section class="tuecus-py-0 tuecus-header" id="tuecus-account-block">
+			<div class="tuecus-container tuecus-py-4 tuecus-bg-light tuecus-p-3 tuecus-border tuecus-rounded tuecus-main-contain">
+				<div class="tuecus-row">
+					<div class="tuecus-col-md-3">
+						
+						<!-- Tabs nav -->
+						<div class="nav tuecus-flex-column tuecus-app-pills tuecus-app-pills-custom tuecus-d-none tuecus-d-md-block" id="app-pills-tab" role="tablist" aria-orientation="vertical">
+							<div class="tuecus-row tuecus-mb-1 tuecus-m-0 tuecus-p-2 tuecus-rounded tuecus-border tuecus-profile-image-background-color">
+									<div class="tuecus-col-md-4 tuecus-pl-0">
+                                      	<div class="mt-overlay mt-15" onclick="uploadlogo();">
+                                          
+                                        
+                                          {% if customer.metafields.tuecus.tuecus_profile_pic != blank %}    
+                                          	<img id="tuecus_avatar" src="{{ customer.metafields.tuecus.tuecus_profile_pic | asset_url }}" class="tuecus-w-100 tuecus-img-responsive tuecus-p-0 tuecus-rounded-circle" alt="avatar">
+                                        
+                                          {% else %}
+                                                
+                                         	 <img id="tuecus_avatar" src="{{'no-image.png' | asset_url }}" class="tuecus-w-100 tuecus-img-responsive tuecus-p-0 tuecus-rounded-circle" alt="avatar">
+                                         
+                                          {% endif %}
+                                          <a class="default tuecus-btn-outline tuecus-position-absolute" href="javascript:;">
+                                            <i class="fa fa-pencil tuecus-position-absolute tuecus-p-1 tuecus-profile-username-text-color"></i>
+                                          </a>
+                                         </div>
+									</div>
+									<div class="tuecus-col-md-8 tuecus-pl-3 tuecus-pr-0">
+										<small class="tuecus-small tuecus-text-capitalize tuecus-d-inline-block tuecus-m-0 tuecus-profile-username-text-color tuecus-w-75">{{ customer.first_name }}</small>
+										<!-- <small class="tuecus-small tuecus-d-inline-block tuecus-m-0 tuecus-profile-username-text-color" style="word-break: break-all;">{{ customer.email }}</small> -->
+										<small class="tuecus-small tuecus-d-inline-block tuecus-m-0 tuecus-profile-username-text-color" style="word-break: break-all;" id="earned-credits-at-profile">{{ 'tuecus.general.total_rewards' | t }}: 0</small>
+									</div>
+								</div>
+							
+							<a class="nav-link tuecus-mb-1 tuecus-p-md-2 tuecus-p-lg-2 tuecus-p-1 tuecus-border tuecus-nav-link active" id="app-pills-profile-tab" data-toggle="pill" href="javascript://ajax" role="tab" aria-controls="app-pills-profile" aria-selected="true" onclick="openTab(event,'app-pills-profile')">
+							<i class="fa fa-user-circle-o tuecus-mr-2"></i>
+							<span class="tuecus-font-weight-600 tuecus-small tuecus-text-uppercase">{{ 'tuecus.general.profile' | t }} </span></a>
+							
+							<!--- membership start sidebar-->
+                       		{% if shop.metafields.tuecus.is_membership_enabled == 1 %}
+							<a class="tuecus-nav-link nav-link tuecus-mb-1 tuecus-p-md-2 tuecus-p-lg-2 tuecus-p-1 tuecus-border" id="app-pills-product-membership-tab" data-toggle="pill" href="javascript://ajax"  role="tab" aria-controls="app-pills-product-membership" aria-selected="false" onclick="openTab(event,'app-pills-product-membership')">
+							<i class="fa fa-user-o tuecus-mr-2"></i>
+							<span class="tuecus-font-weight-600 tuecus-small tuecus-text-uppercase">{{ 'tuecus.general.membership' | t }}</span></a>
+							{% endif %}
+							<!--- membership end sidebar-->
+							
+							<a class="nav-link tuecus-mb-1 tuecus-p-md-2 tuecus-p-lg-2 tuecus-p-1 tuecus-border tuecus-nav-link" id="app-pills-orders-tab" data-toggle="pill" href="javascript://ajax" role="tab" aria-controls="app-pills-orders" aria-selected="false" onclick="openTab(event,'app-pills-orders')">
+							<i class="fa fa-file-text tuecus-mr-2"></i>
+							<span class="tuecus-font-weight-600 tuecus-small tuecus-text-uppercase">{{ 'tuecus.general.my_orders' | t }}</span></a>
+							
+							{% if shop.metafields.tuecus.is_top_ordered_enabled == 1 %}
+							
+								<a class="nav-link tuecus-mb-1 tuecus-p-md-2 tuecus-p-lg-2 tuecus-p-1 tuecus-border tuecus-nav-link" id="app-pills-topproducts-tab" data-toggle="pill" href="javascript://ajax" role="tab" aria-controls="app-pills-topproducts" aria-selected="false" onclick="openTab(event,'app-pills-topproducts')">
+								<i class="fa fa-rocket tuecus-mr-2"></i>
+								<span class="tuecus-font-weight-600 tuecus-small tuecus-text-uppercase">{{ 'tuecus.general.top_ordered_products' | t }}</span></a>
+							
+							{% endif %}
+							
+							<a class="nav-link tuecus-mb-1 tuecus-p-md-2 tuecus-p-lg-2 tuecus-p-1 tuecus-border tuecus-nav-link" id="app-pills-address-tab" data-toggle="pill" href="javascript://ajax" role="tab" aria-controls="app-pills-address" aria-selected="false" onclick="openTab(event,'app-pills-address')">
+							<i class="fa fa-truck tuecus-mr-2"></i>
+							<span class="tuecus-font-weight-600 tuecus-small tuecus-text-uppercase">{{ 'tuecus.general.delivery_address' | t }} </span></a>
+							
+							{% if shop.metafields.tuecus.is_refer_friend_enable == 1 %}
+							
+								<a class="nav-link tuecus-mb-1 tuecus-p-md-2 tuecus-p-lg-2 tuecus-p-1 tuecus-border tuecus-nav-link" id="app-pills-refer-tab" data-toggle="pill" href="javascript://ajax" role="tab" aria-controls="app-pills-refer" aria-selected="false" onclick="openTab(event,'app-pills-refer')">
+									<i class="fa fa-user-plus tuecus-mr-2"></i>
+								<span class="tuecus-font-weight-600 tuecus-small tuecus-text-uppercase">{{ 'tuecus.general.refer_friend' | t }}</span></a>
+								
+							{% endif %}
+							
+							{% if shop.metafields.tuecus.wishlist_enable == 1 %}
+								<a class="nav-link tuecus-mb-1 tuecus-p-md-2 tuecus-p-lg-2 tuecus-p-1 tuecus-border tuecus-nav-link" id="app-pills-wishlist-tab" data-toggle="pill" href="javascript://ajax" role="tab" aria-controls="app-pills-wishlist" aria-selected="false" onclick="openTab(event,'app-pills-wishlist')">
+								<i class="fa fa-heart tuecus-mr-2"></i>
+								<span class="tuecus-font-weight-600 tuecus-small tuecus-text-uppercase">{{ 'tuecus.general.wishlist' | t }}</span></a>
+							{% endif %}
+							
+							{% if shop.metafields.tuecus.is_store_credit_enabled == 1 %}
+								<a class="nav-link tuecus-mb-1 tuecus-p-md-2 tuecus-p-lg-2 tuecus-p-1 tuecus-border tuecus-nav-link" id="app-pills-managecredits-tab" data-toggle="pill" href="javascript://ajax" role="tab" aria-controls="app-pills-managecredits" aria-selected="false" onclick="openTab(event,'app-pills-managecredits')">
+								<i class="fa fa-cubes tuecus-mr-2"></i>
+								<span class="tuecus-font-weight-600 tuecus-small tuecus-text-uppercase">{{ 'tuecus.general.manage_rewards' | t }}</span></a>
+								
+								<a class="nav-link tuecus-mb-1 tuecus-p-md-2 tuecus-p-lg-2 tuecus-p-1 tuecus-border tuecus-nav-link" id="app-pills-storecredits-tab" data-toggle="pill" href="javascript://ajax" role="tab" aria-controls="app-pills-storecredits" aria-selected="false" onclick="openTab(event,'app-pills-storecredits')">
+								<i class="fa fa-diamond tuecus-mr-2"></i>
+								<span class="tuecus-font-weight-600 tuecus-small tuecus-text-uppercase">{{ 'tuecus.general.store_rewards' | t }}</span></a>
+							{% endif %}
+							
+							{% if shop.metafields.tuecus.is_store_pages_enabled == 1 %}
+								{% assign spages = shop.metafields.tuecus.storepages %} 
+								
+								{% if spages.size != 0 %}
+								  {% for spage in spages %}
+									
+										<a class="nav-link tuecus-mb-1 tuecus-p-md-2 tuecus-p-lg-2 tuecus-p-1 tuecus-border tuecus-nav-link" id="app-pills-store-page-{{ spage.id }}-tab" data-toggle="pill" href="javascript://ajax" role="tab" aria-controls="app-pills-store-page-{{ spage.id }}" aria-selected="false" onclick="openTab(event,'app-pills-store-page-{{ spage.id }}')">
+															<i class="fa fa-life-ring tuecus-mr-2"></i>
+															<span class="tuecus-font-weight-600 tuecus-small tuecus-text-uppercase">{{ spage.title }}</span></a>
+									   
+								  {% endfor %}
+								{% endif %}
+							{% endif %}
+							
+						
+							{% if shop.metafields.tuecus.is_recently_viewed_enable == 1 %}
+								<a class="nav-link tuecus-mb-1 tuecus-p-md-2 tuecus-p-lg-2 tuecus-p-1 tuecus-border tuecus-nav-link" id="app-pills-viewedproducts-tab" data-toggle="pill" href="javascript://ajax" role="tab" aria-controls="app-pills-viewedproducts" aria-selected="false" onclick="openTab(event,'app-pills-viewedproducts')">
+								<i class="fa fa-eye tuecus-mr-2"></i>
+								<span class="tuecus-font-weight-600 tuecus-small tuecus-text-uppercase">{{ 'tuecus.general.recently_viewed_products' | t }}</span></a>
+							{% endif %}
+							
+							{% if shop.metafields.tuecus.is_reviews_enabled == 1 %}
+							{% if shop.metafields.tuecus.is_loox_reviews_enabled == '1' or shop.metafields.tuecus.is_judgeme_reviews_enabled == '1' %}
+								<a class="tuecus-nav-link nav-link tuecus-mb-1 tuecus-p-md-2 tuecus-p-lg-2 tuecus-p-1 tuecus-border" id="app-pills-product-reviews-tab" data-toggle="pill" href="javascript://ajax"  role="tab" aria-controls="app-pills-product-reviews" aria-selected="false" onclick="openTab(event,'app-pills-product-reviews')">
+								<i class="fa fa-star tuecus-mr-2"></i>
+								<span class="tuecus-font-weight-600 tuecus-small tuecus-text-uppercase">{{ 'tuecus.general.product_reviews' | t }}</span></a>
+							{% endif %}
+							{% endif %}
+							
+							<a class="nav-link tuecus-mb-1 tuecus-p-md-2 tuecus-p-lg-2 tuecus-p-1 tuecus-border tuecus-nav-link" id="app-pills-passwordchange-tab" data-toggle="pill" href="javascript://ajax"role="tab" aria-controls="app-pills-passwordchange" aria-selected="false" onclick="openTab(event,'app-pills-passwordchange')">
+							<i class="fa fa-unlock tuecus-mr-2"></i>
+							<span class="tuecus-font-weight-600 tuecus-small tuecus-text-uppercase">{{ 'tuecus.general.change_password' | t }}</span></a>
+							
+							<a class="nav-link tuecus-mb-1 tuecus-p-md-2 tuecus-p-lg-2 tuecus-p-1 tuecus-border tuecus-nav-link"  href="account/logout"  aria-selected="false">
+							<i class="fa fa-sign-out tuecus-mr-2"></i>
+							<span class="tuecus-font-weight-600 tuecus-small tuecus-text-uppercase">{{ 'tuecus.general.logout' | t }}</span></a>
+						</div>
+					
+					</div>
+					<div class="tuecus-col-md-9">
+
+
+						<!--
+						<h4 class="tuecus-border-bottom tuecus-pb-2 tuecus-text-success tuecus-h5">Hello {{ customer.first_name }}</h4> -->
+						<div class="tuecus-tab-content" id="app-pills-tabContent">
+							<div class="tuecus-tab-pane tuecus-fade tuecus-shadow-sm tuecus-rounded show active tuecus-p-md-4" id="app-pills-profile" role="tabpanel" aria-labelledby="app-pills-profile-tab">
+								<div class="tuecus-row tuecus-m-0 tuecus-justify-content-end">
+									<button class="tuecus-font-weight-600 tuecus-text-uppercase tuecus-btn tuecus-btn-success tuecus-btn-sm edit-profile" type="button"> <strong>{{ 'tuecus.general.edit' | t }}</strong> &nbsp; <i class="fa fa-pencil"></i></button>
+								</div>
+								<div class="tuecus-row tuecus-m-0 tuecus-border-bottom tuecus-border-light tuecus-mb-4">
+									<div class="tuecus-col-md-3 tuecus-col-sm-3 tuecus-col-6">
+										<small class="tuecus-pb-1">{{ 'tuecus.general.first_name' | t }}  :</small>
+									</div>
+									<div class="tuecus-col-md-3 tuecus-col-sm-9 tuecus-col-6">
+                                      <small class="tuecus-pb-1 font-weight-normal tuecus-pt-1 tuecus-d-inline-block"><span class="tuecus-m-0 tuecus-text-success profile_first_name">{{ customer.first_name }}</span></small>
+									</div>
+								</div>
+								<div class="tuecus-row tuecus-m-0 tuecus-border-bottom tuecus-border-light tuecus-mb-4">
+									<div class="tuecus-col-md-3 tuecus-col-sm-3 tuecus-col-6">
+										<small class="tuecus-pb-1">{{ 'tuecus.general.last_name' | t }} :</small>
+									</div>
+									<div class="tuecus-col-md-3 tuecus-col-sm-9 tuecus-col-6">
+										<small class="tuecus-pb-1 font-weight-normal tuecus-pt-1 tuecus-d-inline-block"><span class="tuecus-m-0 tuecus-text-success profile_last_name">{{ customer.last_name }}</span></small>
+									</div>
+								</div>
+								<div class="tuecus-row tuecus-m-0 tuecus-border-bottom tuecus-border-light tuecus-mb-4">
+									<div class="tuecus-col-md-3 tuecus-col-sm-3 tuecus-col-6">
+										<small class="tuecus-pb-1">{{ 'tuecus.general.email' | t }} :</small>
+									</div>
+									<div class="tuecus-col-md-6 tuecus-col-sm-9 tuecus-col-6">
+										<small class="tuecus-pb-1 font-weight-normal tuecus-pt-0 tuecus-d-inline-block"><span class="tuecus-m-0 tuecus-text-success profile_email" style="word-break: break-all;">{{ customer.email }}</span></small>
+									</div>
+								</div>
+								<div class="tuecus-row tuecus-m-0 tuecus-border-bottom tuecus-border-light tuecus-mb-4">
+									<div class="tuecus-col-md-3 tuecus-col-sm-3 tuecus-col-6">
+										<small class="tuecus-pb-1">{{ 'tuecus.general.phone_no' | t }} :</small>
+									</div>
+									<div class="tuecus-col-md-3 tuecus-col-sm-9 tuecus-col-6">
+										<small class="tuecus-pb-1 font-weight-normal tuecus-pt-1 tuecus-d-inline-block"><span class="tuecus-m-0 tuecus-text-success profile_phone">{{ customer.phone }}</span></small>
+									</div>
+								</div>
+								<div class="tuecus-row tuecus-m-0 tuecus-border-bottom tuecus-border-light tuecus-mb-4">
+									<div class="tuecus-col-md-3 tuecus-col-sm-3 tuecus-col-6">
+										<small class="tuecus-pb-1">{{ 'tuecus.general.birthday' | t }} :</small>
+									</div>
+									<div class="tuecus-col-md-3 tuecus-col-sm-9 tuecus-col-6">
+										<small class="tuecus-pb-1 font-weight-normal tuecus-pt-1 tuecus-d-inline-block"><span class="tuecus-m-0 tuecus-text-success profile_birthdate">{{ customer.metafields.tuecus.customer_birthdate }}</span></small>
+									</div>
+								</div>
+								<div class="tuecus-row tuecus-m-0 tuecus-border-bottom tuecus-border-light tuecus-mb-4">
+									<div class="tuecus-col-md-3 tuecus-col-sm-3 tuecus-col-6">
+										<small class="tuecus-pb-1">{{ 'tuecus.general.gender' | t }} :</small>
+									</div>
+									<div class="tuecus-col-md-3 tuecus-col-sm-9 tuecus-col-6">
+										<small class="tuecus-pb-1 font-weight-normal tuecus-pt-1 tuecus-d-inline-block">
+										
+										<span class="tuecus-m-0 tuecus-text-success profile_gender" data-value="{{ customer.metafields.tuecus.customer_gender }}">
+										
+                                          {% if customer.metafields.tuecus.customer_gender == "1" %}
+                                             Male
+                                          {% elsif customer.metafields.tuecus.customer_gender == "2" %}
+                                              Female
+                                          {% elsif customer.metafields.tuecus.customer_gender == "3" %}
+                                              Other
+                                          {% else %}
+                                               
+                                          {% endif %}
+                                          
+										
+										</span></small>
+									</div>
+								</div>
+							</div>
+							
+							<!-- Tuecus Customer membership View Start-->
+                            <div class="tuecus-tab-pane tuecus-fade tuecus-shadow-sm tuecus-rounded tuecus-bg-white tuecus-p-4 tuecus-pt-1" id="app-pills-product-membership" role="tabpanel" aria-labelledby="app-pills-product-membership-tab">
+
+                                <div class="tuecus-bg-white">
+                                    <section class="tuecus-row1" id="app-pills-product-membership-body">
+                            <div class="tuecus-row tuecus-m-0 tuecus-border-bottom tuecus-border-light tuecus-mb-4">
+                                <div class="tuecus-col-md-3 tuecus-col-sm-3 tuecus-col-6">
+                                    <small class="tuecus-pb-1">{{ 'tuecus.general.membership' | t }} :</small>
+                                </div>
+                                <div class="tuecus-col-md-3 tuecus-col-sm-9 tuecus-col-6">
+                                    <small class="tuecus-pb-1 font-weight-normal tuecus-pt-1 tuecus-d-inline-block"><span class="tuecus-m-0 tuecus-text-success profile_last_name"><b>{{ shop.metafields.tuecus.membership_level }}</b></span></small>
+                                </div>
+                            </div>
+                            <div class="tuecus-row tuecus-m-0 tuecus-border-bottom tuecus-border-light tuecus-mb-4">
+                                <div class="tuecus-col-md-3 tuecus-col-sm-3 tuecus-col-6">
+                                    <small class="tuecus-pb-1">{{ 'tuecus.general.discount_code' | t }} :</small>
+                                </div>
+                                <div class="tuecus-col-md-9 tuecus-col-sm-9 tuecus-col-6">
+                                    <small class="tuecus-pb-1 font-weight-normal tuecus-pt-1 tuecus-d-inline-block">
+                                    <input readonly="" id="membership-discount-code" class="tuecus-m-0 tuecus-text-success profile_last_name code-discout" value="{{ shop.metafields.tuecus.membership_discount_code }}" />
+                                    </small>
+                                  	<button onclick="onCopyMembershipDiscCode()" class="tuecus-btn tuecus-btn-sm tuecus-rw-refcopy tuecus-btn-success tuecus-rounded-0" style="margin-left:-4px;margin-top:-3px;"><small>{{ 'tuecus.general.copy_code' | t }}</small></button>
+                                </div>
+                            </div>
+                            <div class="tuecus-row tuecus-m-0 tuecus-border-bottom tuecus-border-light tuecus-mb-4">
+                                <div class="tuecus-col-md-3 tuecus-col-sm-3 tuecus-col-6">
+                                    <small class="tuecus-pb-1">{{ 'tuecus.general.discount' | t }} :</small>
+                                </div>
+                                <div class="tuecus-col-md-3 tuecus-col-sm-9 tuecus-col-6">
+                                    <small class="tuecus-pb-1 font-weight-normal tuecus-pt-1 tuecus-d-inline-block"> <span class="tuecus-m-0 tuecus-text-success profile_last_name"> <b>{{ shop.metafields.tuecus.membership_discount_value }}</b></span></small>
+                                </div>
+                            </div>
+                                    </section>
+                                </div>
+
+                            </div>
+                            <!-- Tuecus membership View End -->
+							
+							
+							<div class="tuecus-tab-pane tuecus-fade tuecus-shadow-sm tuecus-rounded tuecus-bg-white tuecus-p-2 tuecus-pt-3" id="app-pills-orders" role="tabpanel" aria-labelledby="app-pills-orders-tab">
+								
+                               {% if customer.orders.size != 0 %}		
+							   {% paginate customer.orders by 3 %}
+							  
+                               {% for order in customer.orders %}
+									
+									{% assign order_date_month_original = order.created_at | date: '%B' %}
+									{% assign order_date_month_downcase = order.created_at | date: '%B' | downcase  %}
+									{% assign order_date_month_text = 'tuecus.months.' | append:order_date_month_downcase | t %}	
+									{% assign order_date = order.created_at | date:date_format | replace:order_date_month_original,order_date_month_text %}
+
+									{% assign order_cancelled_month_original = order.cancelled_at | date: '%B' %}
+									{% assign order_cancelled_month_downcase = order.cancelled_at | date: '%B' | downcase  %}
+									{% assign order_cancelled_month_text = 'tuecus.months.' | append:order_cancelled_month_downcase | t %}	
+									{% assign order_cancelled_date = order.cancelled_at | date:date_format | replace:order_cancelled_month_original,order_cancelled_month_text %}
+                              <div class="tuecus-row tuecus-m-0 tuecus-border tuecus-border-success tuecus-p-2 tuecus-mb-3 tuecus-rounded">
+									<div class="tuecus-row tuecus-col-md-12 tuecus-m-0 tuecus-p-0 tuecus-border-bottom tuecus-pb-2">
+									
+									
+
+										<div class="tuecus-mb-md-0 tuecus-mb-2 tuecus-text-center tuecus-text-md-left tuecus-col-md-5 tuecus-p-0 tuecus-mt-1 tuecus-ml-2">
+											<small class="">{{ 'tuecus.general.order_id' | t }} : <span class="tuecus-text-success tuecus-font-weight-600">{{ order.name }}</span></small>
+											
+											<button class="tuecus-font-weight-600 tuecus-text-uppercase tuecus-btn tuecus-btn-success tuecus-btn-sm tuecus-mr-1 tuecus-ml-1 tuecus-pt-0" type="button" onclick="printorder({{ order.id }})"><small>{{ 'tuecus.general.print_order' | t }} &nbsp; <i class="fa fa-print"></i></small></button>
+											
+										</div>
+										<div class="tuecus-row tuecus-col-md-7 tuecus-justify-content-end tuecus-p-0">
+											<button onclick="showorderdetails('orderdetails-{{ order.id}}')" class="tuecus-font-weight-600 tuecus-text-uppercase tuecus-btn tuecus-btn-success tuecus-btn-sm" type="button" data-toggle="collapse" href="#orderdetails-{{ order.id}}" role="button" aria-expanded="false" aria-controls="collapseExample"><small>{{ 'tuecus.general.show_order_details' | t }} &nbsp; <i class="fa fa-file-text-o"></i></small></button>
+											<script>
+                                              function showorderdetails(order_div) {
+                                                var x = document.getElementById(order_div);
+                                                if (x.style.display === "none") {
+                                                  x.style.display = "block";
+                                                } else {
+                                                  x.style.display = "none";
+                                                }
+                                              }
+                                              </script>
+											
+											
+											
+											
+											
+											<button class="tuecus-font-weight-600 tuecus-text-uppercase tuecus-btn tuecus-btn-success tuecus-btn-sm tuecus-mr-1 tuecus-ml-1 tuecus-pt-0" type="button" onclick="tuecusreorder({{ order.id }})"><small>{{ 'tuecus.general.reorder' | t }} &nbsp; <i class="fa fa-refresh"></i></small></button>
+											
+											<button  class="tuecus-contact-modal tuecus-font-weight-600 tuecus-text-uppercase tuecus-btn tuecus-btn-success tuecus-btn-sm  tuecus-pt-0" type="button" onclick="ordercontact('{{order.id}}','{{ customer.first_name }}','{{ customer.last_name }}','{{ customer.email }}','{{ customer.phone }}');"><small>{{ 'tuecus.general.contact_us' | t }} &nbsp; <i class="fa fa-phone-square"></i></small></button>
+										</div>
+										
+										 {% assign order_line_item_price = 0 %}
+										<!-- Order Details -->
+										<div class="collapse tuecus-col-md-12" id="orderdetails-{{ order.id}}" style="display:none;">
+											<div class="tuecus-bg-light tuecus-p-4 tuecus-border-top tuecus-mt-3 tuecus-border-bottom">
+												<div class="tuecus-row">
+													<div class="tuecus-col-md-6 tuecus-border-right">
+                                                      
+														<h6 class="tuecus-text-success tuecus-border-bottom tuecus-pb-2 tuecus-mb-1">{{ 'tuecus.general.shipping_address' | t }} :</h6>
+                                                      {{ order.shipping_address | format_address }}
+														
+													</div>
+													<div class="tuecus-col-md-6 tuecus-pl-4">
+														<h6 class="tuecus-text-success tuecus-border-bottom tuecus-pb-2 tuecus-mb-1">{{ 'tuecus.general.delivery_address' | t }} :</h6>
+													    {{ order.billing_address | format_address }}	
+                                                        
+													</div>
+												</div>
+												<div class="tuecus-row tuecus-mt-3 tuecus-border-top tuecus-pt-3 tuecus-pl-3">
+													<h6 class="tuecus-text-success tuecus-border-bottom tuecus-pb-2 tuecus-mb-1">{{ 'tuecus.general.price_details' | t }} :</h6>
+												</div>
+												<div class="tuecus-pt-1 tuecus-row">
+                                                  {% assign order_line_item_price = order_line_item_price | plus: item.line_price %}
+													<div class="tuecus-col-md-6">
+                                                         
+                                                      
+														<small class="tuecus-d-block tuecus-pb-2">{{ 'tuecus.general.sub_total' | t }}</small>
+														<small class="tuecus-d-block tuecus-pb-2">{{ 'tuecus.general.coupon_code' | t }}</small>
+														<small class="tuecus-d-block tuecus-pb-2">{{ 'tuecus.general.delivery_charges' | t }}</small>
+														<small class="tuecus-d-block tuecus-pb-2">{{ 'tuecus.general.tax_amount' | t }}</small>
+														<p class="tuecus-d-block tuecus-pb-2 tuecus-border-top tuecus-pt-2">{{ 'tuecus.general.grand_total' | t }}</p>
+													</div>
+													<div class="tuecus-col-md-6 tuecus-pl-4 tuecus-text-right">
+                                                      	 
+														<small class="tuecus-d-block tuecus-pb-2 one">{{ order.subtotal_price | money }}</small>
+                                                         {% if order.total_discounts %}
+                                                            <small class="tuecus-d-block tuecus-pb-2 two">{{ order.total_discounts | money }}</small>
+                                                      	 {% else %}
+                                                      		   <small class="tuecus-d-block tuecus-pb-2 two">{{ order.total_discounts | money }}</small>
+                                                           
+                                                      	  {% endif %}
+                                                      
+														<small class="tuecus-d-block tuecus-pb-2 three">{{ order.shipping_price | money }} </small>
+														
+														<small class="tuecus-d-block tuecus-pb-2 three">{{ order.tax_price | money }} </small>
+														
+														<small class="tuecus-d-block tuecus-pb-2 tuecus-border-top tuecus-pt-2 "><strong>{{ order.total_net_amount | money }}</strong></small>
+													</div>
+												</div>
+											</div>
+										</div>
+										<!-- Order Details -->
+									</div>
+									
+									<div class="tuecus-row tuecus-col-md-12 tuecus-m-0 tuecus-p-0 tuecus-pb-2">
+										<div class="tuecus-col-6 tuecus-col-md-9 tuecus-p-0 tuecus-mt-2 tuecus-ml-2">
+											<small class="">{{ 'tuecus.general.date' | t }} : <span class="tuecus-text-success tuecus-font-weight-600">{{ order_date }}</span></small>
+										</div>
+										<div class="tuecus-col-6 tuecus-row tuecus-col-md-3 tuecus-justify-content-end tuecus-p-0 tuecus-mt-2">
+											<small class="tuecus-pt-1">{{ 'tuecus.general.payment_status' | t }} : <span class="tuecus-text-success tuecus-font-weight-600">{{ order.financial_status }}</span></small>
+										</div>
+										
+									</div>
+									
+									
+									<span id="order_line_items_{{order.id}}" style="display:none;">{{ order.line_items | json}}</span>
+									{% assign total_order_items = 0 %}
+									{% for item in order.line_items %}
+									{% assign total_order_items = total_order_items | plus: item.quantity %}
+									<div class="tuecus-row tuecus-col-md-12 tuecus-m-0 tuecus-p-2 tuecus-border tuecus-rounded-0">
+										<div class="tuecus-col-md-2 tuecus-pl-0">
+											<img src="{{item.image | img_url: 'small'}}" class="tuecus-img-thumbnail" />
+										</div>
+										
+										<div class="tuecus-col-md-7 tuecus-pl-0 tuecus-mt-2">
+											<small><a href="{{ item.url }}" class="tuecus-mb-1 tuecus-d-block tuecus-font-weight-600">{{ item.title }}</a></small>
+											<small class="tuecus-font-weight-600 tuecus-mb-1"><i class="mt-1" aria-hidden="true"></i>{{ 'tuecus.general.product_price' | t }} : {{ item.price | money }}</small>
+                                          	<p class="tuecus-font-weight-600 tuecus-pb-0 tuecus-mb-1">{{ 'customer.order.quantity' | t }} : {{ item.quantity }}</p>
+                                          	<p class="tuecus-font-weight-600">{{ 'tuecus.general.total_price' | t }}  : {{  item.line_price | money }}</p>
+										</div>
+										
+							{% if shop.metafields.tuecus.is_reviews_enabled == 1 %}			
+								{% if shop.metafields.tuecus.is_loox_reviews_enabled == '1' or shop.metafields.tuecus.is_judgeme_reviews_enabled == '1' %}
+									<div class="tuecus-text-right tuecus-col-md-3">
+										<a class="tuecus-font-weight-600 tuecus-text-uppercase tuecus-btn tuecus-btn-success tuecus-btn-sm tuecus-pt-0 tuecus-pb-0" href="{{ item.url }}#looxReviews">
+											<small>Write a Review &nbsp;<i class="fa fa-star"></i></small>
+										</a>
+									</div>
+								{% endif %}
+							{% endif %}               
+							{% if order.fulfillment_status == 'fulfilled' %}     
+								    <div class="tuecus-text-right tuecus-col-md-3">
+									<a class="tuecus-font-weight-600 tuecus-text-uppercase tuecus-btn tuecus-btn-success tuecus-btn-sm tuecus-pt-0 tuecus-pb-0" href="#" onclick="showreturnpopup('{{order.id}}','{{ item.product_id }}','{{ item.url }}','{{ customer.first_name }}','{{ customer.last_name }}','{{ customer.email }}','{{ customer.phone }}');">
+										<small>Return &nbsp;<i class="fa fa-star"></i></small>
+									</a>
+								  </div>
+                                
+								  
+								  <div class="tuecus-text-left tuecus-col-md-12 tuecus-d-block tuecus-mt-2 tuecus-pl-0">
+					
+									 {% if item.fulfillment.tracking_company %}
+									
+									 <small class="tuecus-d-block">Carrier Name :</small> <strong class="tuecus-d-block tuecus-small tuecus-font-weight-bold">{{ item.fulfillment.tracking_company }}</strong>
+																			 
+									{% endif %}
+									
+												 
+										
+									{% if item.fulfillment.tracking_number %}
+										   <small class="tuecus-d-block">Tracking Id : <strong class="tuecus-d-block">{{ item.fulfillment.tracking_number }}</strong></small>
+											
+										{% if item.fulfillment.tracking_url %}
+										  <a href="{{ item.fulfillment.tracking_url }}">(View Details)</a>
+										{% endif %}
+		
+									  {% endif %}
+								 </div>
+						
+							   {% endif %}
+                          
+									</div>
+									{% assign order_line_item_price = order_line_item_price | plus: item.line_price %}
+                            		{% endfor %}
+									<div class="tuecus-row tuecus-col-md-12 tuecus-justify-content-end tuecus-m-0 tuecus-p-0 tuecus-pb-2">
+									 {% if order.cancelled  %}	
+                                      <div class="tuecus-col-md-3 tuecus-p-0 tuecus-mt-2">
+											<small class="">{{ 'tuecus.general.cancelled_on' | t }} :<span class="tuecus-text-success tuecus-font-weight-600"> {{ order_cancelled_date }}</span></small>
+										</div>
+                                       {% else %}
+                                      <div class="tuecus-col-md-3 tuecus-p-0 tuecus-mt-2">
+											<small class="">{{ 'tuecus.general.fulfillment_status' | t }} :<span class="tuecus-text-success tuecus-font-weight-600"> {{ order.fulfillment_status_label }}</span></small>
+										</div>
+                                      {% endif %}
+										<div class="tuecus-col-md-2 tuecus-p-0 tuecus-mt-2">
+											<small class="tuecus-pt-1">{{ 'tuecus.general.total_items' | t }} : <span class="tuecus-text-success tuecus-font-weight-600">{{ total_order_items }}</span></small>
+										</div>
+										<div class="tuecus-row tuecus-col-md-3 tuecus-p-0 tuecus-mt-2 tuecus-mr-0">
+											<small class="tuecus-pt-1">{{ 'tuecus.general.grand_total' | t }} : <span class="tuecus-text-success tuecus-font-weight-600"> {{ order.total_price | money }}</span></small>
+										</div>
+									</div>
+								</div>
+								
+                                {% endfor %}
+                                 {% if paginate.pages > 1 %}
+                              	 <div class="tuecus-pagination-div">
+                                      <div class="tuecus-pagination tuecus-text-right tuecus-d-block tuecus-mb-2">
+                                          {% if paginate.previous %}
+                                          <!-- <a href="{{ paginate.previous.url | replace: 'contact_posted=true&', '' }}#orders" title="{{ paginate.previous.title }}">&laquo;</a> -->
+                                          <button onclick="location.href='{{ paginate.previous.url }}#orders'" title="{{ paginate.previous.title }}">&laquo;</button>
+                                          {% else %}
+                                          <a disabled=""><span>&laquo;</span></a>
+                                          {% endif %}
+                                          {% for part in paginate.parts %}
+                                          {% if part.is_link %}
+                                          <!--<a href="{{ part.url | replace: 'contact_posted=true&', '' }}#orders" title="">{{ part.title }}</a> -->
+										  <button onclick="location.href='{{ part.url}}#orders'" title="">{{ part.title }}</button>
+                                          {% else %}
+                                          {% if part.title == paginate.current_page %}
+                                          <a class="active"><span>{{ part.title }}</span></a>
+                                          {% else %}
+                                          <a><span>{{ part.title }}</span></a>
+                                          {% endif %}
+                                          {% endif %}
+                                          {% endfor %}
+                                          {% if paginate.next %}
+                                          <!--<a href="{{ paginate.next.url | replace: 'contact_posted=true&', '' }}#orders" title="{{ paginate.next.title }}">&raquo;</a>-->
+                                          <button onclick="location.href='{{ paginate.next.url }}#orders'" title="{{ paginate.next.title }}">&raquo;</button>
+                                          {% else %}
+                                          <a disabled=""><span>&raquo;</span></a>
+                                          {% endif %}
+                                      </div>
+                                  </div>
+								{% endif %}	 
+                              
+                                {% endpaginate %}
+                              
+                               {% else %}
+									
+									<div class="tuecus-p-4 tuecus-bg-light tuecus-border tuecus-mb-3">
+									<div class="tuecus-text-center tuecus-mb-3">
+										<i class="fa fa-file-text-o fa-5x tuecus-text-muted" aria-hidden="true"></i>
+									</div>
+									<div class="tuecus-text-center">
+										<small class="tuecus-d-block tuecus-mb-3 tuecus-font-weight-bold tuecus-text-muted">{{ 'tuecus.general.no_orders_yet' | t }}</small>
+										<small class="tuecus-d-block tuecus-mb-3 tuecus-font-weight-bold tuecus-text-muted">{{ 'tuecus.general.you_havent_ordered' | t }}</small>
+										<a class="tuecus-btn tuecus-btn-success tuecus-btn-sm tuecus-text-white" href="/collections/all">{{ 'tuecus.general.go_to_products' | t }} <i class="fa fa-cart-plus" aria-hidden="true"></i></a>
+									</div>
+								</div>
+									
+										
+								{% endif %}	 
+                              
+							</div>
+                          	
+                         
+
+
+						 {% if shop.metafields.tuecus.is_top_ordered_enabled and shop.metafields.tuecus.is_top_ordered_enabled == 1 %}
+
+							<div class="tuecus-tab-pane tuecus-fade tuecus-shadow-sm tuecus-rounded tuecus-bg-white tuecus-p-2 tuecus-pt-1" id="app-pills-topproducts" role="tabpanel" aria-labelledby="app-pills-topproducts-tab">
+                           
+
+								<script>
+                          			//getTopOrderProducts();                                 
+                          		</script>
+
+								<div class="tuecus-row tuecus-m-0">
+									<div class="tuecus-col-md-9">
+										<div id="custom-search-input" class="tuecus-col-md-6">
+											<div class="tuecus-input-group">
+												<input type="text" class="tuecus-search-query tuecus-form-control tuecus-rounded" placeholder="Search here" />
+												<span class="tuecus-input-group-btn">
+													<button type="button" disabled>
+														<span class="fa fa-search tuecus-pr-2 tuecus-pt-2"></span>
+													</button>
+												</span>
+											</div>
+										</div>
+									</div>
+									
+									<div class="tuecus-col-md-3 tuecus-p-0">
+										<div class="tuecus-col-md-12">
+											<select class="tuecus-custom-select tuecus-mt-2">
+												<option selected>{{ 'tuecus.general.filter' | t }}</option>
+												<option value="1">{{ 'tuecus.general.lowtohigh' | t }}</option>
+												<option value="2">{{ 'tuecus.general.hightolow' | t }}</option>
+												<option value="3">{{ 'tuecus.general.featured' | t }}</option>
+											</select>
+										</div>
+									</div>
+								</div>
+							</div>	
+							{% else %}
+								
+							   
+                            {% endif %}   
+								
+								
+						
+							
+							
+							
+                          
+							<div class="tuecus-tab-pane tuecus-fade tuecus-shadow-sm tuecus-rounded tuecus-bg-white tuecus-p-4 tuecus-pt-1" id="app-pills-address" role="tabpanel" aria-labelledby="app-pills-address-tab">
+								
+								<div class="tuecus-row tuecus-justify-content-end">
+									<button   class="tuecus-d-block tuecus-font-weight-600 tuecus-text-uppercase tuecus-btn tuecus-btn-success tuecus-btn-sm tuecus-mb-1 tuecus-add-address-modal" type="button">{{ 'tuecus.general.add_new_address' | t }} &nbsp; <i class="fa fa-plus-circle"></i></button>
+								</div>
+								
+                              
+                              	
+                              {% if customer.addresses.size == 0 %}
+                              	<!-- empty address block -->
+                              	<div  class="tuecus-row tuecus-m-0 tuecus-justify-content-center" id="add-address-container">
+									 <div class="tuecus-p-4 tuecus-bg-light tuecus-border tuecus-mt-3" id="empty_addresses">
+										<div class="tuecus-text-center tuecus-mb-3">
+											<i class="fa fa-map-marker fa-5x tuecus-text-muted" aria-hidden="true"></i>
+										</div>
+										<div class="tuecus-text-center">
+											<h5 class="tuecus-d-block tuecus-mb-3 tuecus-font-weight-bold tuecus-text-muted">{{ 'tuecus.general.no_address_added' | t }}</h5>
+											<small class="tuecus-d-block tuecus-mb-3 tuecus-font-weight-bold tuecus-text-muted">{{ 'tuecus.general.add_address_start_shopping' | t }}</small>
+											<div class="col text-center">
+												<button   class="tuecus-font-weight-600 tuecus-text-uppercase tuecus-btn tuecus-btn-success tuecus-btn-sm tuecus-mb-3 tuecus-add-address-modal" type="button">{{ 'tuecus.general.add_new_address' | t }} &nbsp; <i class="fa fa-plus-circle"></i></button>
+											</div>
+										</div>
+									 </div>
+									</div>	
+								
+                              <!-- empty address block -->
+                              {% else %}
+                              
+                              <div  class="tuecus-row tuecus-m-0 tuecus-justify-content-center" id="add-address-container">
+									 {% if customer.addresses.size != 0 %}
+                                	<div class="tuecus-col-md-5 tuecus-border tuecus-bg-light tuecus-p-3 tuecus-mb-4 tuecus-mt-3" data-phone="{{ customer.default_address.phone }}"
+                                data-phone="{{ customer.default_address.phone }}" 
+                                data-first-name="{{ customer.default_address.first_name }}" 
+                                data-last-name="{{ customer.default_address.last_name }}"
+                                data-company="{{ customer.default_address.company }}"
+                                data-address1="{{ customer.default_address.address1 }}"
+                                data-address2="{{ customer.default_address.address2 }}"
+                                data-zip="{{ customer.default_address.zip }}" 
+                                data-city="{{ customer.default_address.city }}" 
+                                data-province="{{ customer.default_address.province }}"
+                                data-country="{{ customer.default_address.country }}"
+                                data-id="{{ customer.default_address.id }}"
+                                data-default="true" id="customer_address_item_{{ customer.default_address.id  }}">
+										<a href="#" class="tuecus-btn tuecus-btn-dark address-close-btn tuecus-btn-sm" data-id ="{{ customer.default_address.id }}" id="address-close-{{ customer.default_address.id }}">X</a>
+										<h6 class="tuecus-text-success tuecus-border-bottom tuecus-pb-2 tuecus-mb-1">{{ 'tuecus.general.delivery_address' | t }} :</h6>
+										<small class="tuecus-d-block tuecus-pb-2">{{ customer.default_address.first_name }} {{ customer.default_address.last_name }}</small>
+										<small class="tuecus-d-block tuecus-pb-2">{{ customer.default_address.address1 }} {{ customer.default_address.address2 }}</small>
+										<small class="tuecus-d-block tuecus-pb-2">{{ customer.default_address.city }} {{ customer.default_address.province }} {{ customer.default_address.country }} {{ customer.default_address.zip }}</small>
+										<small class="tuecus-d-block tuecus-pb-2">{{ customer.default_address.phone }}</small>
+										<p class="custom-deafult-addr-main"><input type="checkbox" checked="checked" name="deafultaddr" data-customer-id="{{ customer.id }}"  onclick="setDefaultAddr(this)" data-address-id="{{ customer.default_address.id }}" class="default-addr tuecus-custom-checkbox prev-default" /><label for="deafultaddr"> Default Address</label></p>
+
+									</div>
+                                {% else %}
+
+                            	{% endif%}
+                                {% for address in customer.addresses %}
+                                  {% if address == customer.default_address %}
+                                  {% continue; %}
+                                  {% endif %}
+									<div  id="customer_address_item_{{ address.id }}" class="tuecus-mt-3 tuecus-col-md-5 tuecus-ml-4 tuecus-border tuecus-bg-light tuecus-p-3 tuecus-mb-4">
+										<a href="#" class="tuecus-btn tuecus-btn-dark address-close-btn tuecus-btn-sm" data-id ="{{ address.id }}" id="address-close-{{ customer.default_address.id }}">X</a>
+										<h6 class="tuecus-text-success tuecus-border-bottom tuecus-pb-2 tuecus-mb-1">{{ 'tuecus.general.delivery_address' | t }} :</h6>
+										<small class="tuecus-d-block tuecus-pb-2">{{ address.first_name }} {{ address.last_name }}</small>
+										<small class="tuecus-d-block tuecus-pb-2">{{ address.address1 }} {{ address.address2 }}</small>
+										<small class="tuecus-d-block tuecus-pb-2">{{ address.city }} {{ address.province }} {{ address.country }} {{ address.zip }}</small>
+										<small class="tuecus-d-block tuecus-pb-2">{{ address.phone }}</small>
+										<p class="custom-deafult-addr-main"><input type="checkbox" name="deafultaddr" onclick="setDefaultAddr(this)" data-customer-id="{{ customer.id }}" data-address-id="{{ address.id }}" class="default-addr tuecus-custom-checkbox prev-default" /><label for="deafultaddr"> Make Default Address</label></p>
+									</div>
+                                
+                                 {% endfor %}
+                                
+								</div>
+                               {% endif %}
+                           </div>
+							
+							<script>
+								getCustomerReferrals();                                 
+							</script>
+							
+							{% if shop.metafields.tuecus.is_refer_friend_enable and shop.metafields.tuecus.is_refer_friend_enable == 1 %}
+
+							<div class="tuecus-tab-pane tuecus-fade tuecus-shadow-sm tuecus-rounded tuecus-bg-white tuecus-p-4 tuecus-pt-1" id="app-pills-refer" role="tabpanel" aria-labelledby="app-pills-refer-tab">
+								
+								
+								<div class="tuecus-row">
+									<div class="tuecus-col-md-7">
+										<div class="tuecus-input-group">
+											{% if shop.metafields.tuecus.customer_landing_page == 0 %}
+												<input type="text" class="tuecus-form-control tuecus-form-control-sm" value="https://{{shop.domain}}?tref={{ customer.metafields.tuecus.referal_code}}" id="tuecus-referralcode">
+												<button onclick="onCopyRefCode()" class="tuecus-btn tuecus-btn-sm tuecus-btn-warning"><small>{{ 'tuecus.general.copy_code' | t }}</small></button>
+											{% elsif  shop.metafields.tuecus.customer_landing_page == 1 %}
+												<input type="text" class="tuecus-form-control tuecus-form-control-sm" value="https://{{shop.domain}}/account/register?tref={{ customer.metafields.tuecus.referal_code}}" id="tuecus-referralcode">
+												<button onclick="onCopyRefCode()" class="tuecus-btn tuecus-btn-sm tuecus-btn-warning"><small>{{ 'tuecus.general.copy_code' | t }}</small></button>
+											{% else %}
+												<input type="text" class="tuecus-form-control tuecus-form-control-sm" value="https://{{shop.domain}}?tref={{ customer.metafields.tuecus.referal_code}}" id="tuecus-referralcode">
+												<button onclick="onCopyRefCode()" class="tuecus-btn tuecus-btn-sm tuecus-btn-warning"><small>{{ 'tuecus.general.copy_code' | t }}</small></button>
+											{% endif %}
+										</div>
+									</div>
+									<div class="tuecus-col-md-5 tuecus-justify-content-end tuecus-row tuecus-pr-0">
+										<div class="tuecus-row tuecus-m-0 tuecus-pt-2 tuecus-pt-md-0">
+											<button class="tuecus-font-weight-600 tuecus-text-uppercase tuecus-btn tuecus-btn-primary tuecus-btn-sm tuecus-mb-1 tuecus-mr-3" type="button" id="tuecus-facebook-share-btn" onclick="referfriendfbshare(this);"><i class="fa fa-facebook-official" ></i>&nbsp;{{ 'tuecus.general.share' | t }}</button>
+											<button class="tuecus-font-weight-600 tuecus-text-uppercase tuecus-btn tuecus-btn-success tuecus-btn-sm tuecus-mb-1  tuecus-mr-3" type="button" id="tuecus-whatsapp-share-btn" onclick="referfriendwhatsappshare(this);"> <i class="fa fa-whatsapp"></i>&nbsp;{{ 'tuecus.general.share' | t }}</button>
+											<button class="tuecus-font-weight-600 tuecus-text-uppercase tuecus-btn tuecus-btn-info tuecus-btn-sm tuecus-mb-1" type="button" id="tuecus-twitter-share-btn" onclick="referfriendtwittershare(this);"> <i class="fa fa-twitter"></i>&nbsp;{{ 'tuecus.general.share' | t }}</button>
+										</div>
+									</div>
+								</div>
+								
+								<div class="tuecus-shadow-sm tuecus-rounded tuecus-bg-white tuecus-p-4 tuecus-border tuecus-mt-3">
+									<h4 class="tuecus-mb-2">{{ 'tuecus.general.how_works' | t }}</h4>
+									<div class="tuecus-row tuecus-m-0 tuecus-text-center tuecus-mt-2 tuecus-bg-light tuecus-p-4 tuecus-justify-content-center">
+										<div class="tuecus-col-md-4 tuecus-pt-2">
+											<img src="{{'refer.png' | asset_url }}" alt="refer-img" class="tuecus-img-fluid" />
+											<p class="tuecus-pt-2">{{ 'tuecus.general.share_referral_code' | t }}</p>
+										</div>
+										<div class="tuecus-col-md-4 tuecus-pt-2">
+											<img src="{{'sign-up.png' | asset_url }}" alt="refer-img" class="tuecus-img-fluid" />
+											<p class="tuecus-pt-2">{{ 'tuecus.general.signup' | t }}</p>
+										</div>
+										<div class="tuecus-col-md-4 tuecus-pt-2">
+											<img src="{{'rewards.png' | asset_url }}" alt="refer-img" class="tuecus-img-fluid" />
+											<p class="tuecus-pt-2">{{ 'tuecus.general.get_rewards' | t }}</p>
+										</div>
+									</div>
+								</div>
+								
+								<div class="tuecus-row tuecus-pt-4 tuecus-mb-1">
+									<h6 class="tuecus-col-6 tuecus-text-success tuecus-col-md-3  tuecus-m-0">{{ 'tuecus.general.rewards_activity' | t }}</h6>
+									<h6 class="tuecus-col-6 tuecus-text-success tuecus-col-md-9 tuecus-text-right tuecus-m-0">{{ 'tuecus.general.earned_rewards' | t }} : <span id="earned_points">{{ 0.00 | money }}</span></h6>
+								</div>
+								<div class="tuecus-row" id="referrals_container">
+								<table class="tuecus-table tuecus-text-center tuecus-table-striped tuecus-table-hover tuecus-border tuecus-mt-2">							
+										<thead>
+											<tr class="tuecus-bg-default tuecus-text-dark">
+												<th scope="col"><small class="tuecus-font-weight-bold">{{ 'tuecus.general.referral_email' | t }}</small></th>
+												<th scope="col"><small class="tuecus-font-weight-bold">{{ 'tuecus.general.referral_name' | t }}</small></th>
+												<th scope="col"><small class="tuecus-font-weight-bold">{{ 'tuecus.general.rewards' | t }}</small></th>
+												<th scope="col"><small class="tuecus-font-weight-bold">{{ 'tuecus.general.date' | t }}</small></th>
+											</tr>
+										</thead>
+										<tbody id="referrals_container_body">
+										
+										</tbody>
+									</table>
+								</div>
+							</div>
+							{% else %}
+								
+							{% endif %}
+								
+							
+							{% if shop.metafields.tuecus.wishlist_enable and shop.metafields.tuecus.wishlist_enable == 1 %}
+								<div class="tuecus-tab-pane tuecus-fade tuecus-shadow-sm tuecus-rounded tuecus-bg-white tuecus-p-4 tuecus-pt-1" id="app-pills-wishlist" role="tabpanel" aria-labelledby="app-pills-wishlist-tab">
+								
+									<script>
+										//getCustomerWishlist();
+									</script>
+									
+									<h6 class="tuecus-text-success tuecus-pb-2 tuecus-mb-4 tuecus-border-bottom tuecus-text-uppercase">{{ 'tuecus.general.wishlist' | t }}</h6>
+									<div class="tuecus-row tuecus-justify-content-center tuecus-wishlist-grid" id="app-pills-wishlist-body">
+										
+									</div>
+								</div>
+								{% else %}
+								
+								{% endif %}
+								
+							
+							{% if shop.metafields.tuecus.is_store_credit_enabled and shop.metafields.tuecus.is_store_credit_enabled == 1 %}
+                          	<div class="tuecus-tab-pane tuecus-fade tuecus-shadow-sm tuecus-rounded tuecus-bg-white tuecus-p-4 tuecus-pt-1" id="app-pills-managecredits" role="tabpanel" aria-labelledby="app-pills-managecredits-tab">
+								<section class="tuecus-container tuecus-py-4">
+									<div class="tuecus-row">
+										<div class="tuecus-col-md-12">
+											<h6 class="tuecus-text-success tuecus-pb-2 tuecus-mb-4 tuecus-border-bottom tuecus-text-uppercase">{{ 'tuecus.general.manage_your_rewards' | t }}</h6>
+											<ul id="tabs" class="nav nav-tabs tuecus-col-8 tuecus-col-md-12">
+												<li class="nav-item"><a href="" data-target="#earning" data-toggle="tab" class="credits-nav-link nav-link small tuecus-text-uppercase tuecus-pl-0 tuecus-mr-3 active" onclick="openCreditsTab(event,'earning');return false;"><i class="fa fa-money tuecus-bg-success tuecus-text-white tuecus-p-1 tuecus-mr-1 tuecus-rounded-circle" aria-hidden="true"></i> {{ 'tuecus.general.earning_rewards' | t }}</a></li>
+												<li class="nav-item"><a href="" data-target="#storeowner" data-toggle="tab" class="credits-nav-link nav-link small tuecus-text-uppercase tuecus-pl-0 tuecus-mr-3" onclick="openCreditsTab(event,'storeowner');return false;"><i class="fa fa-sitemap tuecus-bg-success tuecus-text-white tuecus-p-1 tuecus-mr-1 tuecus-rounded-circle" aria-hidden="true"></i> {{ 'tuecus.general.from_store_owner' | t }}</a></li>
+												<li class="nav-item"><a href="" data-target="#spentpoints" data-toggle="tab" class="credits-nav-link nav-link small tuecus-text-uppercase tuecus-pl-0 tuecus-mr-3" onclick="openCreditsTab(event,'spentpoints');return false;"><i class="fa fa-money tuecus-bg-success tuecus-text-white tuecus-p-1 tuecus-mr-1 tuecus-rounded-circle" aria-hidden="true"></i> {{ 'tuecus.general.spent_rewards' | t }}</a></li>
+											</ul>
+											<br>
+											<div id="tabsContent" class="tuecus-tab-content">
+												<div id="earning" class="tuecus-credits-tab-pane tab-pane tuecus-fade active show">
+													<div class="tuecus-row tuecus-m-0">
+														{% if customer == false  %}
+														{% if shop.metafields.tuecus.enable_registration_credits and shop.metafields.tuecus.enable_registration_credits == 1 and shop.metafields.tuecus.registration_credits != '0.00' and shop.metafields.tuecus.registration_credits != '0' %}
+														<div class="tuecus-mb-3 tuecus-col-md-9 tuecus-row tuecus-bg-white tuecus-border tuecus-border-success tuecus-text-dark tuecus-p-2 tuecus-rounded tuecus-shadow-sm">
+															<div class="tuecus-col-3 tuecus-col-md-2 tuecus-p-0">
+																<i class="fa fa-user-plus fa-3x tuecus-text-success tuecus-p-3" aria-hidden="true"></i>
+															</div>
+															<div class="tuecus-col-md-9 tuecus-mt-2 tuecus-col-9">
+																<h5 class="tuecus-text-success">{{ 'tuecus.general.signup' | t }}</h5>
+																<h6 class="tuecus-text-success">{{ 'tuecus.general.signup_get_more_rewards' | t | replace: "10", shop.metafields.tuecus.registration_credits }}  </h6>
+															</div>
+														</div>
+														{% endif %}
+                                                      	{% endif %}
+														
+														{% if customer.metafields.tuecus.customer_subscribe == "0" %}
+														{% if shop.metafields.tuecus.enable_subscriber_credits and shop.metafields.tuecus.enable_subscriber_credits == 1 and shop.metafields.tuecus.subscriber_credits != '0.00' and shop.metafields.tuecus.subscriber_credits != '0' %}
+														<div class="tuecus-mb-3 tuecus-col-md-9 tuecus-row tuecus-bg-white tuecus-border tuecus-border-warning tuecus-text-dark tuecus-p-2 tuecus-rounded tuecus-shadow-sm">
+															<div class="tuecus-col-3 tuecus-col-md-2 tuecus-p-0">
+																<i class="fa fa-bell fa-3x tuecus-text-warning tuecus-p-3" aria-hidden="true"></i>
+															</div>
+															<div class="tuecus-col-md-9 tuecus-mt-2 tuecus-col-9">
+																<h5 class="tuecus-text-warning">{{ 'tuecus.general.subscription_rewards' | t }}</h5>
+																<h6 class="tuecus-text-warning">{{ 'tuecus.general.subscribtion_getrewards' | t | replace: "20", shop.metafields.tuecus.subscriber_credits }} </h6>
+															</div>
+														</div>
+														{% endif %}
+                                                      	{% endif %}
+														
+														{% if shop.metafields.tuecus.enable_order_credits and shop.metafields.tuecus.enable_order_credits == 1 and shop.metafields.tuecus.credits_on_first_order != '0.00' and shop.metafields.tuecus.credits_on_first_order != '0' %}
+														<div class="tuecus-mb-3 tuecus-col-md-9 tuecus-row tuecus-bg-white tuecus-border tuecus-border-primary tuecus-text-dark tuecus-p-2 tuecus-rounded">
+															<div class="tuecus-col-3 tuecus-col-md-2 tuecus-p-0">
+																<i class="fa fa-first-order fa-3x tuecus-text-primary tuecus-p-3" aria-hidden="true"></i>
+															</div>
+															<div class="tuecus-col-md-9 tuecus-mt-2 tuecus-col-9">
+																<h5 class="tuecus-text-primary">{{ 'tuecus.general.first_order_rewards' | t }}</h5>
+																<h6 class="tuecus-text-primary">{{ 'tuecus.general.get_rewards_first_order' | t | replace: "50", shop.metafields.tuecus.credits_on_first_order }}</h6>
+															</div>
+														</div>
+														{% endif %}
+														
+														{% if shop.metafields.tuecus.enable_birthday_credits and shop.metafields.tuecus.enable_birthday_credits == 1 and shop.metafields.tuecus.birthday_credits != '0.00' and shop.metafields.tuecus.birthday_credits != '0' %}
+														<div class="tuecus-mb-3 tuecus-col-md-9 tuecus-row tuecus-bg-white tuecus-border tuecus-border-danger tuecus-text-dark tuecus-p-2 tuecus-rounded tuecus-shadow-sm">
+															<div class="tuecus-col-3 tuecus-col-md-2 tuecus-p-0">
+																<i class="fa fa-birthday-cake fa-3x tuecus-text-danger tuecus-p-3" aria-hidden="true"></i>
+															</div>
+															<div class="tuecus-col-md-9 tuecus-mt-2 tuecus-col-9">
+																<h5 class="tuecus-text-danger">{{ 'tuecus.general.birthday' | t }} {{ 'tuecus.general.rewards' | t }}</h5>
+																<h6 class="tuecus-text-danger">{{ 'tuecus.general.followus_birthday' | t | replace: "40", shop.metafields.tuecus.birthday_credits }}</h6>
+															</div>
+														</div>
+														{% endif %}
+														
+														{% if shop.metafields.tuecus.enable_monthly_credits and shop.metafields.tuecus.enable_monthly_credits == 1 and shop.metafields.tuecus.monthly_credits != '0.00' and shop.metafields.tuecus.monthly_credits != '0' %}
+														<div class="tuecus-mb-3 tuecus-col-md-9 tuecus-row tuecus-bg-white tuecus-border tuecus-border-dark tuecus-text-dark tuecus-p-2 tuecus-rounded tuecus-shadow-sm">
+															<div class="tuecus-col-3 tuecus-col-md-2 tuecus-p-0">
+																<i class="fa fa-calendar-plus-o fa-3x tuecus-text-dark tuecus-p-3" aria-hidden="true"></i>
+															</div>
+															<div class="tuecus-col-md-9 tuecus-mt-2 tuecus-col-9">
+																<h5 class="tuecus-text-dark">{{ 'tuecus.general.everymonth_rewards' | t }}</h5>
+																<h6 class="tuecus-text-dark">{{ 'tuecus.general.getrewards_everymonth' | t | replace: "10", shop.metafields.tuecus.monthly_credits }}</h6>
+															</div>
+														</div>
+														{% endif %}
+														
+														{% if shop.metafields.tuecus.enable_refer_friend_credits and shop.metafields.tuecus.enable_refer_friend_credits == 1 and shop.metafields.tuecus.referrer_credits != '0.00' and shop.metafields.tuecus.referrer_credits != '0' %}
+														<div class="tuecus-mb-3 tuecus-col-md-9 tuecus-row tuecus-bg-white tuecus-border tuecus-border-info tuecus-text-dark tuecus-p-2 tuecus-rounded tuecus-shadow-sm">
+															<div class="tuecus-col-3 tuecus-col-md-2 tuecus-p-0">
+																<i class="fa fa-users fa-3x tuecus-text-info tuecus-p-3" aria-hidden="true"></i>
+															</div>
+															<div class="tuecus-col-md-9 tuecus-mt-2 tuecus-col-9">
+																<h5 class="tuecus-text-info">{{ 'tuecus.general.refer_your_friend' | t }}</h5>
+																<h6 class="tuecus-text-info">{{ 'tuecus.general.refer_get_100points' | t | replace: "100", shop.metafields.tuecus.referrer_credits }}</h6>
+                                                              	<h6 class="tuecus-text-info">{{ 'tuecus.general.referee_get_points' | t | replace: "10", shop.metafields.tuecus.referee_credits }} {{ 'tuecus.general.rewards' | t }}</h6>
+															</div>
+													   </div>
+													   {% endif %}
+														
+													</div>
+												</div>
+												
+												<div id="storeowner" class="tuecus-credits-tab-pane tab-pane tuecus-fade">
+													<div class="tuecus-row tuecus-m-0">
+														<div class="tuecus-mb-3 tuecus-col-md-9 tuecus-row tuecus-bg-white tuecus-border tuecus-border-success tuecus-text-dark tuecus-p-2 tuecus-rounded tuecus-shadow-sm">
+															<div class="tuecus-col-3 tuecus-col-md-2 tuecus-p-0">
+																<i class="fa fa-user-plus fa-3x tuecus-text-success tuecus-p-3" aria-hidden="true"></i>
+															</div>
+															<div class="tuecus-col-md-9 tuecus-mt-2 tuecus-col-9">
+																<h5 class="tuecus-text-success">{{ 'tuecus.general.summer_sale' | t }}</h5>
+																<h6 class="tuecus-text-success">{{ 'tuecus.general.50off_selected' | t }}</h6>
+															</div>
+														</div>
+													</div>
+												</div>
+												
+												<div id="spentpoints" class="tuecus-credits-tab-pane tab-pane tuecus-fade">
+													<div class="tuecus-row tuecus-m-0">
+														<div class="tuecus-mb-3 tuecus-col-md-9 tuecus-row tuecus-bg-white tuecus-border tuecus-border-info tuecus-text-dark tuecus-p-2 tuecus-rounded tuecus-shadow-sm">
+															<div class="tuecus-col-3 tuecus-col-md-2 tuecus-p-0">
+																<i class="fa fa-users fa-3x tuecus-text-info tuecus-p-3" aria-hidden="true"></i>
+															</div>
+															<div class="tuecus-col-md-9 tuecus-mt-2 tuecus-col-9">
+																<h5 class="tuecus-text-info">{{ 'tuecus.general.promotion_season' | t }}</h5>
+																<h6 class="tuecus-text-info">{{ 'tuecus.general.to_get' | t }}</h6>
+															</div>
+														</div>
+													</div>
+												</div>
+												
+											</div>
+										</div>
+									</div>
+								</section>
+							</div>
+							
+							{% endif %}
+							
+							
+							{% if shop.metafields.tuecus.is_store_credit_enabled and shop.metafields.tuecus.is_store_credit_enabled == 1 %}
+							<div class="tuecus-tab-pane tuecus-fade tuecus-shadow-sm tuecus-rounded tuecus-bg-white tuecus-p-4 tuecus-pt-1" id="app-pills-storecredits" role="tabpanel" aria-labelledby="app-pills-storecredits-tab">
+								<script>
+                          			//getCustomerCredits();                                 
+                          		</script>
+								
+								<h6 class="tuecus-text-success tuecus-pb-2 tuecus-mb-4 tuecus-border-bottom tuecus-text-uppercase">{{ 'tuecus.general.store_rewards' | t }}</h6>
+								<div class="tuecus-row tuecus-m-0 tuecus-text-center tuecus-mb-4 tuecus-p-2">
+									<div class="tuecus-col-md-4  tuecus-m-0 tuecus-border-right tuecus-row">
+										<div class="tuecus-col-md-2">
+											<i class="fa fa-certificate tuecus-text-success fa-3x" aria-hidden="true"></i>
+										</div>
+										<div class="tuecus-col-md-10">
+											<h6 class="tuecus-text-success"  id="earned_credits">{{ 'tuecus.general.earned_rewards' | t }}: 0 </h6>
+											<!-- <h6 class="tuecus-text-success">{{ 'tuecus.general.points' | t }}: 0</h6> -->
+										</div>
+									</div>
+									<div class="tuecus-col-md-4  tuecus-m-0 tuecus-border-right tuecus-row">
+										<div class="tuecus-col-md-2">
+											<i class="fa fa-dollar tuecus-text-success fa-3x" aria-hidden="true"></i>
+										</div>
+										<div class="tuecus-col-md-10">
+											<h6 class="tuecus-text-success" id="spent_credits">{{ 'tuecus.general.spent_rewards' | t }}: 0</h6>
+											<!-- <h6 class="tuecus-text-success" id="spent_credits">{{ 'tuecus.general.points' | t }}: 0</h6> -->
+										</div>
+									</div>
+									<div class="tuecus-col-md-4  tuecus-m-0 tuecus-row">
+										<div class="tuecus-col-md-2">
+											<i class="fa fa-briefcase tuecus-text-success fa-3x" aria-hidden="true"></i>
+										</div>
+										<div class="tuecus-col-md-10">
+											<h6 class="tuecus-text-success" id="current_credits">{{ 'tuecus.general.current_rewards' | t }}: 0</h6>
+											<!-- <h6 class="tuecus-text-success" id="current_credits">{{ 'tuecus.general.points' | t }} : 0</h6> -->
+										</div>
+									</div>
+								</div>
+								<h6 class="tuecus-text-center tuecus-pb-2 tuecus-pt-2 tuecus-bg-success tuecus-text-white tuecus-mb-0 tuecus-rounded">{{ 'tuecus.general.rewards_activity' | t }}</h6>
+								<div id="id="store-credit-container">
+								<table class="tuecus-table tuecus-table-hover tuecus-text-center">
+									<thead>
+										<tr>
+											<th><small class="tuecus-font-weight-bold">{{ 'tuecus.general.rewards' | t }}</small></th>
+											<th><small class="tuecus-font-weight-bold">{{ 'tuecus.general.rewards_details' | t }}</small></th>
+											<th><small class="tuecus-font-weight-bold">{{ 'tuecus.general.date' | t }}</small></th>
+										</tr>
+									</thead>
+									<tbody id="store-credit-container-body">
+																			
+									</tbody>
+								</table>
+							</div>
+								</div>	
+								{% else %}
+									
+								{% endif %}
+							
+												
+							                          	
+							{% assign storepages = shop.metafields.tuecus.storepages %} 
+
+							{% if storepages.size != 0 %}
+							  {% for storepage in storepages %}
+										
+									  <div class="tuecus-tab-pane tuecus-fade tuecus-shadow-sm tuecus-rounded tuecus-bg-white tuecus-p-4 tuecus-pt-1" id="app-pills-store-page-{{ storepage.id }}" role="tabpanel" aria-labelledby="app-pills-store-page-{{ storepage.id }}-tab">
+																						
+											{{ storepage.title }}
+											{% if forloop.index == 1 %}
+											     {% assign store_page_one = shop.metafields.tuecus.page_content_1 %}
+												 {{ store_page_one.page_content }}
+												
+											{% elsif forloop.index == 2 %}
+                                                 {% assign store_page_two = shop.metafields.tuecus.page_content_2 %}
+												 {{ store_page_two.page_content }}
+
+											 {% elsif forloop.index == 3 %}
+                                                 {% assign store_page_three = shop.metafields.tuecus.page_content_3 %}
+												 {{ store_page_three.page_content }}
+
+											{% elsif forloop.index == 4 %}
+                                                 {% assign store_page_four = shop.metafields.tuecus.page_content_4 %}
+												 {{ store_page_four.page_content }}
+
+											{% elsif forloop.index == 5 %}
+                                                 {% assign store_page_five = shop.metafields.tuecus.page_content_5 %}
+												 {{ store_page_five.page_content }}
+										    {% elsif forloop.index == 6 %}
+                                                 {% assign store_page_six = shop.metafields.tuecus.page_content_6 %}
+												 {{ store_page_six.page_content }}
+                                            {% else %}
+
+											{% endif %}
+									  </div>
+							  {% endfor %}
+							{% endif %}
+
+						
+							
+							
+								{% if shop.metafields.tuecus.is_recently_viewed_enable == 1 %}
+								
+									<div class="tuecus-tab-pane tuecus-fade tuecus-shadow-sm tuecus-rounded tuecus-bg-white tuecus-p-4 tuecus-pt-1" id="app-pills-viewedproducts" role="tabpanel" aria-labelledby="app-pills-viewedproducts-tab">
+									
+										<h6 class="tuecus-text-success tuecus-pb-2 tuecus-mb-0 tuecus-mt-4 tuecus-border-bottom tuecus-text-uppercase">{{ 'tuecus.general.recently_viewed_products' | t }}</h6>								
+																				
+										{% capture tuecus_recently_viewed_content %}{% render 'tuecus-account-recently-viewed' %}{% endcapture %}
+										{% unless tuecus_recently_viewed_content contains "Liquid error" %}
+										  {{ tuecus_recently_viewed_content }}
+										{% endunless %}
+		
+									</div>
+								{% else %}
+									<div class="tuecus-tab-pane tuecus-fade tuecus-shadow-sm tuecus-rounded tuecus-bg-white tuecus-p-4 tuecus-pt-1" id="app-pills-viewedproducts" role="tabpanel" aria-labelledby="app-pills-viewedproducts-tab">
+									
+									<div class="tuecus-p-4">
+										<div class="tuecus-text-center tuecus-mb-3">
+											<i class="fa fa-shopping-basket fa-5x tuecus-text-muted" aria-hidden="true"></i>
+										</div>
+										<div class="tuecus-text-center">
+											<small class="tuecus-d-block tuecus-mb-3 tuecus-font-weight-bold tuecus-text-muted">{{ 'tuecus.general.no_recently_viewed_products' | t }}</small>
+											<a class="tuecus-btn tuecus-btn-success tuecus-btn-sm tuecus-text-white" href="/collections/all">{{ 'tuecus.general.go_to_products' | t }} <i class="fa fa-cart-plus" aria-hidden="true"></i></a>
+										</div>
+									</div>
+								</div>
+								{% endif %}
+								{% if shop.metafields.tuecus.is_reviews_enabled == 1 %}
+								{% if shop.metafields.tuecus.is_loox_reviews_enabled == '1' or shop.metafields.tuecus.is_judgeme_reviews_enabled == '1' %}
+									<div class="tuecus-tab-pane fade tuecus-rounded tuecus-pl-4 tuecus-pr-4 tuecus-pt-1" id="app-pills-product-reviews" role="tabpanel" aria-labelledby="app-pills-product-reviews-tab">
+									
+									
+									<!-- Tuecus Customer Review Grid View Start-->
+									<div class="tuecus-bg-light">
+										<section class="tuecus-row" id="app-pills-product-reviews-body">
+											<div class="tuecus-mb-2 tuecus-col-md-3 tuecus-pl-0 tuecus-customer-review">
+												<div class="tuecus-col-md-12 tuecus-col-sm-6 tuecus-bg-white tuecus-p-0 tuecus-shadow-sm">
+													<div class="tuecus-border tuecus-rounded">
+														<a href="#">
+															<img src="" alt="tuecus product image" class="tuecus-img-responsive tuecus-img-thumbnail tuecus-border-0 tuecus-w-100 tuecus-review-img" />
+														</a>
+														<div class="tuecus-pb-2 tuecus-pl-2 tuecus-text-center">
+															<a href="#" class="tuecus-text-dark">
+																<h5 class="tuecus-customer tuecus-m-0">Michael Johnson</h5>
+															</a>	
+															<small class="tuecus-customer tuecus-m-0 tuecus-text-muted" style="font-size: 11px;">02/06/2021</small>
+															<div class="tuecus-rating">
+																<i class="fa fa-star tuecus-text-warning" aria-hidden="true"></i>
+																<i class="fa fa-star tuecus-text-warning" aria-hidden="true"></i>
+																<i class="fa fa-star tuecus-text-warning" aria-hidden="true"></i>
+																<i class="fa fa-star-half-o tuecus-text-warning" aria-hidden="true"></i>
+																<i class="fa fa-star-o tuecus-text-warning" aria-hidden="true"></i>
+															</div>
+															<div class="tuecus-review-desc">
+																<p class="tuecus-m-0">Good Product</p>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+									
+										</section>
+									</div>
+									<!-- Tuecus Customer Review Grisd View End -->
+								</div>
+								
+							{% endif %}
+							
+					{% if  shop.metafields.tuecus.is_judgeme_reviews_enabled == '1' %}
+						<script>
+							if(document.getElementById('app-pills-product-reviews')) {
+								getJudgemeCustomerReviewlist(1);
+							}
+						</script>
+							
+					{% elsif shop.metafields.tuecus.is_loox_reviews_enabled == '1' %}
+								
+						<script>
+							if(document.getElementById('app-pills-product-reviews')) {
+								getCustomerReviewlist();
+							}
+						</script>
+					{% endif %}
+                          {% endif %}
+                          
+                          <div class="tuecus-tab-pane tuecus-fade tuecus-shadow-sm tuecus-rounded tuecus-bg-white tuecus-p-4 tuecus-pt-1" id="app-pills-passwordchange" role="tabpanel" aria-labelledby="app-pills-passwordchange-tab">
+								<form method="post">
+									<div class="tuecus-row">
+										<div class="tuecus-col-md-6">
+											<div class="tuecus-form-group tuecus-input-group tuecus-mb-0">
+												<span class="tuecus-input-group-addon tuecus-pl-2 tuecus-border tuecus-pt-1 tuecus-pr-2"><i class="fa fa-lock tuecus-text-secondary"></i></span>
+												<input type="password" id="tuecus_password" name="tuecus_password" class="tuecus-form-control" placeholder="{{ 'tuecus.general.password' | t }}" value="" />
+											</div>
+											
+										
+												<small id="tuecus_password_error" class="tuecus-text-danger tuecus-mb-2 tuecus-valid-error"></small>
+													
+										
+							
+											<div class="tuecus-form-group tuecus-input-group tuecus-mb-0">
+												<span class="tuecus-input-group-addon tuecus-pl-2 tuecus-border tuecus-pt-1 tuecus-pr-2"><i class="fa fa-lock tuecus-text-secondary"></i></span>
+												<input type="password" id="tuecus_confirm_password" name="tuecus_confirm_password" class="tuecus-form-control" placeholder="{{ 'tuecus.general.confirm_password' | t }}" value="" />
+											</div>
+											
+												<small id="tuecus_confirm_password_error" class="tuecus-text-danger tuecus-mb-2 tuecus-valid-error"></small>
+													
+											
+											<button class="tuecus-btn tuecus-btn-success tuecus-btn-sm" type="button" id="tuecus-update-password">{{ 'tuecus.general.update_your_password' | t }} <i class="fa fa-refresh" aria-hidden="true"></i></button>
+											
+										</div>
+									</div>
+								</form>
+							</div>
+                          
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		
+		
+		
+		<div class="" id="tuecus-loader" style="display:none;">
+			<h4 class="text-center">Please Wait..</h4>
+			<div class="loader"></div>
+			<div class="tuecus-loader-text">
+				<h3></h3>                            
+			</div>                   	
+        </div>  
+	
+	</div>
+		
+		<script>
+		
+			function setDefaultAddr(evt){
+			     // alert(evt.getAttribute("data-address-id"));
+			     // alert(evt.getAttribute("data-customer-id"));
+				//var parent = evt.closest('p');
+				// var current = evt;
+				 var addressId = evt.getAttribute("data-address-id");
+				
+				 var customerId = evt.getAttribute("data-customer-id");
+				 var url="/apps/"+document.getElementById('tuecus-app-proxy').value+"/api/profile/defaultaddress"+"/"+document.getElementById('tuecus-store-token').value;
+
+				  var data = {};
+				  data.app_id =  document.getElementById('tuecus-app-id').value; 
+				  data.store_token = document.getElementById('tuecus-store-token').value;
+				  data.customer_id = customerId;
+				  data.address_id = addressId;
+
+				  const xhr = new XMLHttpRequest();
+				  xhr.open('POST', url, true);
+				  xhr.onreadystatechange = () => {
+					  if (xhr.readyState > 3) { 
+						   var alladdrs = document.getElementsByClassName("prev-default");
+							  for (var i = 0; i < alladdrs.length; i++) {
+							   // alert(alladdrs[i].checked);
+								alladdrs[i].checked = false;
+								alladdrs[i].nextSibling.innerHTML = "Make Default Address";
+							  }
+							  evt.checked = true;
+							  evt.nextSibling.innerHTML = "Default Address";
+					  }
+				   };
+				  xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+				  xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+				  xhr.send(JSON.stringify(data));
+            
+            }
+		  
+			function openTab(evt, target, is_mobile = false) {
+				  var i, tabcontent, tablinks;
+				  tabcontent = document.getElementsByClassName("tuecus-tab-pane");
+				  for (i = 0; i < tabcontent.length; i++) {
+					tabcontent[i].style.display = "none";
+					//tabcontent[i].className.replace(" active", "");
+					//tabcontent[i].className.replace(" show", "");
+					tabcontent[i].classList.remove("active");
+					tabcontent[i].classList.remove("show");
+					 console.log(tabcontent[i].className);
+					
+				  }
+				  tablinks = document.getElementsByClassName("nav-link");
+				  for (i = 0; i < tablinks.length; i++) {
+					tablinks[i].className = tablinks[i].className.replace(" active", "");
+				  }
+				  document.getElementById(target).style.display = "block";
+				   document.getElementById(target).className += " show active";
+				  // evt.currentTarget.style.display = "block";
+				  evt.currentTarget.className += " active";
+				  
+				  if(is_mobile) {
+					  var element = document.getElementById("tuecus-navbar-mobile-collapse");
+					  element.style.display="none";
+				  }
+				  
+				  
+				  
+			}
+
+			//Get the element with id="defaultOpen" and click on it
+			//document.getElementById("defaultOpen").click();
+
+			function openCreditsTab(evt, target) {
+			  var i, tabcontent, tablinks;
+			  tabcontent = document.getElementsByClassName("tuecus-credits-tab-pane");
+			  for (i = 0; i < tabcontent.length; i++) {
+				tabcontent[i].style.display = "none";
+				//tabcontent[i].className.replace(" active", "");
+				//tabcontent[i].className.replace(" show", "");
+				tabcontent[i].classList.remove("active");
+				tabcontent[i].classList.remove("show");
+                 console.log(tabcontent[i].className);
+				
+			  }
+			  tablinks = document.getElementsByClassName("nav-link");
+			  for (i = 0; i < tablinks.length; i++) {
+				tablinks[i].className = tablinks[i].className.replace(" active", "");
+			  }
+			  document.getElementById(target).style.display = "block";
+			   document.getElementById(target).className += " show active";
+			  // evt.currentTarget.style.display = "block";
+			  evt.currentTarget.className += " active";
+			}
+			
+			function toggletuecusmenu() {
+                                                      
+               var element = document.getElementById("tuecus-navbar-mobile-collapse");
+               //toogleClass(element, 'collapse');
+               if(element.style.display === 'none' || element.style.display === '') {
+                      element.style.display = 'block';                                                              
+                } else {
+                     element.style.display = 'none';                                                                     
+                 }                                                                   
+                                                                                    
+             }
+			 
+			 function showreturnpopup(orderid,product_id, item_url,first_name,last_name,email,phone) {
+
+
+
+				document.getElementById("order_refund_return__first_name").value = first_name;
+				document.getElementById("order_refund_return__last_name").value = last_name;
+				document.getElementById("order_refund_return__email").value = email;
+				document.getElementById("order_refund_return__phone").value = phone;
+				document.getElementById("order_refund_return_order_id").value = orderid;
+				document.getElementById("order_refund_return_product_id").value = product_id;
+																	 
+				document.getElementById("tuecus-refund-return-modal").style.display="block";
+																						
+				if(item_url.indexOf('?') !== false) {
+				 item_url = item_url.split('?')[0];
+																						
+				}                                                                           
+				var item_handle = item_url.split('products/')[1];  
+				//alert('item_handle'+item_handle); 
+
+				document.getElementById("order_refund_return_product_handle").value = item_handle;
+
+
+																						
+																						
+				document.getElementById("order_return_message_container").style.display="block";
+				document.getElementById("order_exchange_container").style.display="none";
+					
+																							
+			}
+
+                                                                                
+    function onreturntypeclick(val) {
+       if(val == '0') {
+            document.getElementById("order_return_message_container").style.display="block";
+            document.getElementById("order_exchange_container").style.display="none";
+                                                                              
+        } else {
+            document.getElementById("order_return_message_container").style.display="none";
+            document.getElementById("order_exchange_container").style.display="block";
+        var product_handle =  document.getElementById("order_refund_return_product_handle").value; 
+                                                                                     
+                                                                                      
+            var url='/products/' + product_handle + '.js';
+              const xhr = new XMLHttpRequest();
+               xhr.open('GET', url, true);
+               xhr.onreadystatechange = () => {
+                  if (xhr.readyState > 3) { 
+
+                      var resdata = xhr.responseText;
+                      //console.log(resdata);
+                      //deleteCookie('tref');
+                    //success(xhr);
+                     var product = JSON.parse(resdata);
+
+                     console.log(product.variants);
+                     var variants = [];
+                     for(var v=0;v< product.variants.length; v++) {
+                         var  variant =product.variants[v];   
+                                                                                          
+                         var instock = variant.available == true ? 'in stock' : 'out of stock';                                                                 
+                         variants.push('<div class="tuecus-col-md-12 tuecus-col-12 tuecus-row tuecus-ml-0 tuecus-mb-4 tuecus-pb-2"><div class="tuecus-form-check tuecus-col-md-3 tuecus-col-3 tuecus-mt-2 tuecus-text-center"><input class="tuecus-form-check-input" type="radio" name="order_exchange_variant_id" id="order_exchange_variant_id_'+variant.id+'" value="'+variant.id+'" class="order_exchange_variant_id"></div><div class="tuecus-col-md-4 tuecus-col-4 tuecus-text-center"><h6 class="tuecus-m-0">'+variant.title+'</h6><h6 class="tuecus-m-0 tuecus-font-weight-normal">Price : '+variant.price+'</h6></div><div class="tuecus-col-md-2 tuecus-col-2 tuecus-p-0 tuecus-text-center"><h6 class="tuecus-mt-2 tuecus-pt-2 tuecus-small tuecus-font-weight-bold tuecus-text-uppercase">'+instock+'</h6></div><div class="tuecus-col-md-3 tuecus-col-3 tuecus-text-right tuecus-mt-2"><button class="tuecus-btn tuecus-btn-sm tuecus-btn-success" onclick="selectvariant(\''+variant.id+'\')">SELECT <i class="fa fa-check tuecus-ml-2" aria-hidden="true"></i></button></div></div>');                                                                 
+                     } 
+                     if(variants.length > 0) {
+                     	document.getElementById("order_exchange_container").innerHTML = variants.join('');
+                     }
+                  }
+            
+
+          		};
+          xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+          xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+          xhr.send();                                                                           
+                                                                                     
+           }
+                                                                                          
+        }                                                                        
+     
+        function selectvariant(variant_id) {
+            document.getElementById("order_exchange_variant_id_"+variant_id).click();                                                              
+                                                                          
+		}
+        
+        function onOrderReturnSubmit() {
+           var first_name = document.getElementById("order_refund_return__first_name").value;
+           var last_name = document.getElementById("order_refund_return__last_name").value;
+           var email = document.getElementById("order_refund_return__email").value;
+           var phone = document.getElementById("order_refund_return__phone").value;
+           var orderid = document.getElementById("order_refund_return_order_id").value;
+           var product_id = document.getElementById("order_refund_return_product_id").value;
+		  var return_type = 0;
+          var radios = document.getElementsByName('return_type');
+          for (var radio of radios)
+          {
+              if (radio.checked) {
+                  return_type=radio.value;
+              }
+          }   
+          var return_message = '';
+          var product_variant_id = '';          
+          if( return_type == 0 || return_type == '0') {
+                                                                                    
+              return_message =   document.getElementById("order_return_message").value;                                                                    
+          } else {
+                                                                               
+                                                                    
+          }  
+          
+          var order_exchange_variant_id_radios = document.getElementsByName('order_exchange_variant_id');
+          for (var order_exchange_variant_id_radio of order_exchange_variant_id_radios)
+          {
+              if (order_exchange_variant_id_radio.checked) {
+                  product_variant_id=order_exchange_variant_id_radio.value;
+              }
+          } 
+                                                                               
+          document.getElementById("tuecus-refund-return-modal").style.display="none";
+			
+          
+		var url="/apps/"+document.getElementById('tuecus-app-proxy').value+"/api/profile/orderreturn"+"/"+document.getElementById('tuecus-store-token').value;
+		
+		var data = {};
+		data.app_id =  document.getElementById('tuecus-app-id').value; 
+    	data.store_token = document.getElementById('tuecus-store-token').value;
+		data.customer_id = document.getElementById('tuecus-customer-id').value;
+		data.product_id = product_id;
+		data.first_name = first_name;
+        data.last_name = last_name;
+        data.email = email;
+        data.phone = phone;                                                                                                
+		data.orderid = orderid;
+        data.return_type = return_type;                            
+        data.return_message = return_message;
+        data.product_variant_id = product_variant_id;                                                                                                 const xhr = new XMLHttpRequest();
+		 xhr.open('POST', url, true);
+		 xhr.onreadystatechange = () => {
+			if (xhr.readyState > 3) { 
+			 
+				var resdata = xhr.responseText;
+				var response = JSON.parse(resdata);
+				
+				if(response.status == 'success' || response.error == false) {
+					
+									
+				} else {
+					
+				}
+				 //$('#tuecus-add-address-modal').hide();
+				 //document.getElementById("tuecus-add-address-modal").style.display="none";
+			}
+		 };
+		 xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+		 xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+		 xhr.send(JSON.stringify(data));                                                                          
+                                                                                    
+                                                                                    
+                                                                
+        }
+		
+		function onCopyMembershipDiscCode() {
+		  
+	  
+		  var copyRefInput = document.getElementById('membership-discount-code');
+		  copyRefInput.focus();
+		  copyRefInput.select();
+
+		  try {
+			var successful = document.execCommand('copy');
+			var msg = successful ? 'successful' : 'unsuccessful';
+			console.log('Copying text command was ' + msg);
+		  } catch (err) {
+			console.log('Oops, unable to copy');
+		  }
+		
+	 	}
+		
+		const default_address_checkbox = document.getElementById('setdefaultaddress');
+
+        default_address_checkbox.addEventListener('change', (event) => {
+        if (event.currentTarget.checked) {
+            document.getElementById('setdefaultaddress').value = 1;
+            document.getElementById('isDefaultAddress').value = 1;
+          } else {
+            document.getElementById('setdefaultaddress').value = 0;
+            document.getElementById('isDefaultAddress').value = 0;
+          }
+        });
+
+		</script>
+		
+		
+		
+		
+		

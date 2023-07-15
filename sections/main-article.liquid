@@ -1,399 +1,736 @@
-{{ 'section-blog-post.css' | asset_url | stylesheet_tag }}
-
-<article class="article-template" itemscope itemtype="http://schema.org/BlogPosting">
-  {%- for block in section.blocks -%}
-    {%- case block.type -%}
-      {%- when '@app' -%}
-        <div class="page-width page-width--narrow">
-          {% render block %}
-        </div>
-      {%- when 'featured_image' -%}
-        {%- if article.image -%}
-          <div
-            class="article-template__hero-container{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
-            {{ block.shopify_attributes }}
-          >
-            <div
-              class="article-template__hero-{{ block.settings.image_height }} media"
-              itemprop="image"
-              {% if block.settings.image_height == 'adapt' and article.image %}
-                style="padding-bottom: {{ 1 | divided_by: article.image.aspect_ratio | times: 100 }}%;"
-              {% endif %}
-            >
-              <img
-                srcset="
-                  {% if article.image.width >= 350 %}{{ article.image | image_url: width: 350 }} 350w,{% endif %}
-                  {% if article.image.width >= 750 %}{{ article.image | image_url: width: 750 }} 750w,{% endif %}
-                  {% if article.image.width >= 1100 %}{{ article.image | image_url: width: 1100 }} 1100w,{% endif %}
-                  {% if article.image.width >= 1500 %}{{ article.image | image_url: width: 1500 }} 1500w,{% endif %}
-                  {% if article.image.width >= 2200 %}{{ article.image | image_url: width: 2200 }} 2200w,{% endif %}
-                  {% if article.image.width >= 3000 %}{{ article.image | image_url: width: 3000 }} 3000w,{% endif %}
-                  {{ article.image | image_url }} {{ article.image.width }}w
-                "
-                sizes="(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 }}px, (min-width: 750px) calc(100vw - 10rem), 100vw"
-                src="{{ article.image | image_url: width: 1100 }}"
-                loading="eager"
-                fetchpriority="high"
-                width="{{ article.image.width }}"
-                height="{{ article.image.height }}"
-                alt="{{ article.image.alt | escape }}"
-              >
-            </div>
-          </div>
-        {%- endif -%}
-
-      {%- when 'title' -%}
-        <header
-          class="page-width page-width--narrow{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
-          {{ block.shopify_attributes }}
-        >
-          <h1
-            class="article-template__title"
-            itemprop="headline"
-          >
-            {{ article.title | escape }}
-          </h1>
-          {%- if block.settings.blog_show_date -%}
-            <span class="circle-divider caption-with-letter-spacing" itemprop="dateCreated pubdate datePublished">
-              {{- article.published_at | time_tag: format: 'date' -}}
-            </span>
-          {%- endif -%}
-          {%- if block.settings.blog_show_author -%}
-            <span class="caption-with-letter-spacing" itemprop="author" itemscope itemtype="http://schema.org/Person">
-              <span itemprop="name">{{ article.author }}</span>
-            </span>
-          {%- endif -%}
-        </header>
-
-      {%- when 'content' -%}
-        <div
-          class="article-template__content page-width page-width--narrow rte{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
-          itemprop="articleBody"
-          {{ block.shopify_attributes }}
-        >
-          {{ article.content }}
-        </div>
-
-      {%- when 'share' -%}
-        <div
-          class="article-template__social-sharing page-width page-width--narrow{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
-          {{ block.shopify_attributes }}
-        >
-          {% assign share_url = request.origin | append: article.url %}
-          {% render 'share-button', block: block, share_link: share_url %}
-        </div>
-    {%- endcase -%}
-  {%- endfor -%}
-
-  <div class="article-template__back element-margin-top center{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-    <a href="{{ blog.url }}" class="article-template__link link animate-arrow">
-      <span class="icon-wrap">{% render 'icon-arrow' %}</span>
-      {{ 'blogs.article.back_to_blog' | t: title: blog.title }}
-    </a>
-  </div>
-  {%- if blog.comments_enabled? -%}
-    <div class="article-template__comment-wrapper background-secondary">
-      <div
-        id="comments"
-        class="page-width page-width--narrow{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
-      >
-        {%- if article.comments_count > 0 -%}
-          {%- assign anchorId = '#Comments-' | append: article.id -%}
-
-          <h2 id="Comments-{{ article.id }}" tabindex="-1">
-            {{ 'blogs.article.comments' | t: count: article.comments_count }}
-          </h2>
-          {% paginate article.comments by 5 %}
-            <div class="article-template__comments">
-              {%- if comment.status == 'pending' and comment.content -%}
-                <article id="{{ comment.id }}" class="article-template__comments-comment">
-                  {{ comment.content }}
-                  <footer class="right">
-                    <span class="circle-divider caption-with-letter-spacing">{{ comment.author }}</span>
-                  </footer>
-                </article>
-              {%- endif -%}
-
-              {%- for comment in article.comments -%}
-                <article id="{{ comment.id }}" class="article-template__comments-comment">
-                  {{ comment.content }}
-                  <footer class="right">
-                    <span class="circle-divider caption-with-letter-spacing">{{ comment.author }}</span
-                    ><span class="caption-with-letter-spacing">
-                      {{- comment.created_at | time_tag: format: 'date' -}}
-                    </span>
-                  </footer>
-                </article>
-              {%- endfor -%}
-              {% render 'pagination', paginate: paginate, anchor: anchorId %}
-            </div>
-          {% endpaginate %}
-        {%- endif -%}
-        {% form 'new_comment', article %}
-          {%- liquid
-            assign post_message = 'blogs.article.success'
-            if blog.moderated? and comment.status == 'unapproved'
-              assign post_message = 'blogs.article.success_moderated'
-            endif
-          -%}
-          <h2>{{ 'blogs.article.comment_form_title' | t }}</h2>
-          {%- if form.errors -%}
-            <div class="form__message" role="alert">
-              <h3 class="form-status caption-large text-body" tabindex="-1" autofocus>
-                {% render 'icon-error' %}
-                {{ 'templates.contact.form.error_heading' | t }}
-              </h3>
-            </div>
-            <ul class="form-status-list caption-large">
-              {%- for field in form.errors -%}
-                <li>
-                  <a href="#CommentForm-{{ field }}" class="link">
-                    {%- if form.errors.translated_fields[field] contains 'author' -%}
-                      {{ 'blogs.article.name' | t }}
-                    {%- elsif form.errors.translated_fields[field] contains 'body' -%}
-                      {{ 'blogs.article.message' | t }}
-                    {%- else -%}
-                      {{ form.errors.translated_fields[field] }}
-                    {%- endif -%}
-                    {{ form.errors.messages[field] }}
-                  </a>
-                </li>
-              {%- endfor -%}
-            </ul>
-          {%- elsif form.posted_successfully? -%}
-            <div class="form-status-list form__message" role="status">
-              <h3 class="form-status" tabindex="-1" autofocus>
-                {% render 'icon-success' %}
-                {{ post_message | t }}
-              </h3>
-            </div>
-          {%- endif -%}
-
-          <div
-            {% if blog.moderated? == false %}
-              class="article-template__comments-fields"
-            {% endif %}
-          >
-            <div class="article-template__comment-fields">
-              <div class="field field--with-error">
-                <input
-                  type="text"
-                  name="comment[author]"
-                  id="CommentForm-author"
-                  class="field__input"
-                  autocomplete="name"
-                  value="{{ form.author }}"
-                  aria-required="true"
-                  required
-                  {% if form.errors contains 'author' %}
-                    aria-invalid="true"
-                    aria-describedby="CommentForm-author-error"
-                  {% endif %}
-                  placeholder="{{ 'blogs.article.name' | t }}"
-                >
-                <label class="field__label" for="CommentForm-author">
-                  {{- 'blogs.article.name' | t }}
-                  <span aria-hidden="true">*</span></label
-                >
-                {%- if form.errors contains 'author' -%}
-                  <small id="CommentForm-author-error">
-                    <span class="form__message">
-                      {%- render 'icon-error' -%}
-                      {{- 'blogs.article.name' | t }}
-                      {{ form.errors.messages.author }}.</span
-                    >
-                  </small>
-                {%- endif -%}
-              </div>
-              <div class="field field--with-error">
-                <input
-                  type="email"
-                  name="comment[email]"
-                  id="CommentForm-email"
-                  autocomplete="email"
-                  class="field__input"
-                  value="{{ form.email }}"
-                  autocorrect="off"
-                  autocapitalize="off"
-                  aria-required="true"
-                  required
-                  {% if form.errors contains 'email' %}
-                    aria-invalid="true"
-                    aria-describedby="CommentForm-email-error"
-                  {% endif %}
-                  placeholder="{{ 'blogs.article.email' | t }}"
-                >
-                <label class="field__label" for="CommentForm-email">
-                  {{- 'blogs.article.email' | t }}
-                  <span aria-hidden="true">*</span></label
-                >
-                {%- if form.errors contains 'email' -%}
-                  <small id="CommentForm-email-error">
-                    <span class="form__message">
-                      {%- render 'icon-error' -%}
-                      {{- 'blogs.article.email' | t }}
-                      {{ form.errors.messages.email }}.</span
-                    >
-                  </small>
-                {%- endif -%}
-              </div>
-            </div>
-            <div class="field field--with-error">
-              <textarea
-                rows="5"
-                name="comment[body]"
-                id="CommentForm-body"
-                class="text-area field__input"
-                aria-required="true"
-                required
-                {% if form.errors contains 'body' %}
-                  aria-invalid="true"
-                  aria-describedby="CommentForm-body-error"
-                {% endif %}
-                placeholder="{{ 'blogs.article.message' | t }}"
-              >{{ form.body }}</textarea>
-              <label class="form__label field__label" for="CommentForm-body">
-                {{- 'blogs.article.message' | t }}
-                <span aria-hidden="true">*</span></label
-              >
-            </div>
-            {%- if form.errors contains 'body' -%}
-              <small id="CommentForm-body-error">
-                <span class="form__message">
-                  {%- render 'icon-error' -%}
-                  {{- 'blogs.article.message' | t }}
-                  {{ form.errors.messages.body }}.</span
-                >
-              </small>
-            {%- endif -%}
-          </div>
-          {%- if blog.moderated? -%}
-            <p class="article-template__comment-warning caption">{{ 'blogs.article.moderated' | t }}</p>
-          {%- endif -%}
-          <input type="submit" class="button" value="{{ 'blogs.article.post' | t }}">
-        {% endform %}
-      </div>
+<div class="article-template">
+  <div class="container">
+    {% render 'breadcrumb' %}
+    
+    <div class="page-header">
+      {% if current_tags %}
+        <h2>{{ blog.title | split: '|' | first | link_to: blog.url }} &raquo; {{ current_tags.first }}</h2>
+      {% else %}
+        <h2>{% render 'multilang' with blog.title %}</h2>
+      {% endif %}
     </div>
-  {%- endif -%}
-</article>
-
-<script type="application/ld+json">
-  {
-    "@context": "http://schema.org",
-    "@type": "Article",
-    "articleBody": {{ article.content | strip_html | json }},
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id": {{ request.origin | append: page.url | json }}
-    },
-    "headline": {{ article.title | json }},
-    {% if article.excerpt != blank %}
-      "description": {{ article.excerpt | strip_html | json }},
-    {% endif %}
-    {% if article.image %}
-      "image": [
-        {{ article | image_url: width: 1920 | prepend: "https:" | json }}
-      ],
-    {% endif %}
-    "datePublished": {{ article.published_at | date: '%Y-%m-%dT%H:%M:%SZ' | json }},
-    "dateCreated": {{ article.created_at | date: '%Y-%m-%dT%H:%M:%SZ' | json }},
-    "author": {
-      "@type": "Person",
-      "name": {{ article.author | json }}
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": {{ shop.name | json }}
-    }
-  }
-</script>
+    
+    <div class="halo-blog-content article-content">
+      <div class="row {{ blog.template_suffix }}">
+        {% render 'sidebar-blog' %}
+        {% render 'article-template' %}
+      </div>      
+    </div>   
+  </div>
+</div>
 
 {% schema %}
-{
-  "name": "t:sections.main-article.name",
-  "tag": "section",
-  "class": "section",
-  "blocks": [
-    {
-      "type": "@app"
-    },
-    {
-      "type": "featured_image",
-      "name": "t:sections.main-article.blocks.featured_image.name",
-      "limit": 1,
-      "settings": [
-        {
-          "type": "select",
-          "id": "image_height",
-          "options": [
+  {
+    "name": "Main Article",
+    "settings": [      
+      {
+        "type": "checkbox",
+        "id": "blog_show_author",
+        "label": "Show author",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "blog_show_date",
+        "label": "Show date",
+        "default": true
+      },
+      {
+        "type": "header",
+        "content": "Lookbook Description in Blog Detail"
+      },
+      {
+        "type": "checkbox",
+        "id": "dpl_lookbook_description",
+        "label": "Display Lookbook Description?",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "quote_title",
+        "label": "Quote Title 1"
+      },
+      {
+        "type": "textarea",
+        "id": "quote_des",
+        "label": "Quote Description 1"
+      },
+      {
+        "type": "text",
+        "id": "quote_title_2",
+        "label": "Quote Title 2"
+      },
+      {
+        "type": "textarea",
+        "id": "quote_des_2",
+        "label": "Quote Description 2"
+      },
+      {
+        "type": "header",
+        "content": "LookBook Gallery in Blog Detail"
+      },
+      {
+        "type": "checkbox",
+        "id": "dpl_gallery_lookbook",
+        "label": "Display LookBook Gallery?",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "gallery_lb_title",
+        "label": "Title",
+        "default": "LookBook Gallery"
+      },
+      {
+        "type": "header",
+        "content": "Featured Product"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_cart_best_sellers_product",
+        "label": "Enable",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "Best Sellers"
+      },      
+      {
+        "type": "collection",
+        "id": "show_slider_featured_collection",
+        "label": "Collection to use"
+      },
+      {
+        "type": "range",
+        "id": "slider_featured_limit_all",
+        "label": "Number of new products to show",
+        "min": 3,
+        "max": 20,
+        "step": 1,
+        "default": 8
+      },
+      {
+        "type": "select",
+        "id": "collection_results_per_row1",
+        "label": "Products per row",
+        "options": [
+          {
+            "value": "2",
+            "label": "2"
+          },
+          {
+            "value": "3",
+            "label": "3"
+          },
+          {
+            "value": "4",
+            "label": "4"
+          },
+          {
+            "value": "5",
+            "label": "5"
+          },
+          {
+            "value": "6",
+            "label": "6"
+          }
+        ],
+        "default": "4"
+      }
+
+    ],
+    "blocks": [
+      {
+          "type": "sidebar_blog",
+          "name": "Sidebar Blog",
+          "settings": [
             {
-              "value": "adapt",
-              "label": "t:sections.main-article.blocks.featured_image.settings.image_height.options__1.label"
+                "type": "checkbox",
+                "id": "display_sidebar_blog_page",
+                "label": "Enable Sidebar",
+                "default": true
             },
             {
-              "value": "small",
-              "label": "t:sections.main-article.blocks.featured_image.settings.image_height.options__2.label"
+                "type": "select",
+                "id": "show_sidebar",
+                "label": "Show Sidebar on:",
+                "options": [
+                  {
+                    "value": "left",
+                    "label": "Left"
+                  },
+                  {
+                    "value": "right",
+                    "label": "Right"
+                  }          
+                ],
+                "default": "left",
+                "info": "Default: Left"
             },
             {
-              "value": "medium",
-              "label": "t:sections.main-article.blocks.featured_image.settings.image_height.options__3.label"
+                "type": "checkbox",
+                "id": "display_sidebar_link",
+                "label": "Enable Sidebar Link",
+                "default": true
             },
             {
-              "value": "large",
-              "label": "t:sections.main-article.blocks.featured_image.settings.image_height.options__4.label"
+                "type": "text",
+                "id": "sidebar_link_title",
+                "label": "Title",
+                "default": "Categories"
+            },
+            {
+                "type": "radio",
+                "id": "style_categories",
+                "label": "Show all \/ Only a few categories",
+                "options": [
+                  {
+                    "value": "style_show_all",
+                    "label": "Show all"
+                  },
+                  {
+                    "value": "style_little",
+                    "label": "Only a few categories"
+                  }
+                ]
+            },
+            {
+                "type": "link_list",
+                "id": "link_list",
+                "label": "Choose a menu",
+                "default": "main-menu"
+            },
+            {
+                "type": "checkbox",
+                "id": "sidebar_recent_art",
+                "label": "Show Block Recent Article",
+                "default": true
+            },
+            {
+                "type": "checkbox",
+                "id": "sidebar_blog_tags",
+                "label": "Show Sidebar Blog tags",
+                "default": false
+            },
+            {
+                "type": "header",
+                "content": "Product Slider"
+            },
+            {
+                "type": "checkbox",
+                "id": "enable_product",
+                "label": "Enable",
+                "default": true
+            },
+            {
+                "type": "text",
+                "id": "title_product",
+                "label": "Title",
+                "default": "Featured Products"
+            },
+            {
+                "id": "collection",
+                "type": "collection",
+                "label": "Collection"
+            },
+            {
+                "type": "text",
+                "id": "limit",
+                "label": "Number of products to show",
+                "default": "8"
+            },
+            {
+                "type": "header",
+                "content": "Block Image 1"
+            },
+            {
+                "type": "checkbox",
+                "id": "enable_img_1",
+                "label": "Enable",
+                "default": true
+            },
+            {
+                "type": "image_picker",
+                "id": "image_img_1",
+                "label": "Image"
+            },
+            {
+                "type": "url",
+                "id": "link_img_1",
+                "label": "Link",
+                "info": "Optional"
+            },
+            {
+                "type": "header",
+                "content": "Block Image 2"
+            },
+            {
+                "type": "checkbox",
+                "id": "enable_img_2",
+                "label": "Enable",
+                "default": true
+            },
+            {
+                "type": "image_picker",
+                "id": "image_img_2",
+                "label": "Image"
+            },
+            {
+                "type": "url",
+                "id": "link_img_2",
+                "label": "Link",
+                "info": "Optional"
+            },
+            {
+                "type": "header",
+                "content": "Custom Block"
+            },
+            {
+                "type": "checkbox",
+                "id": "enable_custom_block",
+                "label": "Enable",
+                "default": true
+            },
+            {
+                "type": "text",
+                "id": "title_custom_block",
+                "label": "Heading",
+                "default": "Custom Block"
+            },
+            {
+                "type": "textarea",
+                "id": "quote_custom_block",
+                "label": "Text",
+                "default": "<p>Add customer reviews and testimonials to showcase your store’s happy customers.</p>"
+            }]
+      },
+      {
+          "type": "image",
+          "name": "LookBook Gallery",
+          "settings":[                    
+            {
+              "type" : "header",
+              "content" : "Image 1"
+            },
+            {
+              "type": "image_picker",
+              "id": "image_1",
+              "label" : "Select Image",
+              "info": "Recommended Image: Width x Height (290 x 387)px"
+            },            
+            {
+              "type" : "header",
+              "content" : "Product 1"
+            },
+            {
+              "type" : "product",
+              "id" : "lb_product_1_1",
+              "label" : "Select Product"
+            },
+            {
+              "type" : "text",
+              "id" : "top_position_1_1",
+              "label" : "Top Position",
+              "default" : "10",
+              "info" : "Unit %" 
+            },
+            {
+              "type" : "text",
+              "id" : "left_position_1_1",
+              "label" : "Left Position",
+              "default" : "10",
+              "info" : "Unit %" 
+            },
+            {
+              "type" : "color",
+              "id" : "dots_color_1_1",
+              "label" : "Select Icon Color",
+              "default" : "#fff"
+            },
+            {
+              "type" : "color",
+              "id" : "dots_bg_color_1_1",
+              "label" : "Select Icon Background color",
+              "default" : "#323232"     
+            },
+            {
+              "type" : "color",
+              "id" : "dots_shadow_color_1_1",
+              "label" : "Select Icon Shadow Color with opacity 0.3",
+              "default" : "#fff",
+              "info" : "======================="
+            },
+
+            {
+              "type" : "header",
+              "content" : "Product 2"
+            },
+            {
+              "type" : "product",
+              "id" : "lb_product_1_2",
+              "label" : "Select Product"
+            },
+            {
+              "type" : "text",
+              "id" : "top_position_1_2",
+              "label" : "Top Position",
+              "default" : "10",
+              "info" : "Unit %" 
+            },
+            {
+              "type" : "text",
+              "id" : "left_position_1_2",
+              "label" : "Left Position",
+              "default" : "10",
+              "info" : "Unit %" 
+            },
+            {
+              "type" : "color",
+              "id" : "dots_color_1_2",
+              "label" : "Select Icon Color",
+              "default" : "#fff"
+            },
+            {
+              "type" : "color",
+              "id" : "dots_bg_color_1_2",
+              "label" : "Select Icon Background color",
+              "default" : "#323232"     
+            },
+            {
+              "type" : "color",
+              "id" : "dots_shadow_color_1_2",
+              "label" : "Select Icon Shadow Color with opacity 0.3",
+              "default" : "#fff",
+              "info" : "======================="
+            },
+
+            {
+              "type" : "header",
+              "content" : "Product 3"
+            },
+            {
+              "type" : "product",
+              "id" : "lb_product_1_3",
+              "label" : "Select Product"
+            },
+            {
+              "type" : "text",
+              "id" : "top_position_1_3",
+              "label" : "Top Position",
+              "default" : "10",
+              "info" : "Unit %" 
+            },
+            {
+              "type" : "text",
+              "id" : "left_position_1_3",
+              "label" : "Left Position",
+              "default" : "10",
+              "info" : "Unit %" 
+            },
+            {
+              "type" : "color",
+              "id" : "dots_color_1_3",
+              "label" : "Select Icon Color",
+              "default" : "#fff"
+            },
+            {
+              "type" : "color",
+              "id" : "dots_bg_color_1_3",
+              "label" : "Select Icon Background color",
+              "default" : "#323232"     
+            },
+            {
+              "type" : "color",
+              "id" : "dots_shadow_color_1_3",
+              "label" : "Select Icon Shadow Color with opacity 0.3",
+              "default" : "#fff",
+              "info" : "======================="
+            },
+
+            {
+              "type" : "header",
+              "content" : "Image 2"
+            },
+            {
+              "type": "image_picker",
+              "id": "image_2",
+              "label" : "Select Image",
+              "info": "Recommended Image: Width x Height (290 x 387)px"
+            },            
+            {
+              "type" : "header",
+              "content" : "Product 1"
+            },
+            {
+              "type" : "product",
+              "id" : "lb_product_2_1",
+              "label" : "Select Product"
+            },
+            {
+              "type" : "text",
+              "id" : "top_position_2_1",
+              "label" : "Top Position",
+              "default" : "10",
+              "info" : "Unit %" 
+            },
+            {
+              "type" : "text",
+              "id" : "left_position_2_1",
+              "label" : "Left Position",
+              "default" : "10",
+              "info" : "Unit %" 
+            },
+            {
+              "type" : "color",
+              "id" : "dots_color_2_1",
+              "label" : "Select Icon Color",
+              "default" : "#fff"
+            },
+            {
+              "type" : "color",
+              "id" : "dots_bg_color_2_1",
+              "label" : "Select Icon Background color",
+              "default" : "#323232"     
+            },
+            {
+              "type" : "color",
+              "id" : "dots_shadow_color_2_1",
+              "label" : "Select Icon Shadow Color with opacity 0.3",
+              "default" : "#fff",
+              "info" : "======================="
+            },
+
+            {
+              "type" : "header",
+              "content" : "Product 2"
+            },
+            {
+              "type" : "product",
+              "id" : "lb_product_2_2",
+              "label" : "Select Product"
+            },
+            {
+              "type" : "text",
+              "id" : "top_position_2_2",
+              "label" : "Top Position",
+              "default" : "10",
+              "info" : "Unit %" 
+            },
+            {
+              "type" : "text",
+              "id" : "left_position_2_2",
+              "label" : "Left Position",
+              "default" : "10",
+              "info" : "Unit %" 
+            },
+            {
+              "type" : "color",
+              "id" : "dots_color_2_2",
+              "label" : "Select Icon Color",
+              "default" : "#fff"
+            },
+            {
+              "type" : "color",
+              "id" : "dots_bg_color_2_2",
+              "label" : "Select Icon Background color",
+              "default" : "#323232"     
+            },
+            {
+              "type" : "color",
+              "id" : "dots_shadow_color_2_2",
+              "label" : "Select Icon Shadow Color with opacity 0.3",
+              "default" : "#fff",
+              "info" : "======================="
+            },
+
+            {
+              "type" : "header",
+              "content" : "Product 3"
+            },
+            {
+              "type" : "product",
+              "id" : "lb_product_2_3",
+              "label" : "Select Product"
+            },
+            {
+              "type" : "text",
+              "id" : "top_position_2_3",
+              "label" : "Top Position",
+              "default" : "10",
+              "info" : "Unit %" 
+            },
+            {
+              "type" : "text",
+              "id" : "left_position_2_3",
+              "label" : "Left Position",
+              "default" : "10",
+              "info" : "Unit %" 
+            },
+            {
+              "type" : "color",
+              "id" : "dots_color_2_3",
+              "label" : "Select Icon Color",
+              "default" : "#fff"
+            },
+            {
+              "type" : "color",
+              "id" : "dots_bg_color_2_3",
+              "label" : "Select Icon Background color",
+              "default" : "#323232"     
+            },
+            {
+              "type" : "color",
+              "id" : "dots_shadow_color_2_3",
+              "label" : "Select Icon Shadow Color with opacity 0.3",
+              "default" : "#fff",
+              "info" : "======================="
+            },
+
+            {
+              "type" : "header",
+              "content" : "Image 3"
+            },
+            {
+              "type": "image_picker",
+              "id": "image_3",
+              "label" : "Select Image",
+              "info": "Recommended Image: Width x Height (290 x 387)px"
+            },            
+            {
+              "type" : "header",
+              "content" : "Product 1"
+            },
+            {
+              "type" : "product",
+              "id" : "lb_product_3_1",
+              "label" : "Select Product"
+            },
+            {
+              "type" : "text",
+              "id" : "top_position_3_1",
+              "label" : "Top Position",
+              "default" : "10",
+              "info" : "Unit %" 
+            },
+            {
+              "type" : "text",
+              "id" : "left_position_3_1",
+              "label" : "Left Position",
+              "default" : "10",
+              "info" : "Unit %" 
+            },
+            {
+              "type" : "color",
+              "id" : "dots_color_3_1",
+              "label" : "Select Icon Color",
+              "default" : "#fff"
+            },
+            {
+              "type" : "color",
+              "id" : "dots_bg_color_3_1",
+              "label" : "Select Icon Background color",
+              "default" : "#323232"     
+            },
+            {
+              "type" : "color",
+              "id" : "dots_shadow_color_3_1",
+              "label" : "Select Icon Shadow Color with opacity 0.3",
+              "default" : "#fff",
+              "info" : "======================="
+            },
+
+            {
+              "type" : "header",
+              "content" : "Product 2"
+            },
+            {
+              "type" : "product",
+              "id" : "lb_product_3_2",
+              "label" : "Select Product"
+            },
+            {
+              "type" : "text",
+              "id" : "top_position_3_2",
+              "label" : "Top Position",
+              "default" : "10",
+              "info" : "Unit %" 
+            },
+            {
+              "type" : "text",
+              "id" : "left_position_3_2",
+              "label" : "Left Position",
+              "default" : "10",
+              "info" : "Unit %" 
+            },
+            {
+              "type" : "color",
+              "id" : "dots_color_3_2",
+              "label" : "Select Icon Color",
+              "default" : "#fff"
+            },
+            {
+              "type" : "color",
+              "id" : "dots_bg_color_3_2",
+              "label" : "Select Icon Background color",
+              "default" : "#323232"     
+            },
+            {
+              "type" : "color",
+              "id" : "dots_shadow_color_3_2",
+              "label" : "Select Icon Shadow Color with opacity 0.3",
+              "default" : "#fff",
+              "info" : "======================="
+            },
+
+            {
+              "type" : "header",
+              "content" : "Product 3"
+            },
+            {
+              "type" : "product",
+              "id" : "lb_product_3_3",
+              "label" : "Select Product"
+            },
+            {
+              "type" : "text",
+              "id" : "top_position_3_3",
+              "label" : "Top Position",
+              "default" : "10",
+              "info" : "Unit %" 
+            },
+            {
+              "type" : "text",
+              "id" : "left_position_3_3",
+              "label" : "Left Position",
+              "default" : "10",
+              "info" : "Unit %" 
+            },
+            {
+              "type" : "color",
+              "id" : "dots_color_3_3",
+              "label" : "Select Icon Color",
+              "default" : "#fff"
+            },
+            {
+              "type" : "color",
+              "id" : "dots_bg_color_3_3",
+              "label" : "Select Icon Background color",
+              "default" : "#323232"     
+            },
+            {
+              "type" : "color",
+              "id" : "dots_shadow_color_3_3",
+              "label" : "Select Icon Shadow Color with opacity 0.3",
+              "default" : "#fff",
+              "info" : "======================="
             }
-          ],
-          "default": "adapt",
-          "label": "t:sections.main-article.blocks.featured_image.settings.image_height.label",
-          "info": "t:sections.main-article.blocks.featured_image.settings.image_height.info"
-        }
-      ]
-    },
-    {
-      "type": "title",
-      "name": "t:sections.main-article.blocks.title.name",
-      "limit": 1,
-      "settings": [
-        {
-          "type": "checkbox",
-          "id": "blog_show_date",
-          "default": true,
-          "label": "t:sections.main-article.blocks.title.settings.blog_show_date.label"
-        },
-        {
-          "type": "checkbox",
-          "id": "blog_show_author",
-          "default": false,
-          "label": "t:sections.main-article.blocks.title.settings.blog_show_author.label"
-        }
-      ]
-    },
-    {
-      "type": "content",
-      "name": "t:sections.main-article.blocks.content.name",
-      "limit": 1
-    },
-    {
-      "type": "share",
-      "name": "t:sections.main-article.blocks.share.name",
-      "limit": 2,
-      "settings": [
-        {
-          "type": "text",
-          "id": "share_label",
-          "label": "t:sections.main-article.blocks.share.settings.text.label",
-          "default": "Share"
-        },
-        {
-          "type": "paragraph",
-          "content": "t:sections.main-article.blocks.share.settings.featured_image_info.content"
-        },
-        {
-          "type": "paragraph",
-          "content": "t:sections.main-article.blocks.share.settings.title_info.content"
-        }
-      ]
-    }
-  ]
-}
+          ]
+      }
+
+    ]
+   
+
+  }
 {% endschema %}

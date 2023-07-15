@@ -1,0 +1,251 @@
+{
+  "wrapper": "div.faqs-page",
+  "sections": {
+    "main": {
+      "type": "faq-page",
+      "disabled": true,
+      "settings": {
+        "des_faqs": "",
+        "contact_text": "",
+        "contact_link_text": "",
+        "contact_link": "",
+        "icon_faqs": "",
+        "bg_icon_qs": "#ef6454",
+        "color_icon_qs": "#ffffff",
+        "bg_question": "#fafafa",
+        "color_question": "#323232",
+        "font_size_qs": "12",
+        "bg_question_acitve": "#232323",
+        "color_question_acitve": "#ffffff",
+        "icon_answer": "Answer",
+        "bg_icon_answer": "#69c69c",
+        "color_icon_answer": "#ffffff",
+        "color_question_answer": "#3c3c3c",
+        "font_size_answer": "12",
+        "color_question_link": "#0688e2",
+        "icon_show": "Show",
+        "icon_hide": "Hide"
+      }
+    },
+    "1657614217291b9345": {
+      "type": "home-rich-text",
+      "settings": {
+        "content_top": "<b>Daily Promotion<\/b>",
+        "content_bottom": "",
+        "font_size": "24px",
+        "text_alignment": "center",
+        "button_text_more": "Read More",
+        "button_text_less": "Read Less",
+        "color_text": "",
+        "margin_bottom_mb": 20,
+        "margin_bottom_tab": 20,
+        "margin_bottom": 20
+      }
+    },
+    "16570771779b11657d": {
+      "type": "home-sub-banner",
+      "blocks": {
+        "165707717723c2dc25-0": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/Voucher.jpg",
+            "title": "",
+            "color_title": "#ffffff",
+            "link": "shopify:\/\/pages\/voucher"
+          }
+        },
+        "165707717723c2dc25-1": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/aa.jpg",
+            "title": "",
+            "color_title": "#ffffff",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "165707717723c2dc25-0",
+        "165707717723c2dc25-1"
+      ],
+      "settings": {
+        "display_sub_banner": true,
+        "layout": "default",
+        "margin_bottom_mb": 0,
+        "margin_bottom_tab": 0,
+        "margin_bottom": 0,
+        "font_size_title": "16px",
+        "display_padding": true
+      }
+    },
+    "165717564685773dde": {
+      "type": "home-rich-text",
+      "settings": {
+        "content_top": "<b>Partners Promotion<\/b>",
+        "content_bottom": "",
+        "font_size": "24px",
+        "text_alignment": "center",
+        "button_text_more": "Read More",
+        "button_text_less": "Read Less",
+        "color_text": "",
+        "margin_bottom_mb": 20,
+        "margin_bottom_tab": 20,
+        "margin_bottom": 20
+      }
+    },
+    "16570771391d9fa530": {
+      "type": "home-sub-banner",
+      "blocks": {
+        "1657077139aead44c2-1": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/Banner_1200x650_-_Promo_Reguler_Dana.jpg",
+            "title": "",
+            "color_title": "#ffffff",
+            "link": "https:\/\/link.dana.id\/danadeals"
+          }
+        },
+        "1657077139aead44c2-0": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/Banner_1200x650_-_ShopeePayDay.jpg",
+            "title": "",
+            "color_title": "#ffffff",
+            "link": "https:\/\/tinyurl.com\/y8s6svp8"
+          }
+        }
+      },
+      "block_order": [
+        "1657077139aead44c2-1",
+        "1657077139aead44c2-0"
+      ],
+      "settings": {
+        "display_sub_banner": true,
+        "layout": "default",
+        "margin_bottom_mb": 0,
+        "margin_bottom_tab": 0,
+        "margin_bottom": 0,
+        "font_size_title": "16px",
+        "display_padding": true
+      }
+    },
+    "16570771666f8a8edd": {
+      "type": "home-sub-banner",
+      "blocks": {
+        "1657077166fa10aa13-0": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/Banner_1200x650_-_Atome_Agustus.jpg",
+            "title": "",
+            "color_title": "#ffffff",
+            "link": "shopify:\/\/pages\/urban-co-x-atome"
+          }
+        },
+        "1657077166fa10aa13-1": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/Banner_1200x650_-_Kredivo_Agustus.jpg",
+            "title": "",
+            "color_title": "#ffffff",
+            "link": "shopify:\/\/pages\/urban-co-x-kredivo"
+          }
+        }
+      },
+      "block_order": [
+        "1657077166fa10aa13-0",
+        "1657077166fa10aa13-1"
+      ],
+      "settings": {
+        "display_sub_banner": true,
+        "layout": "default",
+        "margin_bottom_mb": 0,
+        "margin_bottom_tab": 0,
+        "margin_bottom": 0,
+        "font_size_title": "16px",
+        "display_padding": true
+      }
+    },
+    "16570771899cbe3e99": {
+      "type": "home-sub-banner",
+      "blocks": {
+        "1657077189de1816c2-0": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/Banner_1200x650_-_Akulaku_Reguler.jpg",
+            "title": "",
+            "color_title": "#ffffff",
+            "link": "shopify:\/\/pages\/promo-urban-co-x-akulaku"
+          }
+        },
+        "1657077189de1816c2-1": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/Banner_1200x650_-_Promo_SPayLater.jpg",
+            "title": "",
+            "color_title": "#ffffff",
+            "link": "shopify:\/\/pages\/urban-co-x-spaylater"
+          }
+        }
+      },
+      "block_order": [
+        "1657077189de1816c2-0",
+        "1657077189de1816c2-1"
+      ],
+      "settings": {
+        "display_sub_banner": true,
+        "layout": "default",
+        "margin_bottom_mb": 0,
+        "margin_bottom_tab": 0,
+        "margin_bottom": 0,
+        "font_size_title": "16px",
+        "display_padding": true
+      }
+    },
+    "1657077202213f3ac1": {
+      "type": "home-sub-banner",
+      "blocks": {
+        "16570772026f0069f0-0": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/Banner_1200x650_-_Traveloka_PayLater.jpg",
+            "title": "",
+            "color_title": "#ffffff",
+            "link": "shopify:\/\/pages\/promo-urban-co-x-traveloka-paylater"
+          }
+        },
+        "16570772026f0069f0-1": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/aa.jpg",
+            "title": "",
+            "color_title": "#ffffff",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "16570772026f0069f0-0",
+        "16570772026f0069f0-1"
+      ],
+      "settings": {
+        "display_sub_banner": true,
+        "layout": "default",
+        "margin_bottom_mb": 0,
+        "margin_bottom_tab": 0,
+        "margin_bottom": 0,
+        "font_size_title": "16px",
+        "display_padding": true
+      }
+    }
+  },
+  "order": [
+    "main",
+    "1657614217291b9345",
+    "16570771779b11657d",
+    "165717564685773dde",
+    "16570771391d9fa530",
+    "16570771666f8a8edd",
+    "16570771899cbe3e99",
+    "1657077202213f3ac1"
+  ]
+}

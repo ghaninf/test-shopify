@@ -1,0 +1,192 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {
+      }
+    },
+    "1649818595e412988d": {
+      "type": "home-slideshow",
+      "blocks": {
+        "1649818595794ffca7-0": {
+          "type": "image",
+          "settings": {
+            "dpl_slide_img": true,
+            "image_slide": "shopify:\/\/shop_images\/Banner_1200x456_-_Kredivo_Agustus.jpg",
+            "image_slide_mb": "shopify:\/\/shop_images\/Banner_450x300_-_Kredivo_Agustus.jpg",
+            "style_content": "style_1",
+            "alignment": "left",
+            "alignment_custom": "35%",
+            "text_alignment": "center",
+            "bg_color_box": "#ffffff",
+            "color_border_box": "#bcbcbc",
+            "heading": "",
+            "font_size_heading": "40px",
+            "font_size_heading_mb": "24px",
+            "color_heading": "#232323",
+            "color_heading_style_4": "#10ffda",
+            "color_heading_mb": "#ffffff",
+            "sub_heading": "",
+            "font_size_sub_heading": "30px",
+            "font_size_sub_heading_mb": "18px",
+            "color_sub_heading": "#ffffff",
+            "color_sub_heading_mb": "#ffffff",
+            "slide-des": "",
+            "font_size_des": "12px",
+            "font_size_des_mb": "12px",
+            "color_des": "#232323",
+            "color_des_mb": "#ffffff",
+            "button_slide": "",
+            "link": "",
+            "button_slide_2": "",
+            "link_2": "",
+            "bg_button": "#232323",
+            "border_button": "#232323",
+            "color_button": "#ffffff",
+            "bg_button_mb": "#232323",
+            "border_button_mb": "#232323",
+            "color_button_mb": "#ffffff",
+            "lb_product_1": "",
+            "top_position_1": "10",
+            "left_position_1": "10",
+            "dots_color_1": "#ffffff",
+            "dots_bg_color_1": "#323232",
+            "dots_shadow_color_1": "#ffffff",
+            "lb_product_2": "",
+            "top_position_2": "10",
+            "left_position_2": "10",
+            "dots_color_2": "#ffffff",
+            "dots_bg_color_2": "#323232",
+            "dots_shadow_color_2": "#ffffff",
+            "lb_product_3": "",
+            "top_position_3": "10",
+            "left_position_3": "10",
+            "dots_color_3": "#ffffff",
+            "dots_bg_color_3": "#323232",
+            "dots_shadow_color_3": "#ffffff"
+          }
+        }
+      },
+      "block_order": [
+        "1649818595794ffca7-0"
+      ],
+      "settings": {
+        "layout": "default",
+        "bg_color": "",
+        "widget_title": "",
+        "title_style": "style_1",
+        "margin_bottom_mb": 0,
+        "margin_bottom_tab": 0,
+        "margin_bottom": 0,
+        "style_slideshow": "style_1",
+        "autoplay": true,
+        "slideshow_speed": "5000",
+        "slideshow_transition": "true",
+        "dots": "true",
+        "dots_color": "#707979",
+        "dots_active_color": "#505656",
+        "dots_opacity": false,
+        "bg_dots_color": "#bababa",
+        "arrow_active": true,
+        "arrow_color": "#666d6d",
+        "arrow_border_color": "#666d6d",
+        "arrow_bg_color": "#ffffff",
+        "position_slick_arrow": "10%",
+        "min_width_banner_button": "270px",
+        "bg_video": "#866965",
+        "bg_overlay_opacity": 40,
+        "video_height": "41.7%",
+        "auto_playvideo": true,
+        "enable_categories": false,
+        "text_categories": "Shop by categories",
+        "label_color": "",
+        "bg_label": "",
+        "text_icon_color": "",
+        "menu": "",
+        "enable_banner": false
+      }
+    },
+    "1649818601c3817ff8": {
+      "type": "home-rich-text",
+      "settings": {
+        "content_top": "<p><b>SYARAT & KETENTUAN KREDIVO<\/b>\n<\/p>\n\n<p>\n1. Periode promo hingga 31 Agustus 2022.<\/p>\n\n<p>\n2. Diskon 5% maksimal Rp100.000 dengan minimum transaksi Rp500.000.<\/p>\n\n<p>\n3. Promo berlaku untuk semua pengguna Kredivo dan hanya bisa digunakan 1x\/pengguna\/bulan.<\/p>\n\n<p>\n4. Berlaku khusus cicilan 6 dan 12 bulan Kredivo di website URBAN&CO<\/p>\n\n<p>\n5. Kuota promo terbatas hanya 950 orang pengguna pertama\/hari selama periode promo berlangsung.<\/p>\n\n<p>\n6. Jika transaksi dibatalkan, diskon ini tidak dapat digunakan lagi untuk transaksi berikutnya.<\/p>\n\n<br>\n\n<p>\n<b>CARA MENGGUNAKAN PROMO KREDIVO<\/b><\/p>\n\n<p>\n1. Pilih produk yang kamu inginkan di website URBAN&CO.<\/p>\n\n<p>\n2. Login ke akun Kredivo-mu dan pilih pembayaran dengan Kredivo.<\/p>\n\n<p>\n3. Pilih tenor cicilan 6 atau 12 bulan.<\/p>\n\n<p>\n4. Klik \" Voucher belanja hemat\" dan pilih voucher \"Diskon Hingga 100 RIBU di Merchant Online\".<\/p>\n\n<p>\n5. Diskon akan langsung teraplikasikan di transaksimu.<\/p>",
+        "content_bottom": "",
+        "font_size": "16px",
+        "text_alignment": "left",
+        "button_text_more": "Read More",
+        "button_text_less": "Read Less",
+        "color_text": "",
+        "margin_bottom_mb": 30,
+        "margin_bottom_tab": 30,
+        "margin_bottom": 30
+      }
+    },
+    "16498264196bebe507": {
+      "type": "home-custom-block-baner",
+      "blocks": {
+        "1649826419d6698446-0": {
+          "type": "largeImg",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/banner-1880x150-benefit-kredivo_3015fffd-21c8-4be1-a450-ece11e2c8c5c.jpg",
+            "image_mb": "shopify:\/\/shop_images\/banner-1880x300-benefit-kredivo_8c9c3d68-719a-4e20-83c1-529299eefcd9.jpg",
+            "display_parallax": false,
+            "dpl_down_arrow": false,
+            "height_img_parallax": "970px",
+            "content_style": "style_1",
+            "display_bg_animation": false,
+            "color_bg_animation": "#f6f6f6",
+            "alignment": "left",
+            "banner_heading": "",
+            "font_size_banner_heading": "40px",
+            "font_size_banner_heading_mb": "24px",
+            "color_banner_heading": "#232323",
+            "color_banner_heading_style2": "#10ffda",
+            "color_banner_heading_mb": "#232323",
+            "banner_sub_heading": "",
+            "font_size_banner_sub_heading": "13px",
+            "font_size_banner_sub_heading_mb": "13px",
+            "color_banner_sub_heading": "#ffffff",
+            "color_banner_sub_heading_mb": "#232323",
+            "banner_des": "",
+            "font_size_banner_des": "12px",
+            "font_size_banner_des_mb": "12px",
+            "color_banner_des": "#232323",
+            "color_banner_des_mb": "#232323",
+            "countdown": "",
+            "banner_button": "",
+            "link": "shopify:\/\/pages\/benefit-kredivo",
+            "bg_banner_button": "#232323",
+            "border_banner_button": "#232323",
+            "color_banner_button": "#ffffff",
+            "bg_banner_button_mb": "#232323",
+            "border_banner_button_mb": "#232323",
+            "color_banner_button_mb": "#ffffff",
+            "min_width_banner_button": "237px"
+          }
+        }
+      },
+      "block_order": [
+        "1649826419d6698446-0"
+      ],
+      "settings": {
+        "layout": "default",
+        "layout_style": "layout_style_1",
+        "display_bg_banner": false,
+        "bg_color_banner": "#f5f5f5",
+        "widget_title": "",
+        "widget_des": "",
+        "title_style": "style_1",
+        "img_align": "center",
+        "margin_bottom_mb": 0,
+        "margin_bottom_tab": 0,
+        "margin_bottom": 0
+      }
+    }
+  },
+  "order": [
+    "main",
+    "1649818595e412988d",
+    "1649818601c3817ff8",
+    "16498264196bebe507"
+  ]
+}

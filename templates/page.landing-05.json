@@ -1,0 +1,154 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {
+      }
+    },
+    "165708857883d68b7d": {
+      "type": "home-custom-sub-banner",
+      "disabled": true,
+      "blocks": {
+        "16570885789cbbba82-0": {
+          "type": "twoImage",
+          "settings": {
+            "image_1": "shopify:\/\/shop_images\/URB_TSM_CIBUBUR.jpg",
+            "title_1": "",
+            "des_1": "",
+            "color_1": "#ffffff",
+            "button_1": "",
+            "link_1": "",
+            "bg_button_1": "#ffffff",
+            "border_button_1": "#ffffff",
+            "color_button_1": "#232323",
+            "image_2": "shopify:\/\/shop_images\/26._URB_SMS_TANGERANG.jpg",
+            "title_2": "",
+            "des_2": "",
+            "color_2": "#ffffff",
+            "button_2": "",
+            "link_2": "",
+            "bg_button_2": "#ffffff",
+            "border_button_2": "#ffffff",
+            "color_button_2": "#232323"
+          }
+        },
+        "16570885789cbbba82-2": {
+          "type": "twoImage",
+          "settings": {
+            "image_1": "shopify:\/\/shop_images\/Essentials_Ayani_Pontianak_Jl._Jendral_ahmad_yani_no._4_parit_tokaya_kec._Pontianak_sel.jpg",
+            "title_1": "",
+            "des_1": "",
+            "color_1": "#ffffff",
+            "button_1": "",
+            "link_1": "",
+            "bg_button_1": "#ffffff",
+            "border_button_1": "#ffffff",
+            "color_button_1": "#232323",
+            "image_2": "shopify:\/\/shop_images\/ESS_LOMBOK_EPICENTRUM_MALL_NTB.jpg",
+            "title_2": "",
+            "des_2": "",
+            "color_2": "#ffffff",
+            "button_2": "",
+            "link_2": "",
+            "bg_button_2": "#ffffff",
+            "border_button_2": "#ffffff",
+            "color_button_2": "#232323"
+          }
+        }
+      },
+      "block_order": [
+        "16570885789cbbba82-0",
+        "16570885789cbbba82-2"
+      ],
+      "settings": {
+        "font_size_title": "20px",
+        "font_size_desc": "12px",
+        "block_des": "",
+        "block_style": "style_1",
+        "margin_bottom_mb": 0,
+        "margin_bottom_tab": 0,
+        "margin_bottom": 30
+      }
+    },
+    "1648863659f812e0fa": {
+      "type": "home-rich-text",
+      "settings": {
+        "content_top": "<style>\n  <!--\n  .flexing {\n    display: flex;\n    justify-content: center;\n    align-items: flex-start;\n  }\n\n  .flexing>* {\n    margin: 10px;\n  }\n\n  .product {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    flex-direction: column;\n  }\n\n  .detail-product {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    flex-direction: column;\n    text-align: center;\n  }\n\n  .shop-now {\n    width: 100%;\n    margin: 15px 0;\n    -webkit-box-pack: center;\n    justify-content: center;\n    display: inline-flex;\n    position: relative;\n    -webkit-box-align: center;\n    align-items: center;\n    z-index: 1;\n    border-radius: 0px;\n    padding: 0px 1rem;\n    min-width: 2.5rem;\n    height: 50px;\n    min-height: 0px;\n    transition-property: color, background, border;\n    transition-duration: 200ms;\n    transition-timing-function: ease-in;\n    color: rgb(0, 0, 0);\n    border-color: rgb(0, 0, 0);\n    border-width: 2px;\n    border-style: solid;\n    background-color: rgb(255, 255, 255);\n    text-transform: uppercase;\n    font-style: normal;\n    letter-spacing: 0.0852071em;\n    line-break: auto;\n    line-height: 1.13615em;\n    font-size: 13px;\n    font-weight: 600;\n    overflow-wrap: normal;\n    appearance: none;\n    text-decoration: none;\n  }\n\n  .shop-now:hover {\n    color: white;\n    background: black;\n  }\n  \n  .fontsize {\n      font-size: 16px;\n  }\n@media (max-width: 1000px) {\n        .flexing {\n          flex-direction: column;\n          align-items: center;\n        }\n      }\n  -->\n<\/style>\n<div style=\"text-align:center;\"><h2>URBAN&CO CONCEPT STORE<\/h2><\/div>\n\n<style>\nimg {\n  display: block;\n  margin-left: auto;\n  margin-right: auto;\n}\n<\/style>\n<div class=\"flexing\">\n<div class=\"product\">\n<a href=\"\" target=\"_blank\" rel=\"nofollow noopener noreferrer\"> <img src=\"https:\/\/cdn.shopify.com\/s\/files\/1\/0622\/9943\/9335\/files\/GO_UrbanCo_CCM-82_66cf2066-5abb-402f-a1aa-409ab58609ad.jpg?v=1657093577\" width=\"100%\" height=\"100%\" style=\"float: left;\"> <\/a>\n\n<\/div>\n<div><\/div>\n<div style=\"text-align: center;\">\n<div class=\"product\">\n    <a href=\"\" target=\"_blank\" rel=\"nofollow noopener noreferrer\"><img src=\"https:\/\/cdn.shopify.com\/s\/files\/1\/0622\/9943\/9335\/files\/GO_UrbanCo_CCM-81_546da8cc-27b6-4228-b6fb-6dd37bcad4b4.jpg?v=1657093577\" width=\"100%\" height=\"100%\" style=\"float: left;\"> <\/a>\n<br>\n<\/div>\n<\/div>\n<\/div>\n\n<div style=\"line-height:0.8cm; text-align:left;\">\n<b>JOGJA CITY MALL (JCM), Lantai GF Unit 54-A, <\/b>Jalan Magelang 18 Nomor 6 Sleman Yogyakarta 55284<\/div>\n\n<div style=\"line-height:0.8cm; text-align:left;\">\n<b>BINTARO JAYA XCHANGE MALL, Lantai  Unit 1A, <\/b>CBD Bintaro Jaya Blok 0-2, Bintaro Jaya Sektor VII, Tangerang, Banten 15810<\/div>\n\n<div style=\"line-height:0.8cm; text-align:left;\">\n<b>CIBINONG CITY MALL, Lantai 1F Unit B11-B14, <\/b>Jalan Tegar Beriman No.1, Pakansari, Cibinong Bogor, Jawa Barat 16915<\/div>\n\n<div style=\"line-height:0.8cm; text-align:left;\">\n<b>NIPAH MALL MAKASSAR, Lantai UG, Unit 01-05B, <\/b>Jalan Urip Sumoharjo No.23C, Panaikang, Kec. Panakkukang, Kota Makassar, Sulawesi Selatan 90231<\/div>\n\n<div style=\"line-height:0.8cm;text-align:left;\">\n<b>MEDAN FAIR PLAZA, Lantai 2F Unit A-G, <\/b>Jalan Jend. Gatot Subroto No. 30 (Jl. Iskandar Muda), Medan, Sumatera Utara 20113<\/div>\n\n<div style=\"line-height:0.8cm;text-align:left;\">\n<b>MALL PANAKUKKANG, Lantai 1 Gedung D2\n, <\/b>Jalan Boulevard, Makassar, Sulawesi Selatan, 90222<\/div>\n\n<br>\n<br> \n<div style=\"text-align:center;\"><h2>URBAN&CO  STORE<\/h2><\/div>\n<div>\n<div class=\"flexing\">\n<div class=\"product\">\n<a href=\"\" target=\"_blank\" rel=\"nofollow noopener noreferrer\"> <img src=\"https:\/\/cdn.shopify.com\/s\/files\/1\/0622\/9943\/9335\/files\/26._URB_SMS_TANGERANG.jpg?v=1657090778\" width=\"600\" height=\"320\" style=\"float: left;\"> <\/a>\n\n<\/div>\n<div><\/div>\n<div style=\"text-align: center;\">\n<div class=\"product\">\n    <a href=\"\" target=\"_blank\" rel=\"nofollow noopener noreferrer\"><img src=\"https:\/\/cdn.shopify.com\/s\/files\/1\/0622\/9943\/9335\/files\/ESS_LOMBOK_EPICENTRUM_MALL_NTB.jpg?v=1657090719\" width=\"600\" height=\"280\" style=\"float: left;\"> <\/a>\n<br>\n<\/div>\n<\/div>\n<\/div>\n<h3 style=\"text-align:left; color:black;\">DKI JAKARTA<\/h3>\n<div style=\"text-align:left;\">\n\n<div style=\"color: #101010;\"><h4>URBAN&CO<\/h4><\/div>\n<div style=\"line-height:0.8cm;\">\n<b>AEON MALL JGC, Lantai 2 Nomor 41-43,  <\/b>Jakarta Garden City, Jakarta Timur, DKI Jakarta, 13910\n<br> <\/div>\n<div style=\"line-height:0.8cm;\">\n<b>MALL OF INDONESIA KELAPA GADING, Lantai 1 Unit A-11, <\/b>Jalan Boulevard Bar. Raya. Kelapa Gading, Jakarta Utara 14240\n<br>\n<\/div>\n<div style=\"line-height:0.8cm;\">\n<b>BASSURA CITY, Lantai GF No.1B,  <\/b>Jalan Jenderal Basuki Rachmat Nomor 1A, Jakarta Timur, DKI Jakarta, 13410<\/div>\n<div style=\"line-height:0.8cm;\">\n<b>PONDOK INDAH MALL 2, 2nd Floor No.215,  <\/b>Jalan Metro Pondok Indah Nomor 12, Pondok Pinang, Kebayoran Lama, Jakarta Selatan, 12310<\/div>\n<div style=\"line-height:0.8cm;\">\n<b>GANDARIA CITY, Lantai UG Nomor 53-55, <\/b>Jalan Sultan Iskandar Muda, Kebayoran Lama, Jaksel, DKI Jakarta, 12240<\/div>\n<div style=\"line-height:0.8cm;\">\n<b>KALIBATA CITY, Blok LG E11, <\/b>Jalan Raya Kalibata Nomor 1, Pancoran, Jakarta Selatan, DKI Jakarta, 12750<\/div> \n<br>\n\n<div style=\"color: #101010;\"><h4>ESSENTIALS<\/h4><\/div>\n\n<div style=\"line-height:0.8cm;\">\n<b>PONDOK INDAH MALL  2, Lantai 3 Unit 325, <\/b>Jalan Metro Pondok Indah Rt 1\/16 Pd.Pinang, Kecamatan Kebayoran Lama, Jaksel, 12310<\/div>\n\n<div style=\"line-height:0.8cm;\">\n<b>PLAZA BLOK M, Lantai UG Unit 21-22,  <\/b>Jalan Bulungan No.76 Kramat Pela, Kec.Kby Baru, Jakarta Selatan, DKI Jakarta, 12130<\/div>\n\n<br><br>\n\n<h3>JAWA BARAT<\/h3>\n\n<div style=\"color: #101010;\"><h4>URBAN&CO<\/h4><\/div>\n\n<div style=\"line-height:0.8cm;\">\n<b>BOTANI SQUARE MALL, Lantai G Nomor 105, <\/b>Jalan Raya Pajajaran No.40, Tugu Kujang, Kecamatan Bogor Tengah, Kota Bogor, Jawa Barat 16127<\/div>\n\n<div style=\"line-height:0.8cm;\">\n<b>GRAND GALAXY PARK, Lantai GF. Blok G No.B17, <\/b>Jalan Grand Galaxy Park Boulevard, Bekasi, Jawa Barat, 17147<\/div>\n\n<div style=\"line-height:0.8cm;\">\n<b>GRAND METRO BEKASI, Lantai UG Nomor 30, <\/b>Jalan KH. Noer Ali, Bekasi Selatan, Jawa Barat 17148<\/div>\n\n<div style=\"line-height:0.8cm;\">\n<b>PARIS VAN JAVA BANDUNG, Lantai GF Nomor 28, <\/b>Jalan Sukajadi Nomor 131-139 Bandung, Jawa Barat, 40162<\/div>\n\n<div style=\"line-height:0.8cm;\">\n<b>TRANS STUDIO MALL CIBUBUR (TSM CIBUBUR), Lantai 1 Nomor 25-25A, <\/b>Jalan Alternatif Cibubur Nomor 230 A, Harjamukti, Cimanggis, Kota Depok, Jawa Barat, 16454<\/div>\n\n<div style=\"line-height:0.8cm;\">\n<b>AEON MALL SENTUL CITY, Lantai 1 Nomor 60, <\/b>Jalan MH Thamrin, Citaringgul, Babakan Madang, Bogor, Jawa Barat, 16810<\/div>\n\n<div style=\"line-height:0.8cm;\">\n<b>CIBINONG CITY MALL (CCM), Lantai GF A1 Nomor 1, <\/b>Jalan Tegar Beriman Nomor 1, Cibinong, Bogor, Jawa Barat, 16915<\/div>\n\n<div style=\"line-height:0.8cm;\">\n<b>THE PARK SAWANGAN, Lt.1 Nomor 121, <\/b>Jalan Raya Parung - Ciputat No.1, RW.004, Serua, Kec. Bojongsari, Kota Depok, Jawa Barat, 16555<\/div>\n\n<div style=\"line-height:0.8cm;\">\n<b>MARGO CITY DEPOK,  Lantai 1 FL1-61, <\/b>Jalan Margonda Raya No.358, Kemiri Muka, Kecamatan Beji, Kota Depok, Jawa Barat, 16423<\/div>\n\n<br>\n<h4 style=\"color: #101010;\">ESSENTIALS<\/h4>\n\n<div style=\"line-height:0.8cm;\">\n<b>THE PARK SAWANGAN, Lantai 1 Nomor 0300, <\/b>Jalan Raya Parung - Ciputat No.RW.004, Serua, Kec. Bojongsari, Kota Depok, Jawa Barat 16555 <\/div>\n\n<div style=\"line-height:0.8cm;\">\n<b>CIBINONG CITY MALL (CCM), Lantai UG Nomor A17, <\/b>Jalan Tegar Beriman Nomor 1, Cibinong, Bogor, Jawa Barat, 16915<\/div>\n\n<div style=\"line-height:0.8cm;\">\n<b>AEON MALL SENTUL CITY, Lantai 2 Nomor 37, <\/b>Jalan MH Thamrin, Citaringgul, Babakan Madang, Bogor, Jawa Barat, 16810<\/div>\n\n<div style=\"line-height:0.8cm;\">\n<b>METROPOLITAN MALL BEKASI (MM BEKASI), Lantai Dasar Blok D 21-22, <\/b>Jalan Kh Noer Ali , Bekasi Selatan, Jawa Barat, 17148<\/div>\n\n<div style=\"line-height:0.8cm;\">\n<b>CIREBON SUPER BLOCK MALL (CSB MALL), Lantai GF No.470, <\/b>Jalan Dr. Mangunkusumo Nomor 26, Cirebon, Jawa Barat, 45131<\/div>\n\n<div style=\"line-height:0.8cm;\">\n<b>PESONA SQUARE DEPOK (PS DEPOK), Lantai UG Nomor 8, <\/b>Jalan IR H Juanda Nomor 99, Bakti Jaya, Sukmajaya, Depok, Jawa Barat, 16418<\/div>\n\n<br>\n<h3 style=\"text-align:left;\">JAWA TENGAH<\/h3>\n\n<div style=\"color: #101010;\"><h4>URBAN&CO<\/h4><\/div>\n\n<div style=\"line-height:0.8cm;\">\n<b>RITA SUPERMALL PURWOKERTO (RITA PWT), Lantai GF Unit 24, <\/b>Jalan Jendral Soedirman, Nomor 296, Purwokerto, Jawa Tengah, 53116<\/div>\n\n<b>MALL CIPUTRA SEMARANG, Lantai. GF, Unit 59-60, <\/b>Jl. Simpang Lima No.1 Pekunden, Kec. Semarang Tengah, Jawa Tengah - 50125<\/div>\n\n<br>\n<div style=\"text-align:left;\"><h4 style=\"color: #101010;\">ESSENTIALS<\/h4><\/div>\n\n<div style=\"line-height:0.8cm; text-align:left;\">\n<b>ARMADA TOWN SQUARE MALL (ARTOS), Lantai UG Unit 4-6, <\/b> Jalan Mayjen Bambang Soegeng Nomor 1, Mertoyudan, Magelang, Jawa Tengah, 56172<\/div>\n\n<div style=\"line-height:0.8cm; text-align:left;\">\n<b>PEKALONGAN PLAZA, Lantai 01 Nomor 02, <\/b>Jalan Nusantara Nomor 5 Pekalongan, Jawa Tengah, 51128<\/div>\n<br>\n<h3 style=\"text-align:left;\">JAWA TIMUR<\/h3>\n\n<div style=\"text-align:left;\"><h4 style=\"color: #101010;\">URBAN&CO<\/h4><\/div>\n\n<div style=\"line-height:0.8cm; text-align:left;\">\n<b>MALL OLYMPIC GARDEN, Lantai GF Nomor 03-05, <\/b>Jalan Kawi Nomor 24, Klojen, Malang, Jawa Timur, 65116<\/div>\n\n<div style=\"line-height:0.8cm; text-align:left;\">\n<b>PAKUWON MALL SURABAYA (PAKUWON), Lantai 01 Unit 78,  <\/b>Jalan Puncak Indah Lontar Nomor 02, Surabaya, Jawa Timur, 60213<\/div>\n\n<div style=\"line-height:0.8cm; text-align:left;\">\n<b>TUNJUNGAN PLAZA 03, Lantai 02 No 16-19,  <\/b>JL.Basuki Rahmad No 08-12,\nKelurahan Kedungdoro,Kecamatan Tegalsari, Surabaya, Jawa Timur, 60261<\/div>\n\n<div style=\"line-height:0.8cm; text-align:left;\">\n<b>MALANG TOWN SQUARE, Lantai GS Nomor 20-23, <\/b>\nJalan Veteran Nomor 2, \nPenanggungan, Kecamatan Klojen, Kota Malang, Jawa Timur, 65111<\/div>\n<br>\n<div style=\"text-align:left;\"><h4>ESSENTIALS<\/h4><\/div>\n\n<div style=\"line-height:0.8cm; text-align:left;\">\n<b>ICON MALL GRESIK, Lantai GF Nomor 42-43, <\/b>Jalan Dr Wahidin Sudiro Husodo Nomor 788, Kebomas,Gresik, Jawa Timur, 61124<\/div>\n\n<br>\n\n<h3 style=\"text-align:left; \">DAERAH ISTIMEWA YOGYAKARTA<\/h3>\n\n<div style=\"text-align:left;\"><h4 style=\"color: #101010;\">URBAN&CO<\/h4><\/div>\n\n<div style=\"line-height:0.8cm; text-align:left;\">\n<b>SLEMAN CITY HALL (SCH), Lantai GF Unit 06, <\/b>Jalan Magelang, Gito Gati Nomor 18, Sleman,Yogyakarta, 55511<\/div>\n\n<br>\n<div style=\"text-align:left;\"><h4 style=\"color: #101010;\">ESSENTIALS<\/h4><\/div>\n\n<div style=\"line-height:0.8cm; text-align:left;\">\n<b>SLEMAN CITY HALL (SCH), Lantai 01 Unit 07, <\/b>Jalan Magelang, Gito Gati Nomor 18, Sleman,Yogyakarta, 55511<\/div>\n\n<br>\n<h3 style=\"text-align:left;\">SULAWESI SELATAN<\/h3>\n\n<div style=\"text-align:left;\"><h4 style=\"color: #101010;\">URBAN&CO<\/h4><\/div>\n\n<div style=\"line-height:0.8cm; text-align:left;\">\n<b>NIPAH MALL MAKASSAR, Lantai GF\/23-24, <\/b>Jalan Urip Sumoharjo No.23C, Panaikang, Kecamatan Panakkukang, Kota Makassar, Sulawesi Selatan, 90231<\/div>\n\n<div style=\"line-height:0.8cm; text-align:left;\">\n<b>RATU INDAH MALL, Lantai 1 Nomor 148-149,<\/b> Jalan Dr.Sam Ratulangi No.35, Makassar, Sulawesi Selatan, 90132<\/div>\n<br>\n\n<div style=\"text-align:left;\"><h4 style=\"color: #101010;\">ESSENTIALS<\/h4><\/div>\n\n<div style=\"line-height:0.8cm; text-align:left;\">\n<b>MALL PANAKUKKANG, Lantai Dasar C1-01 <\/b>, Jalan Boulevard, Makassar, Sulawesi Selatan, 90222<\/div>\n\n<div style=\"line-height:0.8cm; text-align:left;\">\n<b>MALL PANAKKUKANG, Lantai Dasar D2-01A <\/b>, Jalan Boulevard, Makassar, Sulawesi Selatan, 90222<\/div>\n\n<br>\n\n<h3 style=\"text-align:left;\">SUMATERA UTARA<\/h3>\n\n<div style=\"text-align:left;\"><h4 style=\"color: #101010;\">ESSENTIALS<\/h4><\/div>\n\n<div style=\"line-height:0.8cm; text-align:left;\">\n<b>SUN PLAZA MEDAN, Lantai 2-A-05C, <\/b>Jalan H. Zainul Arifin Nomor 7, Kec.Medan Polonia, Medan, Sumatera Utara, 20152<\/div>\n\n<div style=\"line-height:0.8cm; text-align:left;\">\n<b>PLAZA MEDAN FAIR, Lantai 2 Nomor 7-8, <\/b> Jalan Jend.Gatot Subroto Nomor 30, Kec, Medan Petisah, Kota Medan, Sumatera Utara, 20113<\/div>\n<br>\n\n<h3 style=\"text-align:left;\">SUMATERA SELATAN<\/h3>\n\n<div style=\"text-align:left;\"><h4 style=\"color: #101010;\">ESSENTIALS<\/h4><\/div>\n\n<div style=\"line-height:0.8cm; text-align:left;\">\n<b>PALEMBANG ICON MALL, Lantai 4 no 18, <\/b>Jalan POM IX.Lorok Pakjo, Kec . Ilir Barat.I, Kota Palembang, Sumatera Selatan 30137<\/div>\n\n<div style=\"line-height:0.8cm; text-align:left;\">\n<b>PALEMBANG SQUARE (PLB SQUARE), Lantai 2 Nomor Unit 100-111, <\/b>Jalan Angkatan 45, Lorok Pakjo, Kec. Ilir Bar. I, Kota Palembang, Sumatera Selatan, 30137<\/div>\n\n<br>\n<h3 style=\"text-align:left;\">KALIMANTAN TIMUR<\/h3>\n\n<div style=\"text-align:left;\"><h4 style=\"color: #101010;\">ESSENTIALS<\/h4><\/div>\n\n<div style=\"line-height:0.8cm; text-align:left;\">\n<b>E-WALK BALIKPAPAN, Lantai UG Nomor 37, <\/b>Jalan Gunung Bahagia, Kec Balikpapan Selatan, Kota Balikpapan, Kalimantan Timur, 76114<\/div>\n\n<div style=\"line-height:0.8cm; text-align:left;\">\n<b>BIG MALL SAMARINDA, Lantai GF\/D-009 Samping Miniso, <\/b>Jalan Untung Suropati, Kecamatan Sei Kunjang, Samarinda, Kalimantan Timur, 75126<\/div>\n\n\n<br>\n<h3 style=\"text-align:left;\">KALIMANTAN SELATAN<\/h3>\n\n<div style=\"text-align:left;\"><h4 style=\"color: #101010;\">URBAN&CO<\/h4><\/div>\n\n<div style=\"line-height:0.8cm; text-align:left;\">\n<b>DUTA MALL BANJARMASIN, Lantai 1 Blok 016 Duta Mall 2, <\/b>Jalan A. Yani KM. 2 Banjarmasin Tengah, Banjarmasin, Kalimantan Selatan, 70235 <div>\n<br>\n\n<div style=\"text-align:left;\"><h4 style=\"color: #101010;\">ESSENTIALS<\/h4><\/div>\n\n<div style=\"line-height:0.8cm; text-align:left;\">\n<b>Q MALL BANJARBARU, Lantai UG Nomor 08-09B, <\/b>Jalan A Yani Komet, Kecamatan Banjarbaru Utara, Kota Banjarbaru, Kalimantan Selatan, 70714<\/div>\n\n<div style=\"line-height:0.8cm;\">\n<b>DUTA MALL BANJARMASIN, Lantai 1 Blok 015 Duta Mall 2, <\/b>Jalan A. Yani KM. 2 Banjarmasin Tengah, Banjarmasin, Kalimantan Selatan, 70234<\/div>\n\n<br>\n<h3 style=\"text-align:left;\">KALIMANTAN BARAT<\/h3>\n\n<div style=\"text-align:left;\"><h4 style=\"color: #101010;\">URBAN&CO<\/h4><\/div>\n\n<div style=\"line-height:0.8cm;\">\n<b>GAIA MALL BUMI RAYA CITY (GAIA PONTIANAK), Lantai 1 Nomor 46, <\/b>Jalan Arteri Supadio , Kec. Sungai Raya ,Kab Kuburaya, Pontianak , Kalimantan Barat, 78391<\/div>\n<br>\n<div style=\"text-align:left;\"><h4>ESSENTIALS<\/h4><\/div>\n\n<div style=\"line-height:0.8cm;\">\n<b>AYANI MEGAMALL PONTIANAK, Lantai 1 Nomor B15-B16, <\/b>Jalan Jenderal Ahmad Yani No.4, Parit Tokaya, Kec. Pontianak Sel, Kota Pontianak, Kalimantan Barat, 78113<\/div>\n\n<br>\n\n<h3 style=\"text-align:left;\">BANTEN<\/h3>\n\n<div style=\"text-align:left;\"><h4 style=\"color: #101010;\">URBAN&CO<\/h4><\/div>\n\n<div style=\"line-height:0.8cm;\">\n<b>SUPERMAL KARAWACI, Lantai Dasar Unit 015, <\/b>Jalan Boulevard Diponegoro Nomor 105, Kelapa Dua, Kec. Kelapa Dua, Tangerang, Banten, 15810<\/div>\n\n<div style=\"line-height:0.8cm;\">\n<b>SUMMARECON MALL SERPONG, Unit 1F Nomor 07, <\/b>Jalan Boulevard Raya Gading Serpong, Pakulonan Bar, Kec. Klp. Dua, Tangerang, Banten 15810<\/div>\n\n<br>\n\n<div style=\"text-align:left;\"><h4 style=\"color: #101010;\">ESSENTIALS<\/h4><\/div>\n\n<div style=\"line-height:0.8cm;\">\n<b> TANGERANG CITY, Lantai GF BLOK D-15, <\/b>Jalan Jendral Sudirman Nomor 1 Cikokol, Tangerang, Banten, 15117<\/div>\n\n<div style=\"line-height:0.8cm;\">\n<b>Lantai 2 Unit 2-66, <\/b>Jalan BSD Raya Utama (BUMI SERPONG DAMAI CITY ), Tangerang, Banten, 15345<\/div>\n<div style=\"line-height:0.8cm;\">\n<b>CILEGON CENTER MALL (CCM), Lantai GF Nomor 13, <\/b>Jalan Ahmad Yani, Sukmajaya, Kec. Jombang. Kota Cilegon-Banten, 42426<\/div>\n\n<br>\n<h3 style=\"text-align:left;\">GORONTALO<\/h3>\n\n<div style=\"text-align:left;\"><h4 style=\"color: #101010;\">ESSENTIALS<\/h4><\/div>\n\n<div style=\"line-height:0.8cm;\">\n<b>CITIMALL GORONTALO, Lantai 1 Nomor 148-149, <\/b>Jalan Sultan Batutihe Nomor 68, Heledulaa Selatan, Gorontalo, 96124<\/div>\n<br>\n\n<h3 style=\"text-align:left;\">RIAU<\/h3>\n\n<div style=\"text-align:left;\"><h4 style=\"color: #101010;\">URBAN&CO<\/h4><\/div>\n\n<div style=\"line-height:0.8cm;\">\n<b>GRAND BATAM MALL, Lantai G No.20B, <\/b>Jalan Pembangunan, Batu Selicin, Kec.Lubuk Baja, Kota Batam, Kepulauan Riau 29444<\/div>\n\n<br>\n\n<div style=\"text-align:left;\"><h4 style=\"color: #101010;\">ESSENTIALS<\/h4><\/div>\n\n<div style=\"line-height:0.8cm;\">\n<b>LIIVING WORLD PEKANBARU, LT.1 Unit 1-07, <\/b>Jalan Soekarno Hatta-Pekanbaru, Riau, 28124<\/div>\n\n<div style=\"line-height:0.8cm;\">\n<b>MALL SKA PEKANBARU (SKA PKU), Lantai 1-Nomor 34,<\/b>Jalan Soekarno Hatta Nomor 114, Delima, Kec Tampan, Kota Pekanbaru, Riau, 28292<\/div>\n\n<br>\n\n<h3 style=\"text-align:left;\">JAMBI<\/h3>\n\n<h4 style=\"text-align:left; color: #101010;\">ESSENTIALS<\/h4>\n\n<div style=\"line-height:0.8cm;\">\n<b>JAMBI TOWN SQUARE (JAMTOS MALL), Lantai Ground Floor GF, <\/b>Jalan Kapten.A.Bakaruddin No.88, Kota Baru ,Simpang III Sipin, Jambi, 36125<\/div>\n\n<br>\n\n<h3 style=\"text-align:left;\">BALI<\/h3>\n\n<div style=\"text-align:left;\"><h4 style=\"color: #101010;\">URBAN&CO<\/h4><\/div>\n\n<div style=\"line-height:0.8cm;\">\n<b>MALL BALI GALERIA (MBG BALI), Lantai 1 1C-85, <\/b>Jalan By Pass Ngurah Rai, Kuta, Kabupaten Badung, Bali, 80361<\/div>\n\n<div style=\"line-height:0.8cm;\">\n<b>BEACHWALK SHOPPING CENTER (BW BALI), Lantai 2 Unit B-11C, 11D, <\/b>Jalan Pantai Kuta, Kuta, Kabupaten Badung, Bali, 80361<\/div>\n\n<br>\n\n<h3 style=\"text-align:left;\">NUSA TENGGARA BARAT<\/h3>\n\n<div style=\"text-align:left;\"><h4 style=\"color: #101010;\">ESSENTIALS<\/h4><\/div>\n\n<div style=\"line-height:0.8cm;\">\n<b>LOMBOK EPICENTRUM MALL, Lantai 2 Nomor 46, <\/b>Jalan Sriwijaya Nomor 333, Punia, Kota Mataram, Lombok 83127<\/div>\n\n\n<\/div>\n<\/div>\n<\/div>",
+        "content_bottom": "",
+        "font_size": "14px",
+        "text_alignment": "left",
+        "button_text_more": "Read More",
+        "button_text_less": "Read Less",
+        "color_text": "",
+        "margin_bottom_mb": 20,
+        "margin_bottom_tab": 20,
+        "margin_bottom": 40
+      }
+    },
+    "1648863717f373e401": {
+      "type": "home-new-arrivals",
+      "settings": {
+        "layout": "default",
+        "new_arrivals_title": "NEW ARRIVAL SHOES ON OUR STORE",
+        "new_arrivals_des": "",
+        "title_style": "style_1",
+        "view_all": "",
+        "link_view_all": "",
+        "product_list_collection": "new-arrival",
+        "product_list_limit_all": 15,
+        "display_infinite_scrolling_homepage": false,
+        "collection_results_per_row1": "6",
+        "margin_bottom_mb": 0,
+        "margin_bottom_tab": 0,
+        "margin_bottom": 0
+      }
+    },
+    "165709038756ba9af2": {
+      "type": "home-custom-block-baner-one",
+      "disabled": true,
+      "blocks": {
+        "16570903874a4515ed-0": {
+          "type": "largeImg",
+          "settings": {
+            "display_parallax": false,
+            "height_img_parallax": "920px",
+            "alignment": "left",
+            "banner_heading": "Metropólis",
+            "font_size_banner_heading": "40px",
+            "color_banner_heading": "#232323",
+            "banner_des": "Pellentesque posuere orci lobortis scelerisque blandit. Donec id tellus lacinia an tincidunt risus an consequat delit quisquemos.",
+            "font_size_banner_des": "12px",
+            "color_banner_des": "#232323",
+            "countdown": "",
+            "banner_button": "Shop The Looks",
+            "link": "",
+            "bg_banner_button": "#232323",
+            "border_banner_button": "#232323",
+            "color_banner_button": "#ffffff",
+            "min_width_banner_button": "237px"
+          }
+        }
+      },
+      "block_order": [
+        "16570903874a4515ed-0"
+      ],
+      "settings": {
+        "layout": "full",
+        "widget_title": "",
+        "widget_des": "",
+        "title_style": "style_1",
+        "img_align": "center",
+        "margin_bottom_mb": 25,
+        "margin_bottom_tab": 30,
+        "margin_bottom": 30
+      }
+    }
+  },
+  "order": [
+    "main",
+    "165708857883d68b7d",
+    "1648863659f812e0fa",
+    "1648863717f373e401",
+    "165709038756ba9af2"
+  ]
+}

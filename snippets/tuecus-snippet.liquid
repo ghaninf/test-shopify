@@ -1,0 +1,20 @@
+{% if template contains 'customers/login' %}
+		{% if shop.metafields.tuecus.is_social_login_enabled == 1 %}
+			
+			{% capture tuecus_social_login_content %}{% render 'tuecus_social_login' %}{% endcapture %}
+				{% unless tuecus_social_login_content contains "Liquid error" %}
+				  {{ tuecus_social_login_content }}
+			{% endunless %}
+		
+			{{ 'tuecus-social-login.js' | asset_url | script_tag}}
+		{% endif %}
+	{% elsif template contains 'customers/register' %}
+		{% if shop.metafields.tuecus.is_social_login_enabled == 1 %}
+			{% capture tuecus_social_login_content %}{% render 'tuecus_social_login' %}{% endcapture %}
+				{% unless tuecus_social_login_content contains "Liquid error" %}
+				  {{ tuecus_social_login_content }}
+			{% endunless %}
+			{{ 'tuecus-social-login.js' | asset_url | script_tag}}
+		{% endif %}
+	{% else %}
+{% endif %}

@@ -1,0 +1,137 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {
+      }
+    },
+    "1652233581ed569e49": {
+      "type": "home-slideshow",
+      "blocks": {
+        "165223358027aaa30f-0": {
+          "type": "image",
+          "settings": {
+            "dpl_slide_img": true,
+            "image_slide": "shopify:\/\/shop_images\/Banner_1200x456_-_Nanti_Aja_Agustus.jpg",
+            "image_slide_mb": "shopify:\/\/shop_images\/Banner_450x300_-_Nanti_Aja_Agustus.jpg",
+            "style_content": "style_1",
+            "alignment": "left",
+            "alignment_custom": "35%",
+            "text_alignment": "center",
+            "bg_color_box": "#ffffff",
+            "color_border_box": "#bcbcbc",
+            "heading": "",
+            "font_size_heading": "40px",
+            "font_size_heading_mb": "24px",
+            "color_heading": "#232323",
+            "color_heading_style_4": "#10ffda",
+            "color_heading_mb": "#ffffff",
+            "sub_heading": "",
+            "font_size_sub_heading": "30px",
+            "font_size_sub_heading_mb": "18px",
+            "color_sub_heading": "#ffffff",
+            "color_sub_heading_mb": "#ffffff",
+            "slide-des": "",
+            "font_size_des": "12px",
+            "font_size_des_mb": "12px",
+            "color_des": "#232323",
+            "color_des_mb": "#ffffff",
+            "button_slide": "",
+            "link": "",
+            "button_slide_2": "",
+            "link_2": "",
+            "bg_button": "#232323",
+            "border_button": "#232323",
+            "color_button": "#ffffff",
+            "bg_button_mb": "#232323",
+            "border_button_mb": "#232323",
+            "color_button_mb": "#ffffff",
+            "lb_product_1": "",
+            "top_position_1": "10",
+            "left_position_1": "10",
+            "dots_color_1": "#ffffff",
+            "dots_bg_color_1": "#323232",
+            "dots_shadow_color_1": "#ffffff",
+            "lb_product_2": "",
+            "top_position_2": "10",
+            "left_position_2": "10",
+            "dots_color_2": "#ffffff",
+            "dots_bg_color_2": "#323232",
+            "dots_shadow_color_2": "#ffffff",
+            "lb_product_3": "",
+            "top_position_3": "10",
+            "left_position_3": "10",
+            "dots_color_3": "#ffffff",
+            "dots_bg_color_3": "#323232",
+            "dots_shadow_color_3": "#ffffff"
+          }
+        }
+      },
+      "block_order": [
+        "165223358027aaa30f-0"
+      ],
+      "settings": {
+        "layout": "default",
+        "bg_color": "",
+        "widget_title": "",
+        "title_style": "style_1",
+        "margin_bottom_mb": 0,
+        "margin_bottom_tab": 0,
+        "margin_bottom": 0,
+        "style_slideshow": "style_1",
+        "autoplay": true,
+        "slideshow_speed": "5000",
+        "slideshow_transition": "true",
+        "dots": "true",
+        "dots_color": "#707979",
+        "dots_active_color": "#505656",
+        "dots_opacity": false,
+        "bg_dots_color": "#bababa",
+        "arrow_active": true,
+        "arrow_color": "#666d6d",
+        "arrow_border_color": "#666d6d",
+        "arrow_bg_color": "#ffffff",
+        "position_slick_arrow": "10%",
+        "min_width_banner_button": "270px",
+        "bg_video": "#866965",
+        "bg_overlay_opacity": 40,
+        "video_height": "41.7%",
+        "auto_playvideo": true,
+        "enable_categories": false,
+        "text_categories": "Shop by categories",
+        "label_color": "",
+        "bg_label": "",
+        "text_icon_color": "",
+        "menu": "",
+        "enable_banner": false
+      }
+    },
+    "165223357385aa7cea": {
+      "type": "home-rich-text",
+      "settings": {
+        "content_top": "<p><b>Syarat & Ketentuan<\/b><\/p>\n\n<p>1. Promo khusus untuk <b>pengguna baru<\/b> aplikasi <b>NantiAja<\/b>.<\/p>\n\n<p>2. Promo hanya berlaku untuk <b>transaksi<\/b> yang dilakukan <b>pertama kali<\/b> pakai\npembayaran <b>NantiAja<\/b>.<\/p>\n\n<p>3. Promo adalah <b>potongan harga hingga Rp100.000<\/b> yang kamu terima di\npembayaran keempat.<\/p>\n\n<p>4. Promo berlaku sampai dengan <b>18 Agustus 2022<\/b>.<\/p>\n\n<p>5. <b>Tidak ada minimum transaksi<\/b> untuk ikutan promo ini.<\/p>\n\n<p>6. Kamu tetap bisa ikutan promo <b>terlepas<\/b> dari periode pembayaran yang\nkamu pilih (per dua minggu atau per bulan)<\/p>\n\n<p>7. Pastikan <b>tepat waktu saat pembayaran ke 2,3, dan 4<\/b> supaya terhindar\ndari biaya keterlambatan.<\/p>\n\n<p>8. Pastikan <b>ketersediaan barang<\/b> yang kamu mau beli dan serta <b>kepastian\nharganya<\/b> supaya kamu tetap bisa menikmati promonya secara utuh.<\/p>\n\n<p>9. Apabila terjadi <b>perubahan<\/b> pada poin diatas, <b>promo akan tetap berlaku<\/b>.<\/p>\n\n<p>10. Dengan membaca poin-poin diatas, kamu <b>dianggap menyetujui<\/b> syarat\ndan ketentuan promo ini.<\/p>\n\n<br>\n\n<p><b>Cara Dapetin Potongan 100K di Transaksi Pertama Kamu<\/b><\/p>\n\n<p>1. <b>Download<\/b> aplikasi NantiAja di <b>Playstore<\/b> atau <b>Appstore<\/b>.<\/p>\n\n<p>2. <b>Daftar<\/b> dan tunggu proses verifikasinya.<\/p>\n\n<p>3. Setelah <b>dapat limit<\/b>, kamu bisa langsung belanja.<\/p>\n\n<p>4. Pilih barang yang mau kamu beli.<\/p>\n\n<p>5. Pilih <b>NantiAja<\/b> sebagai <b>metode pembayaran<\/b>.<\/p>\n\n<p>6. Pastikan kamu memiliki saldo e-Wallet\/kartu <b>sebesar 25%<\/b> dari total harga\nbarang yang mau kamu beli untuk <b>pembayaran pertama<\/b>.<\/p>\n\n<p>7. <b>Setelah pembayaran sukses, promo otomatis kamu dapatkan<\/b>.<\/p>\n\n<p>8. Kamu bisa <b>cek status promo<\/b> kamu di aplikasi NantiAja di menu <b>Transaksi<\/b>.<\/p>\n\n<p>9. <b>Ajak temen<\/b> kamu juga ya supaya mereka juga bisa ikutan promonya.<\/p>",
+        "content_bottom": "",
+        "font_size": "16px",
+        "text_alignment": "left",
+        "button_text_more": "",
+        "button_text_less": "",
+        "color_text": "",
+        "margin_bottom_mb": 30,
+        "margin_bottom_tab": 30,
+        "margin_bottom": 30
+      }
+    },
+    "1652235202d08dbf88": {
+      "type": "custom-liquid",
+      "settings": {
+        "custom_liquid": "<center><a href='https:\/\/apps.apple.com\/id\/app\/nantiaja-bayar-4-kali\/id1589718518'><img src='http:\/\/assets.stickpng.com\/images\/5a902db97f96951c82922874.png'width='133' height='128'\/><\/a>&nbsp&nbsp<a href='https:\/\/play.google.com\/store\/apps\/details?id=com.bnpl.android'><img src='https:\/\/upload.wikimedia.org\/wikipedia\/commons\/thumb\/7\/78\/Google_Play_Store_badge_EN.svg\/1200px-Google_Play_Store_badge_EN.svg.png'width='150' height='128'\/><\/a><\/center>"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "1652233581ed569e49",
+    "165223357385aa7cea",
+    "1652235202d08dbf88"
+  ]
+}

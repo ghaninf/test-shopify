@@ -1,0 +1,281 @@
+
+{{ 'tuecus-jquery.products.min.js' | asset_url | script_tag }}
+
+<div class="tuecus-row collection tuecus-grid-collection clearfix tuecus-pt-4" id="recently-viewed-products">
+   
+</div>
+{% raw %}
+<script id="recently-viewed-product-template"  type="text/x-jquery-tmpl">
+ <div id="product-${handle}" class="tuecus-col-md-3 tuecus-ml-3 tuecus-border tuecus-p-3 tuecus-recently-viewed-product">
+    <a href="${url}"><img src="${Shopify.Products.resizeImage(featured_image, "medium")}" class="tuecus-img-thumbnail tuecus-mx-auto tuecus-d-block"></a>
+    <small><a href="${url}" class="tuecus-mb-1 tuecus-d-block tuecus-font-weight-600">${title}</a></small>
+    <div class="tuecus-col-md-12">
+      <select class="tuecus-custom-select tuecus-mt-2 tuecus-form-control-sm tuecus-shadow-sm">
+        <option selected="">Default Title</option>
+        <option value="1">Default Title 1</option>
+      </select>
+    </div>
+    <div class="tuecus-input-group tuecus-mt-3 tuecus-mb-3">
+      <span class="tuecus-input-group-btn">
+        <button type="button" class="tuecus-btn tuecus-btn-default tuecus-btn-number tuecus-border tuecus-border-grey" disabled="disabled" data-type="minus" data-field="quant[1]">
+          <span class="fa fa-minus"></span>
+        </button>
+      </span>
+      <input type="text" name="quant[1]" class="tuecus-form-control tuecus-input-number tuecus-input-sm" value="1" min="1" max="10">
+      <span class="tuecus-input-group-btn">
+        <button type="button" class="tuecus-btn tuecus-btn-default tuecus-btn-number tuecus-border tuecus-border-grey" data-type="plus" data-field="quant[1]">
+          <span class="fa fa-plus"></span>
+        </button>
+      </span>
+    </div>
+     
+	<h6 class="tuecus-d-flex tuecus-justify-content-start tuecus-justify-content-md-center tuecus-mb-3">{{if price_varies}}From {{/if}}${Shopify.formatMoney(price)}</h6>
+	<div class="col text-center">	    
+		<button data-toggle="modal"  class="tuecus-ml-md-3 tuecus-ml-0 tuecus-font-weight-600 tuecus-text-uppercase tuecus-btn tuecus-btn-success tuecus-btn-md  tuecus-pt-1" type="button"><small>Add to Cart &nbsp; <i class="fa fa-shopping-basket"></i></small></button>
+	</div>
+  </div>
+  
+</script>
+{% endraw %}
+
+<script>
+
+	let shop_symbol = "{{ shop.money_format }}";
+	  shop_symbol = shop_symbol.trim();
+	
+	  if(shop_symbol.indexOf('\{\{') !== -1) {
+		var shop_symbol_postion = shop_symbol.indexOf('\{\{');
+		//alert('shop_symbol_postion'+shop_symbol_postion);
+		shop_symbol = shop_symbol.substring(0,shop_symbol_postion - 1);
+	  } else {
+		shop_symbol = shop_symbol.substring(0, 1);
+	  }
+	Shopify.Products.showRecentlyViewed( { howManyToShow:4} );
+	
+	function incrementqty(productid) {
+	
+		var incrementelement = document.getElementById("input_qty_"+productid);
+		incrementelement.value = parseInt(incrementelement.value)+1;
+	    
+		if(parseInt(incrementelement.value) > 0) {
+			var decrementelement = document.getElementById("decrement_qty_"+productid);
+			decrementelement.disabled = false;
+		}
+    }
+	
+	function decrementqty(productid) {
+	
+		var incrementelement = document.getElementById("input_qty_"+productid);
+		if(parseInt(incrementelement.value) > 0) {
+				incrementelement.value = parseInt(incrementelement.value)-1;
+		}
+		
+		if(parseInt(incrementelement.value) <= 0) {
+		  var decrementelement = document.getElementById("decrement_qty_"+productid);
+		  decrementelement.disabled = true;
+	
+		} else {
+		  decrementelement.disabled = false;
+		}
+		
+    }
+	
+   function onaddtocartclick(productid) {
+	    var variantsdataelement = document.getElementById("product_variants_"+productid);
+		var datavariants = variantsdataelement.getAttribute('data-variants');
+		
+		var variants = JSON.parse(atob(datavariants));
+		
+		console.log(variants);
+		
+		let productoptions = document.getElementsByClassName('tuecus-product-option-select-'+productid);
+		
+		//alert('productoptions'+productoptions.length);
+		if(productoptions.length == 3) {
+		   var option1 = productoptions[0].value;
+		   var option2 = productoptions[1].value;
+		   var option3 = productoptions[2].value;
+		   
+		   for(var v=0; v<variants.length; v++) {
+		       var variant = variants[v];
+			   
+			   if(variant.option1 !== 'undefined' && variant.option1 !== 'null'  & variant.option2 !== 'undefined' && variant.option2 !== 'null' & variant.option3 !== 'undefined' && variant.option3 !== 'null') {
+			   
+					if(variant.option1 == option1 && variant.option2 == option2  && variant.option3 == option3) {
+						var variant_id = variant.id;
+						var quantity = 1;
+						
+						var data = {quantity: quantity, id: variant_id};
+						
+						
+						const xhr = new XMLHttpRequest();
+						xhr.open('POST', '/cart/add.js', true);
+						xhr.onreadystatechange = () => {
+							if (xhr.readyState > 3) { 
+							 
+								var resdata = xhr.responseText;
+								var response = JSON.parse(resdata);
+								location.href ="/cart";	
+							}
+						};
+						xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+						xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+						xhr.send(JSON.stringify(data));
+	
+							
+					
+					}
+					break;
+			   }
+				
+		   }
+		   
+		} else if(productoptions.length == 2) {
+		   var option1 = productoptions[0].value;
+		   var option2 = productoptions[1].value;
+		   
+		    for(var v=0; v<variants.length; v++) {
+		       var variant = variants[v];
+			   
+			   if(variant.option1 !== 'undefined' && variant.option1 !== 'null'  & variant.option2 !== 'undefined' && variant.option2 !== 'null') {
+			   
+					if(variant.option1 == option1 && variant.option2 == option2) {
+						var variant_id = variant.id;
+						var quantity = 1;
+						
+						var data = {quantity: quantity, id: variant_id};
+						
+						
+						const xhr = new XMLHttpRequest();
+						xhr.open('POST', '/cart/add.js', true);
+						xhr.onreadystatechange = () => {
+							if (xhr.readyState > 3) { 
+							 
+								var resdata = xhr.responseText;
+								var response = JSON.parse(resdata);
+								location.href ="/cart";	
+							}
+						};
+						xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+						xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+						xhr.send(JSON.stringify(data));
+	
+							
+					
+					}
+					break;
+			   }
+				
+		   }
+		   
+		   
+		  
+		} else if(productoptions.length == 1) {
+		   var option1 = productoptions[0].value;		
+		   for(var v=0; v<variants.length; v++) {
+		       var variant = variants[v];
+			   
+			   if(variant.option1 !== 'undefined' && variant.option1 !== 'null') {
+			   
+					if(variant.option1 == option1) {
+						var variant_id = variant.id;
+						var quantity = 1;
+						
+						var data = {quantity: quantity, id: variant_id};
+						
+						
+						const xhr = new XMLHttpRequest();
+						xhr.open('POST', '/cart/add.js', true);
+						xhr.onreadystatechange = () => {
+							if (xhr.readyState > 3) { 
+							 
+								var resdata = xhr.responseText;
+								var response = JSON.parse(resdata);
+								location.href ="/cart";	
+							}
+						};
+						xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+						xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+						xhr.send(JSON.stringify(data));
+	
+							
+					
+					}
+					break;
+			   }
+				
+		   }
+		}
+   
+   }
+	
+</script>
+
+<style>
+
+/* Some styles to get you started */
+
+.collection {
+clear: both;
+padding-top: 50px;
+}
+
+.collection .product {
+float: left;
+text-align: center;
+width: 162px; /* 160px + 1px + 1px for the borders on either side */
+margin: 0 14px 14px 0;
+padding: 0;
+position: relative; /* used to display absolutely positioned sale tag */
+overflow: hidden;
+}
+
+.collection .product.last {
+margin-right: 0;
+}
+
+.collection .product .image {
+border: 1px solid #E0E0E0;
+margin-bottom: 10px;
+height: 160px;
+overflow: hidden;
+}
+
+.collection .product .cy {
+display: block;
+margin: 0 auto;
+}
+
+.collection .product .image img {
+max-width: 160px;
+}
+
+.collection .product .title {
+display: block;
+line-height: 16px;
+font-size: 12px;
+color: #222;
+font-weight: 700;
+}
+
+.collection .product .price {
+display: block;
+line-height: 16px;
+font-size: 11px;
+color: #777;
+font-weight: normal;
+}
+
+/* new clearfix */
+.clearfix:after {
+visibility: hidden;
+display: block;
+font-size: 0;
+content: " ";
+clear: both;
+height: 0;
+}
+* html .clearfix             { zoom: 1; } /* IE6 */
+*:first-child+html .clearfix { zoom: 1; } /* IE7 */
+
+</style>

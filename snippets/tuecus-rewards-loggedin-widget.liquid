@@ -1,0 +1,1119 @@
+{% if shop.metafields.tuecus.is_store_credit_enabled == 1 and shop.metafields.tuecus.enable_rewards_widget == 1 %}
+		
+		<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+		
+		<style>
+		
+			@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+			
+			#tuecus-rewards-pop-body{
+				font-family: 'Lato', sans-serif;
+				font-size: 13px;
+				letter-spacing: 0.4px;
+				line-height: 19px;
+			}
+
+			#tuecus-chat-circle {
+				position: fixed;
+				bottom: 50px;
+				left: 30px;
+				background: {{ shop.metafields.tuecus.rw_button_background_color }};
+				border-radius: 30px;
+				color: #fff;
+				padding: 10px 20px;
+				cursor: pointer;
+				box-shadow: 0px 3px 2px 0px rgb(183 155 91), 0 3px 1px -2px rgb(0 0 0 / 20%), 0 1px 5px 0 rgb(0 0 0 / 12%);
+			}
+
+			#tuecus-chat-overlay {
+				background: rgba(255,255,255,0.1);
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				border-radius: 50%;
+				display: none;
+			}
+
+
+			.tuecus-chat-box {
+				display: none;
+				background: #fff;
+				position: fixed;
+				left: 30px;
+				bottom: 50px;
+				width: 350px;
+				max-width: 85vw;
+				max-height: 100vh;
+				border-radius: 5px;
+				box-shadow: 0px 0px 20px #d2d1cf;
+				border: 1px solid #e8ddc4;
+              	z-index: 1000;
+			}
+			.tuecus-chat-box-toggle {
+			      position: absolute;
+            	  right: -10px;
+                  top: -10px;
+           		  cursor: pointer;
+			}
+			.tuecus-chat-box-header {
+			  background: {{ shop.metafields.tuecus.rw_header_background_color }};
+			  height:auto;
+			  padding: 20px 0 65px 0;
+			  border-top-left-radius:5px;
+			  border-top-right-radius:5px;
+			  color: {{ shop.metafields.tuecus.rw_text_color }};
+			}
+			.tuecus-chat-box-body {
+			  height:370px;  
+			  /*height:auto;*/
+			  border:1px solid #ccc;  
+			  overflow: visible;
+			  z-index:-1;
+              background:#fff;
+			}
+			
+			#tuecus-pop-page2, #tuecus-norewards-sec, #tuecus-wayredeem-sec, #tuecus-points-history-sec, #tuecus-referral-sec{
+				height:370px;
+				overflow-y:scroll;
+				padding:15px;
+				display:none;
+                background:#fff;
+			}
+			
+			.tuecus-chat-logs {
+			  padding:15px; 
+			  height:430px;
+			  overflow-y:scroll;
+			  position:relative;
+			  z-index:100;
+			  top:-60px;
+			}
+
+			.tuecus-chat-logs::-webkit-scrollbar-track, #tuecus-pop-page2::-webkit-scrollbar-track, #tuecus-wayredeem-sec::-webkit-scrollbar-track, #tuecus-points-history-sec::-webkit-scrollbar-track{
+			  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+			  background-color: #F5F5F5;
+			}
+
+			.tuecus-chat-logs::-webkit-scrollbar, #tuecus-pop-page2::-webkit-scrollbar, #tuecus-wayredeem-sec::-webkit-scrollbar, #tuecus-points-history-sec::-webkit-scrollbar{
+			  width: 5px;  
+			  background-color: #F5F5F5;
+			}
+
+			.tuecus-chat-logs::-webkit-scrollbar-thumb, #tuecus-pop-page2::-webkit-scrollbar-thumb, #tuecus-wayredeem-sec::-webkit-scrollbar-thumb, #tuecus-points-history-sec::-webkit-scrollbar-thumb
+			{
+			  background-color: {{ shop.metafields.tuecus.rw_header_background_color }};
+			}
+
+
+
+			@media only screen and (max-width: 500px) {
+			   .tuecus-chat-logs {
+					height:40vh;
+				}
+			}
+
+			
+			
+			.tuecus-rewards-pop-text{
+				display: inline;
+				font-size: 17px;
+				margin: 0;
+				font-weight: normal;
+				color: #251212;
+				padding-right: 5px;
+			}
+			
+			.tuecus-pop-welcome-text{
+				display: inline-block;
+				font-size: 15px;
+				margin: 0;
+				font-weight: normal;
+				padding-left: 12px;
+				padding-top: 10px;
+			}
+			
+			.tuecus-pop-bigtext{
+				font-size: 14px;
+				text-transform: uppercase;
+				padding: 0 5px;
+              	font-weight:bold;
+			}
+			
+			.tuecus-member-block, .tuecus-pop-points-block, .tuecus-referral-block{
+				background:#fff;
+				padding:15px;
+				border-radius: 10px;
+				text-align:center;
+				margin-bottom:15px;
+				box-shadow:0 0 2px #d8d8d8;
+				border: 1px solid #ececec;
+			}
+			
+			.tuecus-member-block h6, .tuecus-pop-points-block h6, .tuecus-referral-block h6{
+				margin: 0;
+				
+				font-size: 14px;
+				font-weight: normal;
+				text-align: center;
+			}
+			
+			.tuecus-member-block p, .tuecus-pop-points-block p, .tuecus-referral-block p{
+				margin-bottom: 10px;
+				margin-top: 5px;
+			}
+			
+			.tuecus-rewards-pop-btn{
+				border: 0;
+				display: inline-block;
+				text-decoration: none;
+				cursor:pointer;
+				padding: 10px 15px;
+				font-size: 12px;
+				color: #000;
+				background: {{ shop.metafields.tuecus.rw_button_background_color }};
+				border-radius: 5px;
+			}
+			
+			.tuecus-anchor-text{
+				color: #ff5200;
+			}
+			
+			.tuecus-pop-list-items{
+				list-style:none;
+				padding:0;
+				margin:0;
+			}
+			
+			.tuecus-pop-footer{
+				position: relative;
+				bottom: 10px;
+				padding: 5px;
+				display: block;
+				width: 100%;
+				box-shadow: 1px -2px 6px #dcdcdc;
+				z-index: 100;
+				background:#fff;
+			}
+			
+			.tuecus-pop-footer p{
+				text-align: center;
+				margin:0;
+				padding: 4px;
+				color:#656363;
+			}
+			
+			.tuecus-pop-points-block ul li a, .tuecus-referral-block ul li a{
+				color: #1b1300;
+				text-decoration: none;
+				border-bottom: 1px solid #e2e2e2;
+				display: block;
+				padding: 10px;
+			}
+			
+			.tuecus-pop-points-block ul li a:hover, .tuecus-referral-block ul li a:hover{
+				background: #f5f5f5;
+			}
+			
+			.tuecus-referral-block ul li a{
+				line-height: 14px;
+				font-size: 12px;
+			}
+			
+			#tuecus-waytoearn-sec{
+				display:none;
+			}
+			
+			.tuecus-earn-ways{
+				list-style:none;
+				padding: 0;
+			}
+			
+			.tuecus-earn-ways li{
+				background: #f9f9f9;
+				padding: 10px;
+				border-bottom: 1px solid #ddd;
+				margin-bottom: 4px;
+				border-top: 1px solid #ececec;
+			}
+			
+			.tuecus-earn-ways li p{
+				display: inline-block;
+				margin: 0;
+				overflow-wrap: break-word;
+				width: 150px;
+				line-height: 17px;
+			}
+			
+			.tuecus-earn-ways-icon{
+				vertical-align: text-top;
+				margin-right: 15px;
+			}
+			
+			.tuecus-earn-ways-desc{
+				display: inline-grid;
+				font-size: 13px;
+			}
+			
+			.tuecus-earn-ways-heading{
+				display: inline;
+				margin: 0;
+				font-size: 15px;
+				padding: 0 10px;
+				font-weight: normal;
+			}
+			
+			#tuecus-waytoearn-return, #tuecus-norewards-return{
+				text-decoration:none;
+			}
+			
+			.tuecus-bottom-message{
+				background: #ffe6ad;
+				padding: 6px 10px;
+				font-size: 11px;
+				border-radius: 15px;
+				margin-bottom: 5px;
+				text-align: center;
+			}
+			
+			.tuecus-bottom-message .tuecus-coupon-message{
+				margin:0;
+			}
+			
+			.tuecus-align-center{
+				text-align: center;
+			}
+		
+			.tuecus-referral-code{
+				border: 1px solid #ddd;
+				padding: 5px 10px;
+				border-radius: 5px;
+				color: #b3b3b3;
+			}
+			
+			.tuecus-waystoearn-btns{
+				display:inline;
+			}
+			
+			.tuecus-waystoearn-btns .tuecus-rewards-pop-btn{
+				float: right;
+				padding: 6px 12px;
+				border-radius: 3px;
+				margin-top: 5px;
+				font-weight: bold;
+				letter-spacing: 0.5px;
+			}
+			
+			#tuecus-points-history{
+				
+			}
+			
+			.tuecus-m-0{
+				margin:0 !important;
+			}
+			
+			.tuecus-font-21px{
+				font-size: 21px;
+			}
+		
+			.tuecus-pop-fb-icon{
+				color: #1e4eff;
+			}
+			
+			.tuecus-pop-twitter-icon{
+				color: #1eacff;
+			}
+          
+          	.tuecus-pop-whatsapp-icon{
+				color: #45b649;
+			}
+			
+			.tuecus-pop-envelope-icon{
+				color: #ff002f;
+				font-size: 19px;
+			}
+			
+			.tuecus-rw-refcopy{
+				background-color: {{ shop.metafields.tuecus.rw_button_background_color }};
+			}
+		
+		</style>
+
+
+	<div id="tuecus-rewards-pop-body"> 
+		<div id="tuecus-chat-circle" class="btn btn-raised">
+			<div id="tuecus-chat-overlay"></div>
+			<h5 class="tuecus-rewards-pop-text">{{ 'tuecus.general.rewards' | t }}</h5>
+			<svg width="25" height="25" fill="#251212" viewBox="0 0 16 16" style="vertical-align: bottom;">
+			  <path d="M5.5 9.511c.076.954.83 1.697 2.182 1.785V12h.6v-.709c1.4-.098 2.218-.846 2.218-1.932 0-.987-.626-1.496-1.745-1.76l-.473-.112V5.57c.6.068.982.396 1.074.85h1.052c-.076-.919-.864-1.638-2.126-1.716V4h-.6v.719c-1.195.117-2.01.836-2.01 1.853 0 .9.606 1.472 1.613 1.707l.397.098v2.034c-.615-.093-1.022-.43-1.114-.9H5.5zm2.177-2.166c-.59-.137-.91-.416-.91-.836 0-.47.345-.822.915-.925v1.76h-.005zm.692 1.193c.717.166 1.048.435 1.048.91 0 .542-.412.914-1.135.982V8.518l.087.02z"/>
+			  <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+			  <path fill-rule="evenodd" d="M8 13.5a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zm0 .5A6 6 0 1 0 8 2a6 6 0 0 0 0 12z"/>
+			</svg>
+		</div>
+	  
+		<div class="tuecus-chat-box" id="tuecus-chat-box" style="display:none;">
+			<div class="tuecus-chat-box-header" id="tuecus-pop-header">
+				<h6 class="tuecus-pop-welcome-text" id="tuecus-pop-welcome-text">{{ 'tuecus.general.welcome_to' | t }} <span class="tuecus-pop-bigtext">{{ shop.metafields.tuecus.shopify_store_name }}</span></h6>
+				<span class="tuecus-chat-box-toggle" id="tuecus-chat-box-toggle">
+					<svg width="35" height="35" fill="#ffffff" viewBox="0 0 16 16">
+					  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
+					</svg>
+				</span>
+			</div>
+			
+			<div class="tuecus-chat-box-body" id="tuecus-pop-page1">
+				<div class="tuecus-chat-box-overlay">   
+				</div>
+				<div class="tuecus-chat-logs">
+					<div class="tuecus-member-block">
+						<a href="#" id="tuecus-your-rewards-link"><h6>{{ 'tuecus.general.your_total_earned_rewards' | t }} <i class="fa fa-angle-double-right" aria-hidden="true" id="rw-earned-credits">0</i></h6></a>
+					</div>
+					<div class="tuecus-pop-points-block">
+						<h6>{{ shop.metafields.tuecus.shopify_store_name }} {{ 'tuecus.general.rewards' | t }}</h6>
+                      <p>&nbsp;{{ 'tuecus.general.current_rewards' | t }} <span id="rw-customer-earned-rewards">0</span> {{ 'tuecus.general.rewards' | t }} 
+							<a href="#" id="tuecus-points-history-link">
+								<svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16" style="vertical-align: text-bottom; margin-left:4px;">
+									<path d="M8.515 1.019A7 7 0 0 0 8 1V0a8 8 0 0 1 .589.022l-.074.997zm2.004.45a7.003 7.003 0 0 0-.985-.299l.219-.976c.383.086.76.2 1.126.342l-.36.933zm1.37.71a7.01 7.01 0 0 0-.439-.27l.493-.87a8.025 8.025 0 0 1 .979.654l-.615.789a6.996 6.996 0 0 0-.418-.302zm1.834 1.79a6.99 6.99 0 0 0-.653-.796l.724-.69c.27.285.52.59.747.91l-.818.576zm.744 1.352a7.08 7.08 0 0 0-.214-.468l.893-.45a7.976 7.976 0 0 1 .45 1.088l-.95.313a7.023 7.023 0 0 0-.179-.483zm.53 2.507a6.991 6.991 0 0 0-.1-1.025l.985-.17c.067.386.106.778.116 1.17l-1 .025zm-.131 1.538c.033-.17.06-.339.081-.51l.993.123a7.957 7.957 0 0 1-.23 1.155l-.964-.267c.046-.165.086-.332.12-.501zm-.952 2.379c.184-.29.346-.594.486-.908l.914.405c-.16.36-.345.706-.555 1.038l-.845-.535zm-.964 1.205c.122-.122.239-.248.35-.378l.758.653a8.073 8.073 0 0 1-.401.432l-.707-.707z"/>
+									<path d="M8 1a7 7 0 1 0 4.95 11.95l.707.707A8.001 8.001 0 1 1 8 0v1z"/>
+									<path d="M7.5 3a.5.5 0 0 1 .5.5v5.21l3.248 1.856a.5.5 0 0 1-.496.868l-3.5-2A.5.5 0 0 1 7 9V3.5a.5.5 0 0 1 .5-.5z"/>
+								</svg>
+							</a>
+						</p>
+						<ul class="tuecus-pop-list-items">
+							<li><a href="" id="tuecus-waytoearn-link"><i class="fa fa-angle-right" aria-hidden="true"></i> {{ 'tuecus.general.ways_to_earn' | t }}
+								<svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="vertical-align: middle; margin-left:6px;">
+								  <path fill-rule="evenodd" d="M11 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm5-4a5 5 0 1 1-10 0 5 5 0 0 1 10 0z"/>
+								  <path d="M9.438 11.944c.047.596.518 1.06 1.363 1.116v.44h.375v-.443c.875-.061 1.386-.529 1.386-1.207 0-.618-.39-.936-1.09-1.1l-.296-.07v-1.2c.376.043.614.248.671.532h.658c-.047-.575-.54-1.024-1.329-1.073V8.5h-.375v.45c-.747.073-1.255.522-1.255 1.158 0 .562.378.92 1.007 1.066l.248.061v1.272c-.384-.058-.639-.27-.696-.563h-.668zm1.36-1.354c-.369-.085-.569-.26-.569-.522 0-.294.216-.514.572-.578v1.1h-.003zm.432.746c.449.104.655.272.655.569 0 .339-.257.571-.709.614v-1.195l.054.012z"/>
+								  <path d="M1 0a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h4.083c.058-.344.145-.678.258-1H3a2 2 0 0 0-2-2V3a2 2 0 0 0 2-2h10a2 2 0 0 0 2 2v3.528c.38.34.717.728 1 1.154V1a1 1 0 0 0-1-1H1z"/>
+								  <path d="M9.998 5.083 10 5a2 2 0 1 0-3.132 1.65 5.982 5.982 0 0 1 3.13-1.567z"/>
+								</svg>
+							</a></li>
+							<li><a href="" id="tuecus-waytoredeem-link"><i class="fa fa-angle-right" aria-hidden="true"></i> {{ 'tuecus.general.ways_to_redeem' | t }}
+								<svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="vertical-align: middle; margin-left:6px;">
+								  <path fill-rule="evenodd" d="M8 0a5.53 5.53 0 0 0-3.594 1.342c-.766.66-1.321 1.52-1.464 2.383C1.266 4.095 0 5.555 0 7.318 0 9.366 1.708 11 3.781 11H7.5V5.5a.5.5 0 0 1 1 0V11h4.188C14.502 11 16 9.57 16 7.773c0-1.636-1.242-2.969-2.834-3.194C12.923 1.999 10.69 0 8 0zm-.354 15.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 14.293V11h-1v3.293l-2.146-2.147a.5.5 0 0 0-.708.708l3 3z"/>
+								</svg>
+							</a></li>
+						</ul>
+					</div>
+					<div class="tuecus-referral-block" style="padding-top:0;">
+						<ul class="tuecus-pop-list-items">
+							<li><small>
+									<a href="#" id="tuecus-referral-link" style="padding-bottom:0;">{{ 'tuecus.general.refer_your_friends' | t }} &nbsp; <i class="fa fa-caret-right" aria-hidden="true"></i>
+                                      <p><span id="rw-referrals-count">0</span> {{ 'tuecus.general.referrals_completed' | t }} &nbsp; <i class="fa fa-caret-right" aria-hidden="true"></i></p>
+									</a>
+								</small>
+							</li>
+						</ul>
+						<p><small>{{ 'tuecus.general.share_url_to_friends' | t }} {{ shop.metafields.tuecus.referee_credits }} </small></p>
+                      
+						<div class="tuecus-input-group">
+                      	{% if shop.metafields.tuecus.customer_landing_page == 0 %}
+                      		<input readonly="" id="rw-tuecus-referral-code" class="tuecus-referral-code tuecus-form-control tuecus-form-control-sm" value="https://{{shop.domain}}?tref={{ customer.metafields.tuecus.referal_code}}" />
+                       		<button onclick="onrwCopyReferralCode()" class="tuecus-btn tuecus-btn-sm tuecus-rw-refcopy"><small>{{ 'tuecus.general.copy_code' | t }}</small></button>
+                      	{% elsif  shop.metafields.tuecus.customer_landing_page == 1 %}
+                      		<input readonly="" id="rw-tuecus-referral-code" class="tuecus-referral-code tuecus-form-control tuecus-form-control-sm" value="https://{{shop.domain}}/account/register?tref={{ customer.metafields.tuecus.referal_code}}" />
+                            <button onclick="onrwCopyReferralCode()" class="tuecus-btn tuecus-btn-sm tuecus-rw-refcopy"><small>{{ 'tuecus.general.copy_code' | t }}</small></button>
+                      	{% else %}
+                      		<input readonly="" id="rw-tuecus-referral-code" class="tuecus-referral-code tuecus-form-control tuecus-form-control-sm" value="https://{{shop.domain}}?tref={{ customer.metafields.tuecus.referal_code}}" />
+                            <button onclick="onrwCopyReferralCode()" class="tuecus-btn tuecus-btn-sm tuecus-rw-refcopy"><small>{{ 'tuecus.general.copy_code' | t }}</small></button>
+                      	{% endif %}
+                        </div>
+                      
+						<div style="margin-top:10px;">
+							<a href="#" style="color:#333; padding:0px 10px;" onclick="referfriendfbshare(this);"><i class="fa fa-facebook-square fa-2x tuecus-pop-fb-icon tuecus-font-21px" aria-hidden="true"></i></a>
+							<a href="#" style="color:#333; padding:0px 10px;" onclick="referfriendtwittershare(this);"><i class="fa fa-twitter-square fa-2x tuecus-pop-twitter-icon tuecus-font-21px" aria-hidden="true"></i></a>
+							<a href="#" style="color:#333; padding:0px 10px;" onclick="referfriendwhatsappshare(this);"><i class="fa fa-whatsapp fa-2x tuecus-pop-whatsapp-icon tuecus-font-21px" aria-hidden="true"></i></a>
+							<!-- <a href="#" style="color:#333; padding:0px 10px;"><i class="fa fa-envelope fa-2x tuecus-pop-envelope-icon" aria-hidden="true"></i></a> -->
+						</div>
+					</div>
+					
+				</div><!--chat-log -->
+			</div>
+			
+			<div id="tuecus-pop-page2">
+				<div class="tuecus-waytoearn-sec">
+					<a href="#" id="tuecus-waytoearn-return">
+						<svg width="20" height="20" fill="#000" viewBox="0 0 16 16" style="vertical-align: bottom;">
+						  <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"/>
+						</svg>
+					</a>
+					<h4 class="tuecus-earn-ways-heading">{{ 'tuecus.general.ways_to_earn' | t }}</h4>
+					<ul class="tuecus-earn-ways tuecus-mt-2 tuecus-mb-2">
+						
+                      {% if shop.metafields.tuecus.enable_registration_credits and shop.metafields.tuecus.enable_registration_credits == 1 %}
+                        <li>
+							<svg class="tuecus-earn-ways-icon" width="30" height="30" fill="{{ shop.metafields.tuecus.rw_header_background_color }}" viewBox="0 0 16 16">
+							  <path d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1v4.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 13.5V9a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h1.217L5.07 1.243a.5.5 0 0 1 .686-.172zM2 9v4.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V9H2zM1 7v1h14V7H1zm3 3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 4 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 6 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 8 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5z"/>
+							</svg>
+							<div class="tuecus-earn-ways-desc">
+								<p>{{ 'tuecus.general.registration_rewards' | t }}</p>
+								<p>{{ shop.metafields.tuecus.registration_credits }} {{ 'tuecus.general.registration_rewards_text' | t }}</p>
+							</div>
+						</li>
+                      {% endif %}
+                      
+                      {% if shop.metafields.tuecus.enable_subscriber_credits and shop.metafields.tuecus.enable_subscriber_credits == 1 %}
+						<li>
+							<svg class="tuecus-earn-ways-icon" width="30" height="30" fill="{{ shop.metafields.tuecus.rw_header_background_color }}" viewBox="0 0 16 16">
+							  <path d="M6.956 1.745C7.021.81 7.908.087 8.864.325l.261.066c.463.116.874.456 1.012.965.22.816.533 2.511.062 4.51a9.84 9.84 0 0 1 .443-.051c.713-.065 1.669-.072 2.516.21.518.173.994.681 1.2 1.273.184.532.16 1.162-.234 1.733.058.119.103.242.138.363.077.27.113.567.113.856 0 .289-.036.586-.113.856-.039.135-.09.273-.16.404.169.387.107.819-.003 1.148a3.163 3.163 0 0 1-.488.901c.054.152.076.312.076.465 0 .305-.089.625-.253.912C13.1 15.522 12.437 16 11.5 16H8c-.605 0-1.07-.081-1.466-.218a4.82 4.82 0 0 1-.97-.484l-.048-.03c-.504-.307-.999-.609-2.068-.722C2.682 14.464 2 13.846 2 13V9c0-.85.685-1.432 1.357-1.615.849-.232 1.574-.787 2.132-1.41.56-.627.914-1.28 1.039-1.639.199-.575.356-1.539.428-2.59z"/>
+							</svg>
+							<div class="tuecus-earn-ways-desc">
+								<p>{{ 'tuecus.general.subscription_rewards' | t }}</p>
+								<p>{{ shop.metafields.tuecus.subscriber_credits }} {{ 'tuecus.general.subscription_rewards_text' | t }}</p>
+							</div>
+						</li>
+                      {% endif %}
+                      
+                      {% if shop.metafields.tuecus.enable_order_credits and shop.metafields.tuecus.enable_order_credits == 1 %} 
+						<li>
+							<svg class="tuecus-earn-ways-icon" width="30" height="30" fill="{{ shop.metafields.tuecus.rw_header_background_color }}" viewBox="0 0 16 16">
+							   <path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.926 3.926 0 0 0-.923-1.417A3.911 3.911 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0h.003zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599.28.28.453.546.598.92.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.47 2.47 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.478 2.478 0 0 1-.92-.598 2.48 2.48 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233 0-2.136.008-2.388.046-3.231.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92.28-.28.546-.453.92-.598.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045v.002zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92zm-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217zm0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334z"/>
+							</svg>
+							<div class="tuecus-earn-ways-desc">
+								<p>{{ 'tuecus.general.place_order' | t }}</p>
+								<p>{{ shop.metafields.tuecus.credits_on_first_order }} {{ 'tuecus.general.place_order_text' | t }} </p>
+							</div>
+						</li>
+                      {% endif %}
+                      
+                      {% if shop.metafields.tuecus.enable_product_review_credits and shop.metafields.tuecus.enable_product_review_credits == 1 %} 
+						<li>
+							<svg class="tuecus-earn-ways-icon" width="30" height="30" fill="{{ shop.metafields.tuecus.rw_header_background_color }}" viewBox="0 0 16 16">
+							   <path d="M3 2.5a2.5 2.5 0 0 1 5 0 2.5 2.5 0 0 1 5 0v.006c0 .07 0 .27-.038.494H15a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h2.038A2.968 2.968 0 0 1 3 2.506V2.5zm1.068.5H7v-.5a1.5 1.5 0 1 0-3 0c0 .085.002.274.045.43a.522.522 0 0 0 .023.07zM9 3h2.932a.56.56 0 0 0 .023-.07c.043-.156.045-.345.045-.43a1.5 1.5 0 0 0-3 0V3zm6 4v7.5a1.5 1.5 0 0 1-1.5 1.5H9V7h6zM2.5 16A1.5 1.5 0 0 1 1 14.5V7h6v9H2.5z"/>
+							</svg>
+							<div class="tuecus-earn-ways-desc">
+								<p>{{ 'tuecus.general.product_review_rewards' | t }}</p>
+								<p>{{ shop.metafields.tuecus.product_review_credits }} {{ 'tuecus.general.product_review_rewards_text' | t }}</p>
+							</div>
+						</li>
+                      {% endif %}
+                      	
+					</ul>
+					
+					<div class="tuecus-bottom-message">
+						<p class="tuecus-coupon-message"><i class="fa fa-info-circle" aria-hidden="true"></i>  {{ 'tuecus.general.must_have_account_text' | t }} </p>
+					</div>
+					
+					<div class="tuecus-align-center">
+						<a href="https://{{shop.domain}}/account/register" class="tuecus-rewards-pop-btn">{{ 'tuecus.general.join_now' | t }} 
+							<svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="vertical-align: bottom;">
+							  <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z"/>
+							  <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
+							</svg>
+						</a>
+						<p style="margin:4px;">{{ 'tuecus.general.already_have_account' | t }} <a href="https://{{shop.domain}}/account/login" class="tuecus-anchor-text">{{ 'tuecus.general.sign_in' | t }}</a></p>
+					</div>
+					
+				</div>
+			</div>
+			<div id="tuecus-norewards-sec">
+				<a href="#" id="tuecus-norewards-return">
+					<svg width="20" height="20" fill="#000" viewBox="0 0 16 16" style="vertical-align: bottom;">
+					  <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"/>
+					</svg>
+				</a>
+				<svg width="100" height="100" fill="currentColor" viewBox="0 0 16 16" style="display: block;margin: 0 auto;">
+				  <path d="M8 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+				  <path d="M13.997 5.17a5 5 0 0 0-8.101-4.09A5 5 0 0 0 1.28 9.342a5 5 0 0 0 8.336 5.109 3.5 3.5 0 0 0 5.201-4.065 3.001 3.001 0 0 0-.822-5.216zm-1-.034a1 1 0 0 0 .668.977 2.001 2.001 0 0 1 .547 3.478 1 1 0 0 0-.341 1.113 2.5 2.5 0 0 1-3.715 2.905 1 1 0 0 0-1.262.152 4 4 0 0 1-6.67-4.087 1 1 0 0 0-.2-1 4 4 0 0 1 3.693-6.61 1 1 0 0 0 .8-.2 4 4 0 0 1 6.48 3.273z"/>
+				</svg>
+				<div class="">
+					<h4 style="text-align:center;">{{ 'tuecus.general.no_rewards_yet' | t }}</h4>
+					<small>{{ 'tuecus.general.earn_rewards_see_them' | t }}</small>
+					<p style="text-align:center;">
+						<!--<a href="#" style="text-decoration:none;" id="tuecus-norewards-return">
+							<svg width="10" height="10" fill="currentColor" viewBox="0 0 16 16">
+							  <path fill-rule="evenodd" d="M8.354 1.646a.5.5 0 0 1 0 .708L2.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+							  <path fill-rule="evenodd" d="M12.354 1.646a.5.5 0 0 1 0 .708L6.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+							</svg>
+						Go Home</a> -->
+					</p>
+				</div>
+			</div>
+			
+			<div id="tuecus-wayredeem-sec">
+				<a href="#" id="tuecus-wayredeem-return">
+					<svg width="20" height="20" fill="#000" viewBox="0 0 16 16" style="vertical-align: bottom;">
+					  <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"/>
+					</svg>
+				</a>
+				<h4 class="tuecus-earn-ways-heading">{{ 'tuecus.general.ways_to_redeem' | t }}</h4>
+				<ul class="tuecus-earn-ways tuecus-mt-2 tuecus-mb-2">
+					{% if shop.metafields.tuecus.enable_spent_credits and shop.metafields.tuecus.enable_spent_credits == 1 %}  
+						<li>
+							<svg class="tuecus-earn-ways-icon" width="30" height="30" fill="{{ shop.metafields.tuecus.rw_header_background_color }}" viewBox="0 0 16 16">
+							  <path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>
+							  <path d="M0 4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V6a2 2 0 0 1-2-2H3z"/>
+							</svg>
+							<div class="tuecus-earn-ways-desc">
+								<p>{{ 'tuecus.general.rewards_on_order' | t }}</p>
+								<p id="reward-points-conversion-msg">{{ shop.metafields.tuecus.reward_conversion_points_value }} {{ 'tuecus.general.rewards_for_every' | t }} USD 1</p>
+							</div>
+						</li>
+                    {% endif %}  
+				</ul>	
+			</div>
+			
+			<!-- <div id="tuecus-wayredeem-sec">
+				<a href="#" id="tuecus-wayredeem-return">
+					<svg width="20" height="20" fill="{{ shop.metafields.tuecus.rw_header_background_color }}" viewBox="0 0 16 16" style="vertical-align: bottom;">
+					  <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"/>
+					</svg>
+				</a>
+				<h5>Referrals</h5>
+				<ul class="tuecus-earn-ways">
+					<li>
+						<svg class="tuecus-earn-ways-icon" width="30" height="30" fill="{{ shop.metafields.tuecus.rw_header_background_color }}" viewBox="0 0 16 16">
+						  <path d="M1 3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1H1zm7 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>
+						  <path d="M0 5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V5zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V7a2 2 0 0 1-2-2H3z"/>
+						</svg>
+						<div class="tuecus-earn-ways-desc">
+							<p>Order discount</p>
+							<p style="overflow-wrap: normal;width: 100%;">2 Tuecus points for every ₹1</p>
+						</div>
+					</li>
+				</ul>	
+			</div> -->
+			
+				<div id="tuecus-points-history-sec">
+					<a href="#" id="tuecus-points-history-return">
+						<svg width="20" height="20" fill="#000" viewBox="0 0 16 16" style="vertical-align: bottom;">
+						  <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"/>
+						</svg>
+					</a>	
+					<div class="tuecus-align-center">
+						<svg width="100" height="200" fill="currentColor" viewBox="0 0 16 16">
+							  <path d="M8 0c-.176 0-.35.006-.523.017l.064.998a7.117 7.117 0 0 1 .918 0l.064-.998A8.113 8.113 0 0 0 8 0zM6.44.152c-.346.069-.684.16-1.012.27l.321.948c.287-.098.582-.177.884-.237L6.44.153zm4.132.271a7.946 7.946 0 0 0-1.011-.27l-.194.98c.302.06.597.14.884.237l.321-.947zm1.873.925a8 8 0 0 0-.906-.524l-.443.896c.275.136.54.29.793.459l.556-.831zM4.46.824c-.314.155-.616.33-.905.524l.556.83a7.07 7.07 0 0 1 .793-.458L4.46.824zM2.725 1.985c-.262.23-.51.478-.74.74l.752.66c.202-.23.418-.446.648-.648l-.66-.752zm11.29.74a8.058 8.058 0 0 0-.74-.74l-.66.752c.23.202.447.418.648.648l.752-.66zm1.161 1.735a7.98 7.98 0 0 0-.524-.905l-.83.556c.169.253.322.518.458.793l.896-.443zM1.348 3.555c-.194.289-.37.591-.524.906l.896.443c.136-.275.29-.54.459-.793l-.831-.556zM.423 5.428a7.945 7.945 0 0 0-.27 1.011l.98.194c.06-.302.14-.597.237-.884l-.947-.321zM15.848 6.44a7.943 7.943 0 0 0-.27-1.012l-.948.321c.098.287.177.582.237.884l.98-.194zM.017 7.477a8.113 8.113 0 0 0 0 1.046l.998-.064a7.117 7.117 0 0 1 0-.918l-.998-.064zM16 8a8.1 8.1 0 0 0-.017-.523l-.998.064a7.11 7.11 0 0 1 0 .918l.998.064A8.1 8.1 0 0 0 16 8zM.152 9.56c.069.346.16.684.27 1.012l.948-.321a6.944 6.944 0 0 1-.237-.884l-.98.194zm15.425 1.012c.112-.328.202-.666.27-1.011l-.98-.194c-.06.302-.14.597-.237.884l.947.321zM.824 11.54a8 8 0 0 0 .524.905l.83-.556a6.999 6.999 0 0 1-.458-.793l-.896.443zm13.828.905c.194-.289.37-.591.524-.906l-.896-.443c-.136.275-.29.54-.459.793l.831.556zm-12.667.83c.23.262.478.51.74.74l.66-.752a7.047 7.047 0 0 1-.648-.648l-.752.66zm11.29.74c.262-.23.51-.478.74-.74l-.752-.66c-.201.23-.418.447-.648.648l.66.752zm-1.735 1.161c.314-.155.616-.33.905-.524l-.556-.83a7.07 7.07 0 0 1-.793.458l.443.896zm-7.985-.524c.289.194.591.37.906.524l.443-.896a6.998 6.998 0 0 1-.793-.459l-.556.831zm1.873.925c.328.112.666.202 1.011.27l.194-.98a6.953 6.953 0 0 1-.884-.237l-.321.947zm4.132.271a7.944 7.944 0 0 0 1.012-.27l-.321-.948a6.954 6.954 0 0 1-.884.237l.194.98zm-2.083.135a8.1 8.1 0 0 0 1.046 0l-.064-.998a7.11 7.11 0 0 1-.918 0l-.064.998zM4.5 7.5a.5.5 0 0 0 0 1h7a.5.5 0 0 0 0-1h-7z"/>
+						</svg>
+						<h4 class="tuecus-m-0">{{ 'tuecus.general.no_activity_for' | t }} {{ shop.metafields.tuecus.shopify_store_name }} {{ 'tuecus.general.rewards' | t }}  </h4>
+						<p class="tuecus-m-0">{{ 'tuecus.general.you_not_earned_any' | t }} {{ shop.metafields.tuecus.shopify_store_name }} {{ 'tuecus.general.rewards' | t }}.</p>
+						<p class="tuecus-m-0"><a href="#" id="how-to-earn-rewards">{{ 'tuecus.general.how_do_earn_rewards' | t }} </a></p>
+					</div>
+				</div>
+				
+				<div class="" id="tuecus-referral-sec">
+					<a href="#" id="tuecus-referral-sec-return">
+						<svg width="20" height="20" fill="#000" viewBox="0 0 16 16" style="vertical-align: bottom;">
+						  <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"/>
+						</svg>
+					</a>
+					<h4 class="tuecus-earn-ways-heading">{{ 'tuecus.general.referrals' | t }}</h4>
+					<p class="tuecus-mt-2 tuecus-mb-2">{{ 'tuecus.general.referrals_text' | t }}</p>
+					<ul class="tuecus-earn-ways">
+						<li>
+							<svg class="tuecus-earn-ways-icon" width="30" height="30" fill="{{ shop.metafields.tuecus.rw_header_background_color }}" viewBox="0 0 16 16" style="">
+							  <path d="M1 3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1H1zm7 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
+							  <path d="M0 5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V5zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V7a2 2 0 0 1-2-2H3z"></path>
+							</svg>
+							<div class="tuecus-earn-ways-desc">
+								<p>{{ 'tuecus.general.they_get' | t }}</p>
+								<p style="overflow-wrap: normal;width: 100%;">{{ shop.metafields.tuecus.referee_credits }} {{ 'tuecus.general.they_get_rewards_signup' | t }}</p>
+							</div>
+						</li>
+						<li>
+							<svg class="tuecus-earn-ways-icon" width="30" height="30" fill="{{ shop.metafields.tuecus.rw_header_background_color }}" viewBox="0 0 16 16" style="">
+							  <path d="M1 3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1H1zm7 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
+							  <path d="M0 5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V5zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V7a2 2 0 0 1-2-2H3z"></path>
+							</svg>
+							<div class="tuecus-earn-ways-desc">
+								<p>{{ 'tuecus.general.you_get' | t }}</p>
+								<p style="overflow-wrap: normal;width: 100%;">{{ shop.metafields.tuecus.referrer_credits }} {{ 'tuecus.general.you_get_rewards_referring' | t }}</p>
+							</div>
+						</li>
+					</ul>
+					
+					<div class="tuecus-referral-block tuecus-pt-3" style="padding-top:0;">
+						<h4>{{ 'tuecus.general.your_referral_code' | t }}</h4>
+                      	
+                      <div class="tuecus-input-group">
+                      	{% if shop.metafields.tuecus.customer_landing_page == 0 %}
+                      		<input readonly="" id="rw-tuecus-referralcode" class="tuecus-referral-code tuecus-form-control tuecus-form-control-sm" value="https://{{shop.domain}}?tref={{ customer.metafields.tuecus.referal_code}}" />
+                       		<button onclick="onrwCopyRefCode()" class="tuecus-btn tuecus-btn-sm tuecus-rw-refcopy"><small>{{ 'tuecus.general.copy_code' | t }}</small></button>
+                      	{% elsif  shop.metafields.tuecus.customer_landing_page == 1 %}
+                      		<input readonly="" id="rw-tuecus-referralcode" class="tuecus-referral-code tuecus-form-control tuecus-form-control-sm" value="https://{{shop.domain}}/account/register?tref={{ customer.metafields.tuecus.referal_code}}" />
+                            <button onclick="onrwCopyRefCode()" class="tuecus-btn tuecus-btn-sm tuecus-rw-refcopy"><small>{{ 'tuecus.general.copy_code' | t }}</small></button>
+                      	{% else %}
+                      		<input readonly="" id="rw-tuecus-referralcode" class="tuecus-referral-code tuecus-form-control tuecus-form-control-sm" value="https://{{shop.domain}}?tref={{ customer.metafields.tuecus.referal_code}}" />
+                            <button onclick="onrwCopyRefCode()" class="tuecus-btn tuecus-btn-sm tuecus-rw-refcopy"><small>{{ 'tuecus.general.copy_code' | t }}</small></button>
+                      	{% endif %}
+                      </div>	
+                        
+						<div style="margin-top:10px;">
+							<a href="#" style="color:#333; padding:0px 10px;" onclick="referfriendfbshare(this);"><i class="fa fa-facebook-square fa-2x tuecus-pop-fb-icon tuecus-font-21px" aria-hidden="true"></i></a>
+							<a href="#" style="color:#333; padding:0px 10px;" onclick="referfriendtwittershare(this);"><i class="fa fa-twitter-square fa-2x tuecus-pop-twitter-icon tuecus-font-21px" aria-hidden="true"></i></a>
+							<a href="#" style="color:#333; padding:0px 10px;" onclick="referfriendwhatsappshare(this);"><i class="fa fa-whatsapp fa-2x tuecus-pop-whatsapp-icon tuecus-font-21px" aria-hidden="true"></i></a>
+							<!-- <a href="#" style="color:#333; padding:0px 10px;"><i class="fa fa-envelope fa-2x tuecus-pop-envelope-icon" aria-hidden="true"></i></a> -->
+						</div>
+					</div>
+				</div>
+			
+			
+				<div class="tuecus-pop-footer">
+					<p>
+						<svg width="18" height="18" fill="currentColor" viewBox="0 0 16 16" style="vertical-align: sub;">
+						  <path d="M1 3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1H1zm7 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>
+						  <path d="M0 5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V5zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V7a2 2 0 0 1-2-2H3z"/>
+						</svg>
+						{{ 'tuecus.general.we_reward' | t }}
+					</p>
+				</div>
+		</div>
+	</div>
+	
+
+	<script>
+	
+      	  var rewards_for_every_str = 'rewards for every';
+          {% assign rewards_for_every = 'tuecus.general.rewards_for_every' | t %}
+          {% if  rewards_for_every != 'translation missing' %} 
+            rewards_for_every_str = '{{ rewards_for_every }}';
+          {% endif %}
+	  
+       (function(funcName, baseObj) {
+            // The public function name defaults to window.docReady
+            // but you can pass in your own object and own function name and those will be used
+            // if you want to put them in a different namespace
+            funcName = funcName || "docReady";
+            baseObj = baseObj || window;
+            var readyList = [];
+            var readyFired = false;
+            var readyEventHandlersInstalled = false;
+
+            // call this when the document is ready
+            // this function protects itself against being called more than once
+            function ready() {
+                if (!readyFired) {
+                    // this must be set to true before we start calling callbacks
+                    readyFired = true;
+                    for (var i = 0; i < readyList.length; i++) {
+                        // if a callback here happens to add new ready handlers,
+                        // the docReady() function will see that it already fired
+                        // and will schedule the callback to run right after
+                        // this event loop finishes so all handlers will still execute
+                        // in order and no new ones will be added to the readyList
+                        // while we are processing the list
+                        readyList[i].fn.call(window, readyList[i].ctx);
+                    }
+                    // allow any closures held by these functions to free
+                    readyList = [];
+                }
+            }
+
+            function readyStateChange() {
+                if ( document.readyState === "complete" ) {
+                    ready();
+                }
+            }
+
+            // This is the one public interface
+            // docReady(fn, context);
+            // the context argument is optional - if present, it will be passed
+            // as an argument to the callback
+            // https://stackoverflow.com/questions/9899372/pure-javascript-equivalent-of-jquerys-ready-how-to-call-a-function-when-t
+            baseObj[funcName] = function(callback, context) {
+                if (typeof callback !== "function") {
+                    throw new TypeError("callback for docReady(fn) must be a function");
+                }
+                // if ready has already fired, then just schedule the callback
+                // to fire asynchronously, but right away
+                if (readyFired) {
+                    setTimeout(function() {callback(context);}, 1);
+                    return;
+                } else {
+                    // add the function and context to the list
+                    readyList.push({fn: callback, ctx: context});
+                }
+                // if document already ready to go, schedule the ready function to run
+                if (document.readyState === "complete") {
+                    setTimeout(ready, 1);
+                } else if (!readyEventHandlersInstalled) {
+                    // otherwise if we don't have event handlers installed, install them
+                    if (document.addEventListener) {
+                        // first choice is DOMContentLoaded event
+                        document.addEventListener("DOMContentLoaded", ready, false);
+                        // backup is window load event
+                        window.addEventListener("load", ready, false);
+                    } else {
+                        // must be IE
+                        document.attachEvent("onreadystatechange", readyStateChange);
+                        window.attachEvent("onload", ready);
+                    }
+                    readyEventHandlersInstalled = true;
+                }
+            }
+        })("docReady", window);
+   
+      	var toggleVisible = function(item){
+          if (item.style.display === 'none'){
+            return item.style.display = 'block';
+          } else{
+            return item.style.display = 'none';
+          }
+        };
+        
+        let slideLeft = (target, duration=500) => {
+              //target.style.transitionProperty = 'height, margin, padding';
+              target.style.transitionProperty = 'width, margin, padding';
+              target.style.transitionDuration = duration + 'ms';
+              target.style.boxSizing = 'border-box';
+              //target.style.height = target.offsetHeight + 'px';
+             // target.offsetHeight;
+              target.style.width = target.offsetWidth + 'px';
+              target.offsetWidth;
+
+              target.style.overflow = 'hidden';
+              //target.style.height = 0;
+              target.style.width = 0;
+
+          /*    target.style.paddingTop = 0;
+              target.style.paddingBottom = 0;
+              target.style.marginTop = 0;
+              target.style.marginBottom = 0;
+
+          */
+              target.style.paddingLeft = 0;
+              target.style.paddingRight = 0;
+              target.style.marginLeft = 0;
+              target.style.marginRight = 0;
+
+
+              window.setTimeout( () => {
+                target.style.display = 'none';
+                //target.style.removeProperty('height');
+                target.style.removeProperty('width');
+              /*
+                target.style.removeProperty('padding-top');
+                target.style.removeProperty('padding-bottom');
+                target.style.removeProperty('margin-top');
+                target.style.removeProperty('margin-bottom');
+              */
+
+              target.style.removeProperty('padding-left');
+                target.style.removeProperty('padding-right');
+                target.style.removeProperty('margin-left');
+                target.style.removeProperty('margin-right');
+
+                target.style.removeProperty('overflow');
+                target.style.removeProperty('transition-duration');
+                target.style.removeProperty('transition-property');
+                //alert("!");
+              }, duration);
+        }
+
+        let slideRight = (target, duration=500) => {
+                target.style.removeProperty('display');
+                let display = window.getComputedStyle(target).display;
+
+                if (display === 'none')
+                  display = 'block';
+
+                target.style.display = display;
+                //let height = target.offsetHeight;
+                let width = target.offsetWidth;
+                target.style.overflow = 'hidden';
+                //target.style.height = 0;
+                target.style.width = 0;
+
+            /*	target.style.paddingTop = 0;
+                target.style.paddingBottom = 0;
+                target.style.marginTop = 0;
+                target.style.marginBottom = 0;
+            */
+
+                target.style.paddingLeft = 0;
+                target.style.paddingRight = 0;
+                target.style.marginLeft = 0;
+                target.style.marginRight = 0;
+
+
+                //target.offsetHeight;
+                target.offsetWidth;
+                target.style.boxSizing = 'border-box';
+                //target.style.transitionProperty = "height, margin, padding";
+                target.style.transitionProperty = "width, margin, padding";
+                target.style.transitionDuration = duration + 'ms';
+                //target.style.height = height + 'px';
+                target.style.width = width + 'px';
+            /*
+                target.style.removeProperty('padding-top');
+                target.style.removeProperty('padding-bottom');
+                target.style.removeProperty('margin-top');
+                target.style.removeProperty('margin-bottom');
+
+            */
+                target.style.removeProperty('padding-left');
+                target.style.removeProperty('padding-right');
+                target.style.removeProperty('margin-left');
+                target.style.removeProperty('margin-right');
+
+                window.setTimeout( () => {
+                  //target.style.removeProperty('height');
+                  target.style.removeProperty('width');
+                  target.style.removeProperty('overflow');
+                  target.style.removeProperty('transition-duration');
+                  target.style.removeProperty('transition-property');
+                }, duration);
+        }
+        
+		docReady(function() {   
+			  var tuecus_chat_circle = document.getElementById('tuecus-chat-circle');
+			  var tuecus_chat_box = document.getElementById('tuecus-chat-box');
+			  var tuecus_chat_box_toggle = document.getElementById('tuecus-chat-box-toggle');
+
+			  tuecus_chat_circle.onclick = function(e){
+				//your handler here
+				toggleVisible(tuecus_chat_circle);
+				toggleVisible(tuecus_chat_box);
+			  }
+
+			  tuecus_chat_box_toggle.onclick = function(e){
+				//your handler here
+				toggleVisible(tuecus_chat_circle);
+				toggleVisible(tuecus_chat_box);
+			  }
+			  
+			  
+			  var how_to_earn_rewards = document.getElementById("how-to-earn-rewards");
+			  how_to_earn_rewards.onclick = function(e){
+				  //your handler here
+				  e.stopPropagation();
+				  e.preventDefault();
+				  /* $('#tuecus-points-history-sec').hide("slide", { direction: "left" }, 500, function () {
+					$('#tuecus-pop-page2').show("slide", { direction: "right" }, 500);
+					$('#tuecus-pop-header').height(50);
+					$('.tuecus-pop-welcome-text').hide();
+					}); 	*/
+				  slideLeft(document.getElementById("tuecus-points-history-sec"), 200);
+				  setTimeout(function() {
+					document.getElementById("tuecus-pop-page2").style.display = "block";
+					document.getElementById("tuecus-pop-header").style.height = 50;
+					document.getElementById("tuecus-pop-welcome-text").style.display="none";
+				  }, 200)
+			  }
+			  
+			  var tuecus_waytoearn_link = document.getElementById("tuecus-waytoearn-link");
+			  tuecus_waytoearn_link.onclick = function(e){
+				  //your handler here
+				  e.stopPropagation();
+				  e.preventDefault();
+				  /* $('#tuecus-pop-page1').hide("slide", { direction: "left" }, 500, function () {
+					$('#tuecus-pop-page2').show("slide", { direction: "right" }, 500);
+					$('#tuecus-pop-header').height(50);
+					$('.tuecus-pop-welcome-text').hide();
+					}); 	*/
+				  slideLeft(document.getElementById("tuecus-pop-page1"), 200);
+				  setTimeout(function() {
+					document.getElementById("tuecus-pop-page2").style.display = "block";
+					document.getElementById("tuecus-pop-header").style.height = 50;
+					document.getElementById("tuecus-pop-welcome-text").style.display="none";
+				  }, 200)
+			  }
+			  
+			  var tuecus_waytoearn_return = document.getElementById("tuecus-waytoearn-return");
+			  tuecus_waytoearn_return.onclick = function(e){
+				  //your handler here
+				  e.stopPropagation();
+				  e.preventDefault();
+				  /* $('#tuecus-pop-page2').hide("slide", { direction: "right" }, 500, function () {
+					$('#tuecus-pop-page1').show("slide", { direction: "left" }, 500);
+					$('#tuecus-pop-header').height(100);
+					$('.tuecus-pop-welcome-text').show();
+					}); 	*/
+				  slideLeft(document.getElementById("tuecus-pop-page2"), 200);
+				  setTimeout(function() {
+					document.getElementById("tuecus-pop-page1").style.display = "block";
+					document.getElementById("tuecus-pop-header").style.height = 100;
+					document.getElementById("tuecus-pop-welcome-text").style.display="block";
+				  }, 200)
+			  }
+			  
+			  var tuecus_your_rewards_link = document.getElementById("tuecus-your-rewards-link");
+			  tuecus_your_rewards_link.onclick = function(e){
+				  //your handler here
+				  e.stopPropagation();
+				  e.preventDefault();
+				  /* $('#tuecus-pop-page1').hide("slide", { direction: "left" }, 500, function () {
+					$('#tuecus-norewards-sec').show("slide", { direction: "right" }, 500);
+					$('#tuecus-pop-header').height(50);
+					$('.tuecus-pop-welcome-text').hide();
+					}); 	*/
+				  slideLeft(document.getElementById("tuecus-pop-page1"), 200);
+				  setTimeout(function() {
+					document.getElementById("tuecus-norewards-sec").style.display = "block";
+					document.getElementById("tuecus-pop-header").style.height = 50;
+					document.getElementById("tuecus-pop-welcome-text").style.display="none";
+				  }, 200)
+			  }
+			  
+			  var tuecus_norewards_return = document.getElementById("tuecus-norewards-return");
+			  tuecus_norewards_return.onclick = function(e){
+				  //your handler here
+				  e.stopPropagation();
+				  e.preventDefault();
+				  /* $('#tuecus-norewards-sec').hide("slide", { direction: "right" }, 500, function () {
+					$('#tuecus-pop-page1').show("slide", { direction: "left" }, 500);
+					$('#tuecus-pop-header').height(100);
+					$('.tuecus-pop-welcome-text').show();
+					}); 	*/
+				  slideLeft(document.getElementById("tuecus-norewards-sec"), 200);
+				  setTimeout(function() {
+					document.getElementById("tuecus-pop-page1").style.display = "block";
+					document.getElementById("tuecus-pop-header").style.height = 100;
+					document.getElementById("tuecus-pop-welcome-text").style.display="block";
+				  }, 200)
+			  }
+			  
+			  var tuecus_waytoredeem_link = document.getElementById("tuecus-waytoredeem-link");
+			  tuecus_waytoredeem_link.onclick = function(e){
+				  //your handler here
+				  e.stopPropagation();
+				  e.preventDefault();
+				  /* $('#tuecus-pop-page1').hide("slide", { direction: "left" }, 500, function () {
+					$('#tuecus-wayredeem-sec').show("slide", { direction: "right" }, 500);
+					$('#tuecus-pop-header').height(50);
+					$('.tuecus-pop-welcome-text').hide();
+					});	*/
+				  slideLeft(document.getElementById("tuecus-pop-page1"), 200);
+				  setTimeout(function() {
+					document.getElementById("tuecus-wayredeem-sec").style.display = "block";
+					document.getElementById("tuecus-pop-header").style.height = 50;
+					document.getElementById("tuecus-pop-welcome-text").style.display = "none";
+                    var reward_points_conversion_msg = document.getElementById('reward-points-conversion-msg');
+					if (typeof(reward_points_conversion_msg) != 'undefined' && reward_points_conversion_msg != null)
+					{
+					  reward_points_conversion_msg.innerHTML = {{ shop.metafields.tuecus.reward_conversion_points_value }}+" "+rewards_for_every_str+" "+ Shopify.currency['active']+" 1";
+					}
+					//document.getElementById("reward-points-conversion-msg").innerHTML = {{ shop.metafields.tuecus.reward_conversion_points_value }}+" "+rewards_for_every_str+" "+ Shopify.currency['active']+" 1";
+				  }, 200)
+			  }
+			  
+			  var tuecus_wayredeem_return = document.getElementById("tuecus-wayredeem-return");
+			  tuecus_wayredeem_return.onclick = function(e){
+				  //your handler here
+				  e.stopPropagation();
+				  e.preventDefault();
+				  /* $('#tuecus-wayredeem-sec').hide("slide", { direction: "right" }, 500, function () {
+					$('#tuecus-pop-page1').show("slide", { direction: "left" }, 500);
+					$('#tuecus-pop-header').height(100);
+					$('.tuecus-pop-welcome-text').show();
+					});	*/
+				  slideLeft(document.getElementById("tuecus-wayredeem-sec"), 200);
+				  setTimeout(function() {
+					document.getElementById("tuecus-pop-page1").style.display = "block";
+					document.getElementById("tuecus-pop-header").style.height = 100;
+					document.getElementById("tuecus-pop-welcome-text").style.display = "block";
+				  }, 200)
+			  }
+			  
+			  var tuecus_points_history_link = document.getElementById("tuecus-points-history-link");
+			  tuecus_points_history_link.onclick = function(e){
+				  //your handler here
+				  e.stopPropagation();
+				  e.preventDefault();
+				  /* $('#tuecus-pop-page1').hide("slide", { direction: "left" }, 500, function () {
+					$('#tuecus-points-history-sec').show("slide", { direction: "right" }, 500);
+					$('#tuecus-pop-header').height(50);
+					$('.tuecus-pop-welcome-text').hide();
+					});	*/
+				  slideLeft(document.getElementById("tuecus-pop-page1"), 200);
+				  setTimeout(function() {
+					document.getElementById("tuecus-points-history-sec").style.display = "block";
+					document.getElementById("tuecus-pop-header").style.height = 50;
+					document.getElementById("tuecus-pop-welcome-text").style.display = "none";
+				  }, 200)
+			  }
+			  
+			  var tuecus_points_history_return = document.getElementById("tuecus-points-history-return");
+			  tuecus_points_history_return.onclick = function(e){
+				  //your handler here
+				  e.stopPropagation();
+				  e.preventDefault();
+				  /* $('#tuecus-points-history-sec').hide("slide", { direction: "right" }, 500, function () {
+					$('#tuecus-pop-page1').show("slide", { direction: "left" }, 500);
+					$('#tuecus-pop-header').height(100);
+					$('.tuecus-pop-welcome-text').show();
+					});	*/
+				  slideLeft(document.getElementById("tuecus-points-history-sec"), 200);
+				  setTimeout(function() {
+					document.getElementById("tuecus-pop-page1").style.display = "block";
+					document.getElementById("tuecus-pop-header").style.height = 100;
+					document.getElementById("tuecus-pop-welcome-text").style.display = "block";
+				  }, 200)
+			  }
+			  
+			  var tuecus_referral_link = document.getElementById("tuecus-referral-link");
+			  tuecus_referral_link.onclick = function(e){
+				  //your handler here
+				  e.stopPropagation();
+				  e.preventDefault();
+				  /* $('#tuecus-pop-page1').hide("slide", { direction: "left" }, 500, function () {
+					$('#tuecus-referral-sec').show("slide", { direction: "right" }, 500);
+					$('#tuecus-pop-header').height(50);
+					$('.tuecus-pop-welcome-text').hide();
+					});	*/
+				  slideLeft(document.getElementById("tuecus-pop-page1"), 200);
+				  setTimeout(function() {
+					document.getElementById("tuecus-referral-sec").style.display = "block";
+					document.getElementById("tuecus-pop-header").style.height = 50;
+					document.getElementById("tuecus-pop-welcome-text").style.display = "none";
+				  }, 200)
+			  }
+			  
+			  var tuecus_referral_sec_return = document.getElementById("tuecus-referral-sec-return");
+			  tuecus_referral_sec_return.onclick = function(e){
+				  //your handler here
+				  e.stopPropagation();
+				  e.preventDefault();
+				  /* $('#tuecus-referral-sec').hide("slide", { direction: "right" }, 500, function () {
+					$('#tuecus-pop-page1').show("slide", { direction: "left" }, 500);
+					$('#tuecus-pop-header').height(100);
+					$('.tuecus-pop-welcome-text').show();
+					});	*/
+				  slideLeft(document.getElementById("tuecus-referral-sec"), 200);
+				  setTimeout(function() {
+					document.getElementById("tuecus-pop-page1").style.display = "block";
+					document.getElementById("tuecus-pop-header").style.height = 100;
+					document.getElementById("tuecus-pop-welcome-text").style.display = "block";
+				  }, 200)
+			  }
+
+			
+		});
+		
+	function onrwCopyRefCode() {
+	  
+  
+		  var copyRefInput = document.getElementById('rw-tuecus-referralcode');
+		  copyRefInput.focus();
+		  copyRefInput.select();
+
+		  try {
+			var successful = document.execCommand('copy');
+			var msg = successful ? 'successful' : 'unsuccessful';
+			console.log('Copying text command was ' + msg);
+		  } catch (err) {
+			console.log('Oops, unable to copy');
+		  }
+		
+	}
+
+	function onrwCopyReferralCode() {
+		  
+	  
+		  var copyRefInput = document.getElementById('rw-tuecus-referral-code');
+		  copyRefInput.focus();
+		  copyRefInput.select();
+
+		  try {
+			var successful = document.execCommand('copy');
+			var msg = successful ? 'successful' : 'unsuccessful';
+			console.log('Copying text command was ' + msg);
+		  } catch (err) {
+			console.log('Oops, unable to copy');
+		  }
+		
+	}	
+		
+	</script>
+	
+{% endif %}

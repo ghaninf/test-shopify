@@ -1,0 +1,58 @@
+.tuecus-app-pills-custom {
+					background-color: #ffffff
+				}
+				.tuecus-app-pills-custom .nav-link {
+					color: #6b6a6a; 
+					background-color: #ffffff 
+				}
+				.tuecus-app-pills-custom .nav-link:hover {
+					background-color: #ebebeb 
+				}
+				.tuecus-app-pills-custom .nav-link:hover {
+					color: #000000 
+				}
+				.tuecus-app-pills-custom .nav-link.active {
+					background-color: #ffffff 
+				}
+				.tuecus-app-pills-custom .nav-link.active, .tuecus-app-pills-custom .nav-link.active span {
+					color: #000000 
+				}
+				.tuecus-profile-username-text-color {
+					color: #000000 
+				}
+				.tuecus-profile-image-background-color {
+					background: #ffffff 
+				}
+				.tuecus-app-pills-custom .nav-link.active {
+					border:1px solid #e6e6e6 
+				}
+				.tuecus-tab-content {
+					background-color:#ffffff 
+				}
+				.tuecus-tab-content .tuecus-text-success {
+					color:#333333 
+				}
+				.tuecus-btn-success {
+					background-color:#000000 
+				}
+				.tuecus-text-success {
+					color:#000000 
+				}
+				.tuecus-btn-success:hover {
+					background-color:#333333 
+				}
+				.tuecus-text-success:hover {
+					color:#333333 
+				}
+				.tuecus-btn-success {
+					border-color:#000000 
+				}
+				.tuecus-border-success {
+					border-color:#000000 
+				}
+				.tuecus-btn-success:hover {
+					color:#ffffff 
+				}
+				.tuecus-btn-success {
+					color:#ffffff 
+				}

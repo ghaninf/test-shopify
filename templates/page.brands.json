@@ -1,0 +1,274 @@
+{
+  "wrapper": "div.brands-page",
+  "sections": {
+    "main": {
+      "type": "brands-page",
+      "disabled": true,
+      "blocks": {
+        "0d7e1071-0a47-4509-9058-cf20a7b6e92f": {
+          "type": "image",
+          "settings": {
+            "title": "Benjamin Button",
+            "link": ""
+          }
+        },
+        "5235eba3-4519-45e2-880c-ef416cba8a2b": {
+          "type": "image",
+          "settings": {
+            "title": "Benjamin Button",
+            "link": ""
+          }
+        },
+        "8aa42d60-cd2f-4ca6-be46-9ec4b473d58c": {
+          "type": "image",
+          "settings": {
+            "title": "Benjamin Button",
+            "link": ""
+          }
+        },
+        "71cb782a-8b2b-4f16-8702-8b1420841353": {
+          "type": "image",
+          "settings": {
+            "title": "Benjamin Button",
+            "link": ""
+          }
+        },
+        "0f0c862d-ebd1-4361-b317-0867ec38dff3": {
+          "type": "image",
+          "settings": {
+            "title": "Benjamin Button",
+            "link": ""
+          }
+        },
+        "408c3400-375a-4fb8-a330-0c6b1fb5f00b": {
+          "type": "image",
+          "settings": {
+            "title": "Benjamin Button",
+            "link": ""
+          }
+        },
+        "d16fa18c-334b-4800-bc5d-f37d2a14b1fc": {
+          "type": "image",
+          "settings": {
+            "title": "Benjamin Button",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "0d7e1071-0a47-4509-9058-cf20a7b6e92f",
+        "5235eba3-4519-45e2-880c-ef416cba8a2b",
+        "8aa42d60-cd2f-4ca6-be46-9ec4b473d58c",
+        "71cb782a-8b2b-4f16-8702-8b1420841353",
+        "0f0c862d-ebd1-4361-b317-0867ec38dff3",
+        "408c3400-375a-4fb8-a330-0c6b1fb5f00b",
+        "d16fa18c-334b-4800-bc5d-f37d2a14b1fc"
+      ],
+      "settings": {
+        "display_brand": true,
+        "link_brand": "vendor"
+      }
+    },
+    "16259888694ade058e": {
+      "type": "home-custom-block-images",
+      "disabled": true,
+      "blocks": {
+        "16259888694ade058e-0": {
+          "type": "image",
+          "settings": {
+            "color_content": "#ffffff",
+            "heading_color_style_2": "#f7e3dc",
+            "sub_heading": "New Arrivals",
+            "font_size_sub_heading": "13px",
+            "heading": "Da Scarvéro",
+            "font_size_heading": "30px",
+            "des": "Phasellus lorem malesuada ligula pulvino commodo maecenas",
+            "font_size_des": "12px",
+            "button": "Shop Now",
+            "link": "",
+            "bg_button": "#ffffff",
+            "border_button": "#ffffff",
+            "color_button": "#232323"
+          }
+        },
+        "16259888694ade058e-1": {
+          "type": "image",
+          "settings": {
+            "color_content": "#ffffff",
+            "heading_color_style_2": "#f7e3dc",
+            "sub_heading": "New Arrivals",
+            "font_size_sub_heading": "13px",
+            "heading": "Da Scarvéro",
+            "font_size_heading": "30px",
+            "des": "Phasellus lorem malesuada ligula pulvino commodo maecenas",
+            "font_size_des": "12px",
+            "button": "Shop Now",
+            "link": "",
+            "bg_button": "#ffffff",
+            "border_button": "#ffffff",
+            "color_button": "#232323"
+          }
+        },
+        "16259888694ade058e-2": {
+          "type": "image",
+          "settings": {
+            "color_content": "#ffffff",
+            "heading_color_style_2": "#f7e3dc",
+            "sub_heading": "New Arrivals",
+            "font_size_sub_heading": "13px",
+            "heading": "Da Scarvéro",
+            "font_size_heading": "30px",
+            "des": "Phasellus lorem malesuada ligula pulvino commodo maecenas",
+            "font_size_des": "12px",
+            "button": "Shop Now",
+            "link": "",
+            "bg_button": "#ffffff",
+            "border_button": "#ffffff",
+            "color_button": "#232323"
+          }
+        }
+      },
+      "block_order": [
+        "16259888694ade058e-0",
+        "16259888694ade058e-1",
+        "16259888694ade058e-2"
+      ],
+      "settings": {
+        "layout": "default",
+        "layout_style": "layout_style_1",
+        "display_padding": true,
+        "bg_color": "#f8f8f8",
+        "widget_title": "",
+        "widget_des": "",
+        "title_style": "style_1",
+        "margin_bottom_mb": 0,
+        "margin_bottom_tab": 0,
+        "margin_bottom": 0
+      }
+    },
+    "16488242139533f4be": {
+      "type": "home-brands",
+      "blocks": {
+        "d96c3b62-eb82-46b0-b2b1-b5f0f2f6a32e": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/DISC_30_urb.jpg",
+            "title": "",
+            "link": ""
+          }
+        },
+        "d8b7694a-4cf2-4923-b363-83f6f28d29db": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/DISC_25_urb.jpg",
+            "title": "",
+            "link": ""
+          }
+        },
+        "908d3967-e818-42a4-9e92-ccf6cc260be9": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/DISC_20_urb.jpg",
+            "title": "",
+            "link": ""
+          }
+        },
+        "e0f269a2-94f9-48bb-af9f-e17567538d8b": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/50.000_urb.jpg",
+            "title": "",
+            "link": ""
+          }
+        },
+        "cd7108c9-2110-4d78-afff-b86f2ea36a23": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/45.000_urb.jpg",
+            "title": "",
+            "link": ""
+          }
+        },
+        "aa27617e-18e2-4c21-927b-be1fb5ca1a96": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/40.000_urb.jpg",
+            "title": "",
+            "link": ""
+          }
+        },
+        "1f051185-a2b7-4bbe-b1a0-f051fe02df5b": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/35.000_urb.jpg",
+            "title": "",
+            "link": ""
+          }
+        },
+        "b54b36f2-8fee-4bc9-9817-254105887766": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/30.000_urb.jpg",
+            "title": "",
+            "link": ""
+          }
+        },
+        "265f9bc7-41fe-490c-9732-70a5677273ae": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/GO_10.000_urb.jpg",
+            "title": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "d96c3b62-eb82-46b0-b2b1-b5f0f2f6a32e",
+        "d8b7694a-4cf2-4923-b363-83f6f28d29db",
+        "908d3967-e818-42a4-9e92-ccf6cc260be9",
+        "e0f269a2-94f9-48bb-af9f-e17567538d8b",
+        "cd7108c9-2110-4d78-afff-b86f2ea36a23",
+        "aa27617e-18e2-4c21-927b-be1fb5ca1a96",
+        "1f051185-a2b7-4bbe-b1a0-f051fe02df5b",
+        "b54b36f2-8fee-4bc9-9817-254105887766",
+        "265f9bc7-41fe-490c-9732-70a5677273ae"
+      ],
+      "settings": {
+        "layout": "default",
+        "margin_bottom_mb": 0,
+        "margin_bottom_tab": 0,
+        "margin_bottom": 0,
+        "display_brand_border": true,
+        "display_bg_banner": true,
+        "bg_color_banner": "#f7c185",
+        "brand_title": "",
+        "brand_des": "",
+        "brands_view_all": "",
+        "brands_view_all_link": "",
+        "title_style": "style_1",
+        "brand_rows": "6"
+      }
+    },
+    "16488245479bfb8a01": {
+      "type": "home-rich-text",
+      "settings": {
+        "content_top": "<p><b>BERIKUT VOUCHER UNTUK PEMBELIAN VIA WEBSITE URBANCO.CO.ID BESERTA SYARAT & KETENTUANNYA<\/b><\/p>\n\n<p>\n1. <a href=\"https:\/\/urbanco.co.id\/discount\/URB25GRATISONGKIR\" style=\"color:blue\"><u><b>KLIK DISINI<\/b><\/u><\/a> untuk voucher diskon otomatis sebesar <b>35%<\/b> dengan maksimum potongan voucher <b>Rp25.000<\/b> dan minimum pembelian Rp174.900 (belum termasuk ongkos kirim).\n<\/p>\n\n<p>\n2. <a href=\"https:\/\/urbanco.co.id\/discount\/URB20GRATISONGKIR\" style=\"color:blue\"><u><b>KLIK DISINI<\/b><\/u><\/a> untuk voucher diskon otomatis sebesar <b>25%<\/b> dengan maksimum potongan voucher <b>Rp20.000<\/b> dan minimum pembelian Rp159.900 (belum termasuk ongkos kirim).\n<\/p>\n\n<p>\n3. <a href=\"https:\/\/urbanco.co.id\/discount\/URB15GRATISONGKIR\" style=\"color:blue\"><u><b>KLIK DISINI<\/b><\/u><\/a> untuk voucher diskon otomatis sebesar <b>20%<\/b> dengan maksimum potongan voucher <b>Rp15.000<\/b> dan minimum pembelian Rp99.900 (belum termasuk ongkos kirim).\n<\/p>\n\n<p>\n4.  <a href=\"https:\/\/urbanco.co.id\/discount\/URB50GRATISONGKIR\" style=\"color:blue\"><u><b>KLIK DISINI<\/b><\/u><\/a> untuk voucher diskon otomatis dengan maksimum potongan voucher <b>Rp40.000<\/b> dan ongkos kirim <b>Rp10.000<\/b>, diperoleh dengan minimum pembelian Rp499.900 (belum termasuk ongkos kirim).\n<\/p>\n\n<p>\n5.  <a href=\"https:\/\/urbanco.co.id\/discount\/URB45GRATISONGKIR\" style=\"color:blue\"><u><b>KLIK DISINI<\/b><\/u><\/a> untuk voucher diskon otomatis dengan maksimum potongan voucher <b>Rp35.000<\/b> dan ongkos kirim <b>Rp10.000<\/b>, diperoleh dengan minimum pembelian Rp449.900 (belum termasuk ongkos kirim).\n<\/p>\n\n<p>\n6.  <a href=\"https:\/\/urbanco.co.id\/discount\/URB40GRATISONGKIR\" style=\"color:blue\"><u><b>KLIK DISINI<\/b><\/u><\/a> untuk voucher diskon otomatis dengan maksimum potongan voucher <b>Rp30.000<\/b> dan ongkos kirim <b>Rp10.000<\/b>, diperoleh dengan minimum pembelian Rp399.900 (belum termasuk ongkos kirim).\n<\/p>\n\n<p>\n7.  <a href=\"https:\/\/urbanco.co.id\/discount\/URB35GRATISONGKIR\" style=\"color:blue\"><u><b>KLIK DISINI<\/b><\/u><\/a> untuk voucher diskon otomatis dengan maksimum potongan voucher <b>Rp25.000<\/b> dan ongkos kirim <b>Rp10.000<\/b>, diperoleh dengan minimum pembelian Rp299.900 (belum termasuk ongkos kirim).\n<\/p>\n\n<p>\n8.  <a href=\"https:\/\/urbanco.co.id\/discount\/URB30GRATISONGKIR\" style=\"color:blue\"><u><b>KLIK DISINI<\/b><\/u><\/a> untuk voucher diskon otomatis dengan maksimum potongan voucher <b>Rp20.000<\/b> dan ongkos kirim <b>Rp10.000<\/b>, diperoleh dengan minimum pembelian Rp249.900 (belum termasuk ongkos kirim).\n<\/p>\n\n<p>\n9.  <a href=\"https:\/\/urbanco.co.id\/discount\/URBGRATISONGKIR\" style=\"color:blue\"><u><b>KLIK DISINI<\/b><\/u><\/a> untuk voucher diskon otomatis dengan maksimum potongan ongkos kirim <b>Rp10.000<\/b>, diperoleh tanpa ada minimum pembelian.\n<\/p>\n\n<p>\n10. Dengan mengeklik tautan yang ada pada setiap voucher, maka voucher yang diklik tersebut akan otomatis terklaim di halaman checkout.\n<\/p>\n\n<p>\n11. Voucher berlaku untuk semua jenis produk.\n<\/p>\n\n<p>\n12. Voucher berlaku untuk semua pengguna.\n<\/p>\n\n<p>\n13. Setiap voucher tidak dapat digabungkan dengan voucher yang lain.\n<\/p>\n\n<p>\n14. Voucher dapat digunakan secara berulang selama persediaan masih ada.\n<\/p>\n\n<p>\n15. <b>URBAN&CO<\/b> berhak menghilangkan voucher tanpa pemberitahuan sebelumnya.\n<\/p>\n\n<p>\n16. Dengan menggunakan voucher ini, pengguna dianggap mengerti dan menyetujui semua syarat & ketentuan yang berlaku.\n<\/p>",
+        "content_bottom": "",
+        "font_size": "14px",
+        "text_alignment": "left",
+        "button_text_more": "Read More",
+        "button_text_less": "Read Less",
+        "color_text": "",
+        "margin_bottom_mb": 0,
+        "margin_bottom_tab": 0,
+        "margin_bottom": 0
+      }
+    }
+  },
+  "order": [
+    "main",
+    "16259888694ade058e",
+    "16488242139533f4be",
+    "16488245479bfb8a01"
+  ]
+}

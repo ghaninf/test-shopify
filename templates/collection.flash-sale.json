@@ -2,12 +2,11 @@
   "sections": {
     "main": {
       "type": "main-collection",
-      "disabled": true,
       "blocks": {
         "69b2440e-a586-4ff0-beb4-e2f08b0b99a8": {
           "type": "sidebar",
           "settings": {
-            "display_sidebar": true,
+            "display_sidebar": false,
             "sidebar_style": "style_1",
             "show_sidebar": "left",
             "style_option_color": "Color",
@@ -52,11 +51,11 @@
             "title_product": "",
             "collection": "",
             "limit": "8",
-            "enable_img_1": true,
+            "enable_img_1": false,
             "link_img_1": "",
-            "enable_img_2": true,
+            "enable_img_2": false,
             "link_img_2": "",
-            "enable_custom_block": true,
+            "enable_custom_block": false,
             "title_custom_block": "Custom Block",
             "quote_custom_block": "<p>Add customer reviews and testimonials to showcase your store’s happy customers.<\/p>"
           }
@@ -69,14 +68,14 @@
         "limited_view": true,
         "view_as_enable": false,
         "sort_enable": true,
-        "collection_results_per_row": "3",
-        "collection_results_per_page": "12",
+        "collection_results_per_row": "5",
+        "collection_results_per_page": "20",
         "color_button_more": "#ffffff",
         "bg_color_button_more": "#ba7a2d",
         "border_color_button_more": "#ba7a2d",
         "show_countdown": true,
         "text_countdown": "End ins:",
-        "show_pro_des": false,
+        "show_pro_des": true,
         "show_banner": false,
         "show_banner_1": false,
         "link_banner_1": "",

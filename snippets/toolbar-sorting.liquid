@@ -1,0 +1,30 @@
+<div
+  class="label-tab"
+  data-toggle="dropdown"
+  aria-expanded="false">
+  {% if sort_by == 'price-ascending' %}
+    <span class="label-text" {% if settings.enable_multilang %}data-translate="collections.sorting.price_ascending"{% endif %}>
+      {{ 'collections.sorting.price_ascending' | t }}
+    </span>
+  {% elsif sort_by == 'price-descending' %}
+    <span class="label-text" {% if settings.enable_multilang %}data-translate="collections.sorting.price_descending"{% endif %}>
+      {{ 'collections.sorting.price_descending' | t }}
+    </span>
+  {% endif %}
+  <span class="icon-dropdown">
+    <i class="fa fa-angle-down"></i>
+  </span>
+</div>
+
+<ul class="dropdown-menu">
+  <li {% if sort_by == 'price-ascending' %}class="active"{% endif %}>
+    <span data-href="price-ascending" {% if settings.enable_multilang %}data-translate="collections.sorting.price_ascending"{% endif %}>
+      {{ 'collections.sorting.price_ascending' | t }}
+    </span>
+  </li>
+  <li {% if sort_by == 'price-descending' %}class="active"{% endif %}>
+    <span data-href="price-descending" {% if settings.enable_multilang %}data-translate="collections.sorting.price_descending"{% endif %}>
+      {{ 'collections.sorting.price_descending' | t }}
+    </span>
+  </li>
+</ul>

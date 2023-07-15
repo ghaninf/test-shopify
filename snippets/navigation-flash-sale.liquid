@@ -1,0 +1,12 @@
+<div id="shopify-section-navigation-flash-sale" class="shopify-section container-flash-sale">
+  <div class="flash-sale-navigation"></div>
+  {% if section.settings.countdown != blank %}
+    <div class="countdown countdown-style-market">
+      {% render 'multilang' with section.settings.text_countdown %}
+      <div
+        class="countdown-item countdown-suppermarket"
+        data-countdown-normal
+        data-countdown-value="{{ section.settings.countdown }}"></div>
+    </div>
+  {% endif %}
+</div>

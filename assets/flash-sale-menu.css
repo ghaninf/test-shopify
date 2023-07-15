@@ -1,0 +1,24 @@
+.container-flash-sale {
+  position: relative;
+  display: block;
+}
+
+.flash-sale-navigation {
+  position: relative;
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 0;
+}
+
+.flash-sale-navigation > .navigation {
+  position: block;
+  width: 100%;
+  height: auto;
+}
+
+.flash-sale-navigation > .navigation > .title {
+  color: black;
+}

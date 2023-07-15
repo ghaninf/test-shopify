@@ -175,6 +175,10 @@
             "label": "Category Page FullWidth"
           },
           {
+            "value": "flash-sale",
+            "label": "Category Page Flash Sale"
+          },
+          {
             "value": "mansory",
             "label": "Category Page Mansory"
           },

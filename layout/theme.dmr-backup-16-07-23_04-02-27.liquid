@@ -305,6 +305,5 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 								<input type="hidden" name="tuecus-app-id" value="{{ shop.metafields.tuecus.app_id }}" id="tuecus-app-id">
 								<input type="hidden" name="tuecus-customer-id" value="{{ customer.id }}" id="tuecus-customer-id">
 								<input type="hidden" name="tuecus-app-proxy" value="{{ shop.metafields.tuecus.app_proxy }}" id="tuecus-app-proxy">{% render 'tuecus-social-share.liquid' %} {% if shop.customer_accounts_enabled %}{% if customer  %}{% include 'tuecus-rewards-loggedin-widget' %}{% else %}{% include 'tuecus-rewards-widget' %}{% endif %}{% endif %}<div data-app="mm" data-product="{{product.id}}"></div>
-{% render 'spurit_dmr_theme_snippet' %}
 </body>
 </html>

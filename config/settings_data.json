@@ -2743,6 +2743,7 @@
       },
       "16588891450764daed": {
         "type": "instagenie-zegsu",
+        "disabled": true,
         "settings": {
           "heading_font": "nunito_sans_n4",
           "heading_size": 20,
@@ -2753,15 +2754,16 @@
       },
       "856c6e46-2568-424e-b076-8d16084bbe84": {
         "type": "supermarket-featured-products",
+        "disabled": false,
         "settings": {
           "title_style": "style_1",
           "featured_products_title": "Flash Sale",
           "color_text_title": "",
           "text_countdown": "Ends in:",
-          "countdown": "2023\/07\/15 22:0:00",
+          "countdown": "2023\/07\/16 18:0:00",
           "view_all": "See More",
-          "link_view_all": "shopify:\/\/collections\/flash-sale",
-          "show_slider_featured_collection": "flash-sale",
+          "link_view_all": "shopify:\/\/collections\/shirt-collection",
+          "show_slider_featured_collection": "shirt-collection",
           "slider_featured_limit_all": 6,
           "collection_results_per_row1": "4",
           "margin_bottom_mb": 0,
@@ -2775,7 +2777,6 @@
       "1635838621d16da425",
       "1648779944faa56bda",
       "1647481671a6d5e390",
-      "1649048844d072a2ff",
       "1648970258ddf3e865",
       "1648970704742a1f83",
       "163584382932592b1d",
@@ -2789,6 +2790,7 @@
       "1636027606b90c188c",
       "1647326584e33c6a63",
       "16588891450764daed",
+      "1649048844d072a2ff",
       "856c6e46-2568-424e-b076-8d16084bbe84"
     ]
   },
